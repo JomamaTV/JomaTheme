@@ -8,71 +8,76 @@
    ----------------------------------------------------------------------------
    Theming model (per https://blueprint.zip/docs/themes/colors):
      - Colors are CSS variables named  --blueprint-<color>-<brightness>
-     - Values MUST be plain space-separated RGB channels, e.g.  124 92 252
+     - Values MUST be plain space-separated RGB channels, e.g.  122 152 255
      - Pterodactyl's Tailwind config maps bg-*/text-*/border-* onto these
        variables, so overriding them re-themes the whole panel.
    ============================================================================ */
 
 /* ----------------------------------------------------------------------------
-   1. JomaMC color system
+   1. JomaMC color system  (v2.0 — Nebula-inspired: navy / plum / periwinkle)
+   Design direction adapted from the Nebula aesthetic; implementation is original.
    ---------------------------------------------------------------------------- */
 :root {
-  /* --- Primary accent (JomaMC violet, centred on #7C5CFC) --- */
-  --blueprint-primary-50:  245 243 255;
-  --blueprint-primary-100: 238 233 255;
-  --blueprint-primary-200: 224 213 255;
-  --blueprint-primary-300: 198 179 254;
-  --blueprint-primary-400: 165 139 252;
-  --blueprint-primary-500: 124 92 252;   /* main accent */
-  --blueprint-primary-600: 109 76 247;
-  --blueprint-primary-700: 91 63 211;
-  --blueprint-primary-800: 76 53 168;
-  --blueprint-primary-900: 64 45 133;
-  --blueprint-primary-950: 43 30 88;
+  /* --- Primary accent (periwinkle indigo, ~#7a98ff) --- */
+  --blueprint-primary-50:  238 241 255;
+  --blueprint-primary-100: 226 232 255;
+  --blueprint-primary-200: 204 216 255;
+  --blueprint-primary-300: 178 195 255;
+  --blueprint-primary-400: 150 173 255;
+  --blueprint-primary-500: 122 152 255;   /* main accent */
+  --blueprint-primary-600: 100 134 230;
+  --blueprint-primary-700: 84 113 196;
+  --blueprint-primary-800: 70 95 162;
+  --blueprint-primary-900: 60 81 138;
+  --blueprint-primary-950: 40 54 92;
 
-  /* --- Neutral scale: low = dark surfaces, high = light text --- */
-  --blueprint-white: 28 28 42;   /* cards / raised surfaces (brightest surface) */
-  --blueprint-black: 5 5 9;
-  --blueprint-neutral-50:  20 20 32;   /* page body base */
-  --blueprint-neutral-100: 26 26 40;   /* hover / alt surface */
-  --blueprint-neutral-200: 40 40 58;   /* subtle borders */
-  --blueprint-neutral-300: 52 52 72;   /* dividers */
-  --blueprint-neutral-400: 70 70 92;   /* disabled / muted icons */
-  --blueprint-neutral-500: 130 130 150;
-  --blueprint-neutral-600: 160 160 178;
-  --blueprint-neutral-700: 190 190 206;
-  --blueprint-neutral-800: 215 215 228;
-  --blueprint-neutral-900: 235 235 245;
+  /* --- Neutral scale: navy body → plum surfaces → light text --- */
+  --blueprint-white: 37 31 48;      /* cards / raised surfaces (plum) */
+  --blueprint-black: 4 8 20;        /* page navy */
+  --blueprint-neutral-50:  4 8 20;     /* page body base (navy) */
+  --blueprint-neutral-100: 43 47 62;   /* hover / alt surface */
+  --blueprint-neutral-200: 50 46 66;   /* subtle borders */
+  --blueprint-neutral-300: 60 56 80;   /* dividers */
+  --blueprint-neutral-400: 90 86 112;  /* disabled / muted icons */
+  --blueprint-neutral-500: 120 116 140;
+  --blueprint-neutral-600: 150 146 168;
+  --blueprint-neutral-700: 180 176 196;
+  --blueprint-neutral-800: 210 210 224;
+  --blueprint-neutral-900: 233 234 238;  /* primary text */
   --blueprint-neutral-950: 248 248 252;
 
-  /* --- Semantic colors (plain RGB) --- */
-  --blueprint-success-500: 34 197 94;
-  --blueprint-success-600: 22 163 74;
-  --blueprint-warning-500: 245 158 11;
-  --blueprint-warning-600: 217 119 6;
-  --blueprint-danger-500:  239 68 68;
-  --blueprint-danger-600:  220 38 38;
-  --blueprint-info-500:    56 189 248;
-  --blueprint-info-600:    14 165 233;
+  /* --- Semantic colors (Nebula status scale) --- */
+  --blueprint-success-500: 44 221 47;
+  --blueprint-success-600: 36 175 39;
+  --blueprint-warning-500: 219 192 37;
+  --blueprint-warning-600: 183 160 31;
+  --blueprint-danger-500:  188 54 47;
+  --blueprint-danger-600:  157 45 39;
+  --blueprint-info-500:    122 152 255;
+  --blueprint-info-600:    100 134 230;
 
-  /* JomaMC-local tokens (used by this theme's own components) */
-  --joma-bg:           9 9 16;
-  --joma-surface:       28 28 42;
-  --joma-surface-2:     22 22 34;
-  --joma-surface-hover: 34 34 52;
+  /* JomaMC-local tokens */
+  --joma-bg:            4 8 20;        /* navy */
+  --joma-surface:        37 31 48;      /* plum (#251f30) */
+  --joma-surface-2:      43 47 62;      /* (#2b2f3e) */
+  --joma-surface-hover:  43 47 62;
+  --joma-surface-active: 48 52 67;      /* (#303443) inputs/active */
+  --joma-surface-selected: 54 62 87;    /* (#363e57) */
   --joma-border:        255 255 255;
-  --joma-text:          236 236 245;
-  --joma-text-muted:    150 150 170;
-  --joma-primary:       124 92 252;
-  --joma-primary-2:     56 189 248;
-  --joma-success:       34 197 94;
-  --joma-warning:       245 158 11;
-  --joma-danger:        239 68 68;
-  --joma-info:          56 189 248;
-  --joma-radius:        16px;
+  --joma-text:          233 234 238;    /* (#e9eaee) */
+  --joma-text-muted:    107 117 136;
+  --joma-primary:       122 152 255;   /* periwinkle accent */
+  --joma-primary-2:     79 98 149;     /* (#4f6295) button hover */
+  --joma-button:        58 67 92;      /* (#3a435c) default button */
+  --joma-success:       44 221 47;
+  --joma-warning:       219 192 37;
+  --joma-danger:        188 54 47;
+  --joma-info:          122 152 255;
+  --joma-radius:        10px;
   --joma-radius-sm:     10px;
-  --joma-shadow:        0 8px 32px rgb(0 0 0 / 0.45);
-  --joma-glow:          0 0 0 1px rgb(124 92 252 / 0.35), 0 18px 50px rgb(124 92 252 / 0.18);
+  --joma-radius-pill:   100px;
+  --joma-shadow:        0 8px 24px rgb(0 0 0 / 0.35);
+  --joma-glow:          0 0 0 1px rgb(122 152 255 / 0.35), 0 12px 40px rgb(122 152 255 / 0.16);
 }
 
 /* ----------------------------------------------------------------------------
@@ -83,11 +88,11 @@ html { color-scheme: dark; }
 body {
   background-color: rgb(var(--joma-bg)) !important;
   background-image:
-    radial-gradient(60rem 60rem at 12% -10%, rgb(124 92 252 / 0.18), transparent 60%),
-    radial-gradient(50rem 50rem at 110% 10%, rgb(56 189 248 / 0.14), transparent 55%),
-    radial-gradient(40rem 40rem at 50% 120%, rgb(217 70 239 / 0.10), transparent 60%);
+    radial-gradient(70rem 70rem at 15% -15%, rgb(122 152 255 / 0.10), transparent 60%),
+    radial-gradient(55rem 55rem at 115% 5%, rgb(79 98 149 / 0.10), transparent 55%);
   background-attachment: fixed;
   color: rgb(var(--joma-text)) !important;
+  font-family: "Inter var", "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -117,10 +122,10 @@ body {
 /* Headings inherit a light tone */
 h1, h2, h3, h4, h5, h6 { color: rgb(248 248 252) !important; letter-spacing: -0.01em; }
 
-a { color: rgb(165 139 252); transition: color 0.18s ease; }
-a:hover { color: rgb(198 179 254); }
+a { color: rgb(150 173 255); transition: color 0.18s ease; }
+a:hover { color: rgb(122 152 255); }
 
-::selection { background: rgb(124 92 252 / 0.35); color: rgb(255 255 255); }
+::selection { background: rgb(122 152 255 / 0.35); color: rgb(255 255 255); }
 
 /* ----------------------------------------------------------------------------
    4. Navigation bar
@@ -130,10 +135,10 @@ a:hover { color: rgb(198 179 254); }
 #NavigationBar,
 nav[class*="NavigationBar"],
 header[class*="NavigationBar"] {
-  background: rgb(13 13 22 / 0.72) !important;
+  background: rgb(4 8 20 / 0.92) !important;
   backdrop-filter: blur(18px) saturate(160%);
   -webkit-backdrop-filter: blur(18px) saturate(160%);
-  border-bottom: 1px solid rgb(255 255 255 / 0.08) !important;
+  border-bottom: 1px solid rgb(255 255 255 / 0.06) !important;
   box-shadow: 0 10px 30px rgb(0 0 0 / 0.35) !important;
   position: relative;
 }
@@ -145,14 +150,8 @@ header[class*="NavigationBar"]::after {
   position: absolute;
   left: 0; right: 0; bottom: -1px;
   height: 2px;
-  background: linear-gradient(90deg,
-    transparent,
-    rgb(124 92 252 / 0.0),
-    rgb(124 92 252) 20%,
-    rgb(56 189 248) 50%,
-    rgb(217 70 239) 80%,
-    transparent);
-  opacity: 0.65;
+  background: linear-gradient(90deg, transparent, rgb(122 152 255) 50%, transparent);
+  opacity: 0.7;
   filter: blur(0.4px);
 }
 
@@ -163,31 +162,27 @@ nav[class*="NavigationBar"] a, nav[class*="NavigationBar"] button {
   transition: color 0.18s ease, background-color 0.18s ease, transform 0.18s ease;
 }
 #NavigationBar a:hover,
-nav[class*="NavigationBar"] a:hover { color: rgb(248 248 252) !important; }
+nav[class*="NavigationBar"] a:hover { color: rgb(122 152 255) !important; }
 
 /* ----------------------------------------------------------------------------
-   5. Surfaces / cards / panels (glassmorphism)
+   5. Surfaces / cards / panels (solid plum — Nebula is flat, not glassy)
    ---------------------------------------------------------------------------- */
 .bg-white,
 .bg-neutral-50,
 [class*="bg-white"],
 .bg-neutral-100 {
-  background-color: rgb(28 28 42 / 0.66) !important;
-  backdrop-filter: blur(16px) saturate(150%);
-  -webkit-backdrop-filter: blur(16px) saturate(150%);
-  border: 1px solid rgb(255 255 255 / 0.07) !important;
+  background-color: rgb(37 31 48) !important;
+  border: 1px solid rgb(255 255 255 / 0.05) !important;
   border-radius: var(--joma-radius) !important;
-  box-shadow: var(--joma-shadow), inset 0 1px 0 rgb(255 255 255 / 0.05);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 0.25);
 }
 
 /* Dark navbar/menus (bg-neutral-800/900 are light in our scale) → force dark */
 .bg-neutral-800,
 .bg-neutral-900,
 .bg-neutral-950 {
-  background-color: rgb(16 16 26 / 0.78) !important;
-  backdrop-filter: blur(14px) saturate(150%);
-  -webkit-backdrop-filter: blur(14px) saturate(150%);
-  border: 1px solid rgb(255 255 255 / 0.07) !important;
+  background-color: rgb(4 8 20 / 0.95) !important;
+  border: 1px solid rgb(255 255 255 / 0.05) !important;
 }
 
 /* Borders: make existing border utilities visible on dark */
@@ -214,11 +209,16 @@ nav[class*="NavigationBar"] a:hover { color: rgb(248 248 252) !important; }
 /* ----------------------------------------------------------------------------
    6. Buttons
    ---------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------
+   6. Buttons  (Nebula-style: round pills, plum default, indigo hover)
+   ---------------------------------------------------------------------------- */
 button,
 .btn,
 a[class*="btn"],
 [class*="Button"] {
-  border-radius: var(--joma-radius-sm) !important;
+  border-radius: var(--joma-radius-pill) !important;
+  font-weight: 600 !important;
+  text-transform: capitalize !important;
   transition: transform 0.16s cubic-bezier(0.34, 1.56, 0.64, 1),
               box-shadow 0.18s ease, background-color 0.18s ease, filter 0.18s ease;
 }
@@ -231,7 +231,20 @@ a[class*="btn"]:hover,
 button:not(:disabled):active,
 .btn:active,
 [class*="Button"]:not(:disabled):active {
-  transform: translateY(0) scale(0.985);
+  transform: translateY(0) scale(0.97);
+}
+
+/* Default button surface (plum → indigo on hover) */
+button:not([class*="primary"]):not([class*="secondary"]):not([class*="danger"]):not([class*="ghost"]),
+.btn:not(.btn-primary):not(.btn-secondary):not(.btn-danger) {
+  background-color: rgb(58 67 92) !important;
+  color: rgb(233 234 238) !important;
+  border: 1px solid rgb(255 255 255 / 0.06) !important;
+}
+button:not([class*="primary"]):not([class*="secondary"]):not([class*="danger"]):not([class*="ghost"]):not(:disabled):hover,
+.btn:not(.btn-primary):not(.btn-secondary):not(.btn-danger):hover {
+  background-color: rgb(79 98 149) !important;
+  color: rgb(255 255 255) !important;
 }
 
 /* Primary / accent buttons */
@@ -239,16 +252,18 @@ button[class*="primary"],
 .btn-primary,
 [class*="PrimaryButton"],
 a[class*="btn-primary"] {
-  background-image: linear-gradient(135deg, rgb(124 92 252), rgb(91 63 211)) !important;
-  color: rgb(255 255 255) !important;
-  box-shadow: 0 8px 24px rgb(124 92 252 / 0.35), inset 0 1px 0 rgb(255 255 255 / 0.18) !important;
-  border: 1px solid rgb(165 139 252 / 0.5) !important;
+  background-color: rgb(122 152 255) !important;
+  background-image: linear-gradient(135deg, rgb(122 152 255), rgb(100 134 230)) !important;
+  color: rgb(4 8 20) !important;
+  border: 1px solid rgb(122 152 255 / 0.6) !important;
+  box-shadow: 0 8px 24px rgb(122 152 255 / 0.32), inset 0 1px 0 rgb(255 255 255 / 0.25) !important;
 }
 button[class*="primary"]:not(:disabled):hover,
 .btn-primary:hover,
 [class*="PrimaryButton"]:not(:disabled):hover {
   filter: brightness(1.08);
-  box-shadow: 0 12px 30px rgb(124 92 252 / 0.45) !important;
+  background-color: rgb(100 134 230) !important;
+  box-shadow: 0 12px 30px rgb(122 152 255 / 0.45) !important;
 }
 
 /* Secondary / ghost buttons */
@@ -256,24 +271,26 @@ button[class*="secondary"],
 .btn-secondary,
 [class*="SecondaryButton"],
 button[class*="ghost"] {
-  background-color: rgb(255 255 255 / 0.04) !important;
-  color: rgb(236 236 245) !important;
-  border: 1px solid rgb(255 255 255 / 0.1) !important;
+  background-color: rgb(48 52 67) !important;
+  color: rgb(233 234 238) !important;
+  border: 1px solid rgb(255 255 255 / 0.06) !important;
 }
 button[class*="secondary"]:not(:disabled):hover,
 .btn-secondary:hover,
 [class*="SecondaryButton"]:not(:disabled):hover {
-  background-color: rgb(255 255 255 / 0.08) !important;
-  border-color: rgb(124 92 252 / 0.4) !important;
+  background-color: rgb(79 98 149) !important;
+  border-color: rgb(122 152 255 / 0.4) !important;
+  color: rgb(255 255 255) !important;
 }
 
 /* Danger buttons */
 button[class*="danger"],
 .btn-danger,
 [class*="DangerButton"] {
-  background-image: linear-gradient(135deg, rgb(239 68 68), rgb(220 38 38)) !important;
+  background-color: rgb(188 54 47) !important;
+  background-image: linear-gradient(135deg, rgb(188 54 47), rgb(157 45 39)) !important;
   color: rgb(255 255 255) !important;
-  box-shadow: 0 8px 24px rgb(239 68 68 / 0.3) !important;
+  box-shadow: 0 8px 24px rgb(188 54 47 / 0.3) !important;
 }
 
 /* ----------------------------------------------------------------------------
@@ -291,10 +308,10 @@ select,
 [class*="Input"],
 [class*="Textarea"],
 [class*="Select"] {
-  background-color: rgb(16 16 26 / 0.7) !important;
-  border: 1px solid rgb(255 255 255 / 0.1) !important;
-  border-radius: var(--joma-radius-sm) !important;
-  color: rgb(236 236 245) !important;
+  background-color: rgb(48 52 67) !important;
+  border: 1px solid rgb(255 255 255 / 0.06) !important;
+  border-radius: var(--joma-radius) !important;
+  color: rgb(233 234 238) !important;
   transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
 }
 input:focus,
@@ -304,16 +321,16 @@ select:focus,
 [class*="Textarea"]:focus,
 [class*="Select"]:focus {
   outline: none !important;
-  border-color: rgb(124 92 252 / 0.6) !important;
-  box-shadow: 0 0 0 3px rgb(124 92 252 / 0.22) !important;
-  background-color: rgb(20 20 32 / 0.8) !important;
+  border-color: rgb(122 152 255 / 0.6) !important;
+  box-shadow: 0 0 0 3px rgb(122 152 255 / 0.2) !important;
+  background-color: rgb(48 52 67) !important;
 }
 input::placeholder,
 textarea::placeholder { color: rgb(120 120 138) !important; }
 
 /* Checkboxes / toggles */
 input[type="checkbox"],
-input[type="radio"] { accent-color: rgb(124 92 252); }
+input[type="radio"] { accent-color: rgb(122 152 255); }
 
 /* ----------------------------------------------------------------------------
    8. Tables
@@ -335,31 +352,31 @@ tbody td { border-color: rgb(255 255 255 / 0.06) !important; }
    ---------------------------------------------------------------------------- */
 [class*="status-running"],
 [class*="StatusRunning"],
-[class*="running"] { color: rgb(34 197 94) !important; }
+[class*="running"] { color: rgb(44 221 47) !important; }
 [class*="status-offline"],
 [class*="StatusOffline"],
-[class*="offline"] { color: rgb(239 68 68) !important; }
+[class*="offline"] { color: rgb(120 116 116) !important; }
 [class*="status-starting"],
-[class*="StatusStarting"] { color: rgb(245 158 11) !important; }
+[class*="StatusStarting"] { color: rgb(219 192 37) !important; }
 [class*="status-stopping"],
-[class*="StatusStopping"] { color: rgb(217 119 6) !important; }
+[class*="StatusStopping"] { color: rgb(219 192 37) !important; }
 
 /* ----------------------------------------------------------------------------
    10. Scrollbar, focus, misc
    ---------------------------------------------------------------------------- */
-* { scrollbar-width: thin; scrollbar-color: rgb(124 92 252 / 0.5) transparent; }
+* { scrollbar-width: thin; scrollbar-color: rgb(122 152 255 / 0.5) transparent; }
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(rgb(124 92 252 / 0.55), rgb(56 189 248 / 0.45));
+  background: linear-gradient(rgb(122 152 255 / 0.55), rgb(79 98 149 / 0.45));
   border-radius: 999px;
   border: 2px solid transparent;
   background-clip: padding-box;
 }
-::-webkit-scrollbar-thumb:hover { background: rgb(124 92 252 / 0.8); background-clip: padding-box; }
+::-webkit-scrollbar-thumb:hover { background: rgb(122 152 255 / 0.8); background-clip: padding-box; }
 
 :focus-visible {
-  outline: 2px solid rgb(124 92 252 / 0.7);
+  outline: 2px solid rgb(122 152 255 / 0.7);
   outline-offset: 2px;
 }
 
@@ -367,15 +384,15 @@ code, pre, kbd {
   background: rgb(8 8 14 / 0.6) !important;
   border: 1px solid rgb(255 255 255 / 0.08) !important;
   border-radius: var(--joma-radius-sm) !important;
-  color: rgb(198 179 254) !important;
+  color: rgb(150 173 255) !important;
 }
 
 /* Tooltips / badges */
 [class*="Badge"],
 [class*="badge"] {
-  background: rgb(124 92 252 / 0.16) !important;
-  color: rgb(198 179 254) !important;
-  border: 1px solid rgb(124 92 252 / 0.3) !important;
+  background: rgb(122 152 255 / 0.16) !important;
+  color: rgb(150 173 255) !important;
+  border: 1px solid rgb(122 152 255 / 0.3) !important;
   border-radius: 999px !important;
 }
 
@@ -387,7 +404,7 @@ code, pre, kbd {
   overflow: hidden;
   border-radius: var(--joma-radius);
   border: 1px solid rgb(255 255 255 / 0.08);
-  background: linear-gradient(135deg, rgb(124 92 252 / 0.14), rgb(56 189 248 / 0.06) 60%, transparent);
+  background: linear-gradient(135deg, rgb(122 152 255 / 0.14), rgb(79 98 149 / 0.06) 60%, transparent);
   box-shadow: var(--joma-shadow);
   padding: 1.75rem 1.75rem;
   margin: 0 0 1.5rem;
@@ -397,9 +414,9 @@ code, pre, kbd {
   position: absolute; inset: -40% -10% auto -10%;
   height: 220%;
   background:
-    radial-gradient(40% 60% at 20% 30%, rgb(124 92 252 / 0.55), transparent 70%),
-    radial-gradient(40% 60% at 80% 20%, rgb(56 189 248 / 0.45), transparent 70%),
-    radial-gradient(50% 60% at 60% 90%, rgb(217 70 239 / 0.35), transparent 70%);
+    radial-gradient(40% 60% at 20% 30%, rgb(122 152 255 / 0.55), transparent 70%),
+    radial-gradient(40% 60% at 80% 20%, rgb(79 98 149 / 0.45), transparent 70%),
+    radial-gradient(50% 60% at 60% 90%, rgb(100 134 230 / 0.35), transparent 70%);
   filter: blur(48px);
   opacity: 0.55;
   z-index: -2;
@@ -421,7 +438,7 @@ code, pre, kbd {
   margin: 0 0 0.6rem;
   font-size: 0.72rem; font-weight: 600;
   letter-spacing: 0.12em; text-transform: uppercase;
-  color: rgb(165 139 252);
+  color: rgb(122 152 255);
 }
 .jomatheme-welcome__dot {
   width: 8px; height: 8px; border-radius: 999px;
@@ -434,11 +451,11 @@ code, pre, kbd {
   font-weight: 800;
   margin: 0 0 0.5rem;
   line-height: 1.15;
-  background: linear-gradient(120deg, #fff 10%, rgb(198 179 254) 55%, rgb(56 189 248));
+  background: linear-gradient(120deg, #fff 10%, rgb(150 173 255) 55%, rgb(79 98 149));
   -webkit-background-clip: text; background-clip: text;
   color: transparent;
 }
-.jomatheme-welcome__name { color: rgb(124 92 252); -webkit-text-fill-color: rgb(165 139 252); }
+.jomatheme-welcome__name { color: rgb(122 152 255); -webkit-text-fill-color: rgb(122 152 255); }
 .jomatheme-welcome__wave { display: inline-block; animation: joma-wave 2.6s ease-in-out infinite; transform-origin: 70% 70%; }
 .jomatheme-welcome__sub {
   margin: 0 0 1rem; max-width: 46rem;
@@ -450,9 +467,9 @@ code, pre, kbd {
   font-size: 0.72rem; font-weight: 600;
   padding: 0.3rem 0.7rem;
   border-radius: 999px;
-  color: rgb(198 179 254);
-  background: rgb(124 92 252 / 0.12);
-  border: 1px solid rgb(124 92 252 / 0.28);
+  color: rgb(150 173 255);
+  background: rgb(122 152 255 / 0.12);
+  border: 1px solid rgb(122 152 255 / 0.28);
 }
 
 /* ----------------------------------------------------------------------------
@@ -482,12 +499,12 @@ code, pre, kbd {
 .jomatheme-toast.is-leaving { animation: joma-toast-out 0.35s ease forwards; }
 .jomatheme-toast::before {
   content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
-  background: rgb(124 92 252);
+  background: rgb(122 152 255);
 }
 .jomatheme-toast[data-type="success"]::before { background: rgb(34 197 94); }
 .jomatheme-toast[data-type="warning"]::before { background: rgb(245 158 11); }
 .jomatheme-toast[data-type="error"]::before   { background: rgb(239 68 68); }
-.jomatheme-toast[data-type="info"]::before    { background: rgb(56 189 248); }
+.jomatheme-toast[data-type="info"]::before    { background: rgb(79 98 149); }
 .jomatheme-toast__icon { font-size: 1rem; line-height: 1.4; }
 .jomatheme-toast__body { flex: 1; min-width: 0; font-size: 0.9rem; line-height: 1.4; }
 .jomatheme-toast__title { font-weight: 700; margin-bottom: 0.1rem; }
@@ -521,7 +538,7 @@ code, pre, kbd {
 .jomatheme-spinner {
   width: 1.1em; height: 1.1em; border-radius: 999px;
   border: 2px solid rgb(255 255 255 / 0.18);
-  border-top-color: rgb(124 92 252);
+  border-top-color: rgb(122 152 255);
   animation: joma-spin 0.8s linear infinite;
   display: inline-block; vertical-align: -0.15em;
 }
@@ -548,7 +565,7 @@ code, pre, kbd {
   --joma-blur-lg:       28px;
   --joma-transition-fast:   120ms;
   --joma-transition-normal: 200ms;
-  --joma-primary-soft: 124 92 252;
+  --joma-primary-soft: 122 152 255;
 }
 
 /* structural canvas — dark on every page, full viewport */

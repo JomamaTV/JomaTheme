@@ -44,7 +44,7 @@ export default function JomaWelcome(): JSX.Element {
         </p>
         <h2 className="jomatheme-welcome__title">
           Willkommen zurück{name ? <>, <span className="jomatheme-welcome__name">{name}</span></> : null}
-          <span className="jomatheme-welcome__wave" aria-hidden="true"> 👋</span>
+          <span className="jomatheme-welcome__wave" aria-hidden="true"> <i className="bi bi-stars"></i></span>
         </h2>
         <p className="jomatheme-welcome__sub">
           Deine Server sind bereit — CPU, RAM und Speicher live im Blick, Aktionen einen Klick entfernt.

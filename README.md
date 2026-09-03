@@ -2,7 +2,7 @@
 
 > A modern, dark, **SaaS-style** Blueprint extension theme for **Pterodactyl 1.15.1** running **Blueprint beta-2026-08**. Glassmorphism, animated aurora backgrounds, layout slide transitions, toast notifications, skeleton loaders and a slick live welcome banner — without touching a single Pterodactyl core file.
 
-![status](https://img.shields.io/badge/status-active-22c55e) ![version](https://img.shields.io/badge/version-1.1.0-7c5cfc) ![target](https://img.shields.io/badge/blueprint-beta--2026--08-7c5cfc) ![pterodactyl](https://img.shields.io/badge/pterodactyl-1.15.1-38bdf8)
+![status](https://img.shields.io/badge/status-active-22c55e) ![version](https://img.shields.io/badge/version-2.0.0-7a98ff) ![target](https://img.shields.io/badge/blueprint-beta--2026--08-7a98ff) ![pterodactyl](https://img.shields.io/badge/pterodactyl-1.15.1-38bdf8)
 
 ---
 

@@ -6,6 +6,19 @@
    Heavy keyframes live here so they can never break the React CSS bundle.
    ============================================================================ */
 
+/* ---- web fonts: Inter (UI) + Bootstrap Icons (Nebula-style iconography) ---- */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css");
+
+/* ---- magic-pattern background overlay (original, Nebula-inspired) ---- */
+body::before {
+  content: "";
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background-image: radial-gradient(rgb(122 152 255 / 0.05) 1px, transparent 1px);
+  background-size: 26px 26px;
+  opacity: 0.55;
+}
+
 /* ---- keyframes referenced by dashboard.css ---- */
 @keyframes joma-aurora-drift {
   0%   { transform: translate3d(-4%, -2%, 0) scale(1.05); }
@@ -74,8 +87,8 @@
 }
 .bg-white:hover,
 [class*="bg-white"]:hover {
-  border-color: rgb(124 92 252 / 0.28) !important;
-  box-shadow: 0 14px 38px rgb(0 0 0 / 0.5), 0 0 0 1px rgb(124 92 252 / 0.18) !important;
+  border-color: rgb(122 152 255 / 0.28) !important;
+  box-shadow: 0 14px 38px rgb(0 0 0 / 0.5), 0 0 0 1px rgb(122 152 255 / 0.18) !important;
 }
 
 /* ---- primary button shine sweep on hover ---- */
@@ -103,30 +116,30 @@ button[class*="primary"]:not(:disabled):hover::after,
 
 /* ---- top loading bar ---- */
 #jomatheme-progress {
-  position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 99998;
+  position: fixed; bottom: 0; left: 0; right: 0; height: 2px; z-index: 99998;
   pointer-events: none; opacity: 0;
   transition: opacity 0.3s ease;
 }
 #jomatheme-progress.is-loading { opacity: 1; }
 #jomatheme-progress__bar {
   height: 100%; width: 100%; transform-origin: left center; transform: translateX(-100%);
-  background: linear-gradient(90deg, rgb(124 92 252), rgb(56 189 248), rgb(217 70 239), rgb(124 92 252));
-  background-size: 200% 100%;
-  animation: joma-gradient-shift 1.6s linear infinite;
-  box-shadow: 0 0 12px rgb(124 92 252 / 0.7);
+  background: rgb(122 152 255);
+  box-shadow: 0 0 10px rgb(122 152 255 / 0.8);
   transition: transform 0.25s ease;
 }
 #jomatheme-progress.is-loading #jomatheme-progress__bar { transform: translateX(-30%); }
 #jomatheme-progress.is-done #jomatheme-progress__bar { transform: translateX(0%); }
 
-/* ---- staggered rise utility ---- */
-.jomatheme-rise { animation: joma-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
-.jomatheme-rise:nth-child(1) { animation-delay: 0.04s; }
-.jomatheme-rise:nth-child(2) { animation-delay: 0.10s; }
-.jomatheme-rise:nth-child(3) { animation-delay: 0.16s; }
-.jomatheme-rise:nth-child(4) { animation-delay: 0.22s; }
-.jomatheme-rise:nth-child(5) { animation-delay: 0.28s; }
-.jomatheme-rise:nth-child(6) { animation-delay: 0.34s; }
+/* ---- staggered rise utility (Nebula-style 30ms steps) ---- */
+.jomatheme-rise { animation: joma-rise 0.3s cubic-bezier(0.22, 1, 0.36, 1) both; opacity: 0; }
+.jomatheme-rise:nth-child(1) { animation-delay: 0ms; }
+.jomatheme-rise:nth-child(2) { animation-delay: 30ms; }
+.jomatheme-rise:nth-child(3) { animation-delay: 60ms; }
+.jomatheme-rise:nth-child(4) { animation-delay: 90ms; }
+.jomatheme-rise:nth-child(5) { animation-delay: 120ms; }
+.jomatheme-rise:nth-child(6) { animation-delay: 150ms; }
+.jomatheme-rise:nth-child(7) { animation-delay: 180ms; }
+.jomatheme-rise:nth-child(8) { animation-delay: 210ms; }
 
 /* ---- console tweaks (safe, selector-tolerant) ---- */
 [class*="terminal"],
@@ -180,14 +193,14 @@ button[class*="primary"]:not(:disabled):hover,
 [class*="PrimaryButton"]:not(:disabled):hover {
   background-position: 100% 0% !important;
   filter: brightness(1.07);
-  box-shadow: 0 16px 36px rgb(124 92 252 / 0.5), 0 0 0 1px rgb(165 139 252 / 0.45),
+  box-shadow: 0 16px 36px rgb(122 152 255 / 0.5), 0 0 0 1px rgb(122 152 255 / 0.45),
               inset 0 1px 0 rgb(255 255 255 / 0.25) !important;
 }
 button[class*="primary"]:not(:disabled):active,
 .btn-primary:active,
 [class*="PrimaryButton"]:not(:disabled):active {
   transform: translateY(0) scale(0.96);
-  box-shadow: 0 4px 14px rgb(124 92 252 / 0.4) !important;
+  box-shadow: 0 4px 14px rgb(122 152 255 / 0.4) !important;
 }
 
 /* ---- secondary / ghost / danger press ---- */
@@ -220,8 +233,8 @@ button:not(:disabled):hover svg,
 }
 [class*="ServerCard"]:hover, [class*="server-card"]:hover, [class*="ServerRow"]:hover {
   transform: translateY(-3px) !important;
-  border-color: rgb(124 92 252 / 0.28) !important;
-  box-shadow: 0 22px 46px rgb(0 0 0 / 0.5), 0 0 0 1px rgb(124 92 252 / 0.22) !important;
+  border-color: rgb(122 152 255 / 0.28) !important;
+  box-shadow: 0 22px 46px rgb(0 0 0 / 0.5), 0 0 0 1px rgb(122 152 255 / 0.22) !important;
 }
 
 /* ---- gradient-border utility ---- */
@@ -229,7 +242,7 @@ button:not(:disabled):hover svg,
 .jomatheme-grad-border::before {
   content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
   padding: 1px; margin: -1px; pointer-events: none;
-  background: linear-gradient(135deg, rgb(124 92 252), rgb(56 189 248), rgb(217 70 239));
+  background: linear-gradient(135deg, rgb(122 152 255), rgb(79 98 149), rgb(100 134 230));
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor; mask-composite: exclude;
 }
@@ -244,7 +257,7 @@ button:not(:disabled):hover svg,
 .jomatheme-progress { height: 6px; border-radius: 999px; background: rgb(255 255 255 / 0.08); overflow: hidden; }
 .jomatheme-progress__bar {
   height: 100%; border-radius: 999px; transition: width 0.4s ease;
-  background: linear-gradient(90deg, rgb(124 92 252), rgb(56 189 248));
+  background: linear-gradient(90deg, rgb(122 152 255), rgb(79 98 149));
   background-size: 200% 100%; animation: joma-gradient-shift 2.4s linear infinite;
 }
 
@@ -275,7 +288,7 @@ button:not(:disabled):hover svg,
   background: rgb(18 18 28 / 0.86);
   backdrop-filter: blur(var(--joma-blur-lg)) saturate(160%); -webkit-backdrop-filter: blur(var(--joma-blur-lg)) saturate(160%);
   border: 1px solid rgb(255 255 255 / 0.1); border-radius: var(--joma-radius-modal);
-  box-shadow: 0 30px 80px rgb(0 0 0 / 0.6), 0 0 0 1px rgb(124 92 252 / 0.12), inset 0 1px 0 rgb(255 255 255 / 0.06);
+  box-shadow: 0 30px 80px rgb(0 0 0 / 0.6), 0 0 0 1px rgb(122 152 255 / 0.12), inset 0 1px 0 rgb(255 255 255 / 0.06);
   overflow: hidden; animation: joma-cmdk-in 0.32s cubic-bezier(0.34,1.56,0.64,1) both;
 }
 .jomatheme-cmdk__head {
@@ -300,8 +313,8 @@ button:not(:disabled):hover svg,
   transition: background var(--joma-transition-fast) ease, border-color var(--joma-transition-fast) ease, transform var(--joma-transition-fast) ease, color var(--joma-transition-fast) ease;
 }
 .jomatheme-cmdk__item.is-active {
-  background: linear-gradient(135deg, rgb(124 92 252 / 0.22), rgb(56 189 248 / 0.1));
-  border-color: rgb(124 92 252 / 0.35); color: rgb(248 248 252); transform: translateX(2px);
+  background: linear-gradient(135deg, rgb(122 152 255 / 0.22), rgb(79 98 149 / 0.1));
+  border-color: rgb(122 152 255 / 0.35); color: rgb(248 248 252); transform: translateX(2px);
 }
 .jomatheme-cmdk__item-icon { width: 1.2rem; text-align: center; }
 .jomatheme-cmdk__item-label { flex: 1; }
@@ -320,8 +333,8 @@ button:not(:disabled):hover svg,
   box-shadow: 0 8px 24px rgb(0 0 0 / 0.35);
   transition: border-color var(--joma-transition-normal) ease, transform var(--joma-transition-normal) ease, color var(--joma-transition-normal) ease;
 }
-#jomatheme-cmdk-hint:hover { border-color: rgb(124 92 252 / 0.5); color: rgb(248 248 252); transform: translateY(-1px); }
-#jomatheme-cmdk-hint kbd { font-size: .66rem; border: 1px solid rgb(255 255 255 / 0.14); border-radius: 5px; padding: .05rem .3rem; background: rgb(255 255 255 / 0.06); color: rgb(165 139 252); }
+#jomatheme-cmdk-hint:hover { border-color: rgb(122 152 255 / 0.5); color: rgb(248 248 252); transform: translateY(-1px); }
+#jomatheme-cmdk-hint kbd { font-size: .66rem; border: 1px solid rgb(255 255 255 / 0.14); border-radius: 5px; padding: .05rem .3rem; background: rgb(255 255 255 / 0.06); color: rgb(122 152 255); }
 @media (max-width: 640px) { #jomatheme-cmdk-hint { display: none; } }
 </style>
 
@@ -709,12 +722,12 @@ button:not(:disabled):hover svg,
     function go(p) { try { window.location.href = p; } catch (e) {} }
 
     var cmds = [
-      { group: "Navigate", icon: "🏠", label: "Dashboard", hint: "/", run: function () { go("/"); } },
-      { group: "Account",  icon: "👤", label: "Account Settings", hint: "/account", run: function () { go("/account"); } },
-      { group: "Account",  icon: "🔑", label: "API Credentials", hint: "/account/api", run: function () { go("/account/api"); } },
-      { group: "Account",  icon: "🧩", label: "SSH Keys", hint: "/account/ssh", run: function () { go("/account/ssh"); } },
-      { group: "Actions",   icon: "✨", label: "Create Server", hint: "new", run: function () { go("/"); } },
-      { group: "Actions",   icon: "🔄", label: "Reload page", hint: "refresh", run: function () { window.location.reload(); } }
+      { group: "Navigate", icon: "bi-house", label: "Dashboard", hint: "/", run: function () { go("/"); } },
+      { group: "Account",  icon: "bi-person", label: "Account Settings", hint: "/account", run: function () { go("/account"); } },
+      { group: "Account",  icon: "bi-key", label: "API Credentials", hint: "/account/api", run: function () { go("/account/api"); } },
+      { group: "Account",  icon: "bi-terminal", label: "SSH Keys", hint: "/account/ssh", run: function () { go("/account/ssh"); } },
+      { group: "Actions",   icon: "bi-plus-circle", label: "Create Server", hint: "new", run: function () { go("/"); } },
+      { group: "Actions",   icon: "bi-arrow-clockwise", label: "Reload page", hint: "refresh", run: function () { window.location.reload(); } }
     ];
 
     /* server-aware: if we're on /server/<id>, offer that server's tabs first */
@@ -729,8 +742,8 @@ button:not(:disabled):hover svg,
       var serverCmds = tabs.map(function (t) {
         var path = "/server/" + id + t[1];
         var ic = ({
-          "Console": "🖥️", "Files": "📁", "Backups": "💾", "Schedules": "⏰",
-          "Users": "👥", "Network": "🌐", "Startup": "🚀", "Settings": "⚙️"
+          "Console": "bi-terminal", "Files": "bi-folder", "Backups": "bi-archive", "Schedules": "bi-clock",
+          "Users": "bi-people", "Network": "bi-globe", "Startup": "bi-rocket-takeoff", "Settings": "bi-gear"
         })[t[0]];
         return { group: "Server", icon: ic, label: t[0], hint: path, run: function () { go(path); } };
       });
@@ -745,12 +758,12 @@ button:not(:disabled):hover svg,
     } catch (e) {}
     if (isAdmin) {
       var admin = [
-        ["Admin Dashboard", "/admin", "⚙️"], ["Admin Users", "/admin/users", "👤"],
-        ["Admin Servers", "/admin/servers", "🖥️"], ["Admin Nodes", "/admin/nodes", "🌐"],
-        ["Admin Locations", "/admin/locations", "📍"], ["Admin Nests", "/admin/nests", "🪆"],
-        ["Admin Eggs", "/admin/eggs", "🥚"], ["Admin Databases", "/admin/databases", "🗄️"],
-        ["Admin Mounts", "/admin/mounts", "📦"], ["Blueprint Extensions", "/admin/extensions", "🧩"],
-        ["JomaTheme Settings", "/admin/extensions/jomatheme", "🎨"]
+        ["Admin Dashboard", "/admin", "bi-speedometer2"], ["Admin Users", "/admin/users", "bi-people"],
+        ["Admin Servers", "/admin/servers", "bi-server"], ["Admin Nodes", "/admin/nodes", "bi-hdd-network"],
+        ["Admin Locations", "/admin/locations", "bi-geo-alt"], ["Admin Nests", "/admin/nests", "bi-collection"],
+        ["Admin Eggs", "/admin/eggs", "bi-egg"], ["Admin Databases", "/admin/databases", "bi-database"],
+        ["Admin Mounts", "/admin/mounts", "bi-box"], ["Blueprint Extensions", "/admin/extensions", "bi-puzzle"],
+        ["JomaTheme Settings", "/admin/extensions/jomatheme", "bi-palette"]
       ];
       admin.forEach(function (a) {
         cmds.push({ group: "Admin", icon: a[2], label: a[0], hint: a[1], run: function () { go(a[1]); } });
@@ -764,7 +777,7 @@ button:not(:disabled):hover svg,
       '<div class="jomatheme-cmdk__backdrop" data-cmdk-close></div>' +
       '<div class="jomatheme-cmdk__panel" role="dialog" aria-modal="true" aria-label="JomaMC command palette">' +
         '<div class="jomatheme-cmdk__head">' +
-          '<span class="jomatheme-cmdk__icon" aria-hidden="true">⌕</span>' +
+          '<span class="jomatheme-cmdk__icon" aria-hidden="true"><i class="bi bi-search"></i></span>' +
           '<input class="jomatheme-cmdk__input" id="jomatheme-cmdk-input" placeholder="Search or run a command..." autocomplete="off" spellcheck="false">' +
           '<span class="jomatheme-cmdk__kbd">ESC</span>' +
         '</div>' +
@@ -801,7 +814,7 @@ button:not(:disabled):hover svg,
         groups[g].forEach(function (c) {
           var idx = filtered.indexOf(c);
           html += '<div class="jomatheme-cmdk__item' + (idx === active ? " is-active" : "") + '" data-idx="' + idx + '" role="option">' +
-            '<span class="jomatheme-cmdk__item-icon">' + c.icon + '</span>' +
+            '<span class="jomatheme-cmdk__item-icon"><i class="bi ' + c.icon + '"></i></span>' +
             '<span class="jomatheme-cmdk__item-label">' + c.label + '</span>' +
             '<span class="jomatheme-cmdk__item-hint">' + c.hint + '</span>' +
           '</div>';
