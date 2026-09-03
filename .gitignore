@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+*.blueprint
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Laravel / vendor
+vendor/
+
+# Editor / OS
+.idea/
+.vscode/
+*.log
+.DS_Store
+Thumbs.db
+
+# Blueprint dev artifacts
+.blueprint/

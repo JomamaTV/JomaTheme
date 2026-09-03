@@ -1,0 +1,38 @@
+### Blueprint Extension configuration — JomaTheme
+### Target: Blueprint beta-2026-08  |  Pterodactyl 1.15.1
+### Docs: https://blueprint.zip/docs/configs/confyml
+
+info:
+  name: 'JomaTheme'
+  identifier: 'jomatheme'
+  description: 'Modern dark SaaS-style theme for JomaMC — glassmorphism, animated aurora background, layout slide transitions, skeleton loaders, toast notifications and a slick server dashboard.'
+  flags: ''
+  version: '1.0.0'
+  target: 'beta-2026-08'
+  author: 'JomaMC'
+  icon: ''
+  website: 'https://jomamc.de'
+
+admin:
+  view: 'view.blade.php'
+  controller: ''
+  css: 'admin.css'
+  wrapper: ''
+
+dashboard:
+  css: 'dashboard.css'
+  wrapper: 'wrapper.blade.php'
+  components: 'components'
+
+data:
+  directory: ''
+  public: ''
+  console: ''
+
+requests:
+  views: ''
+  app: ''
+  routers: ''
+
+database:
+  migrations: ''

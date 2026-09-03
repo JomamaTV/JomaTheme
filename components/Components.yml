@@ -1,0 +1,9 @@
+### Blueprint dashboard component injection — JomaTheme
+### Docs: https://blueprint.zip/docs/configs/componentsyml
+###
+### Component paths are relative to this directory and MUST NOT include
+### the .tsx extension (e.g. "elements/JomaWelcome", not "elements/JomaWelcome.tsx").
+
+Dashboard:
+  Serverlist:
+    BeforeContent: "elements/JomaWelcome"

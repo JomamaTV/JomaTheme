@@ -1,0 +1,101 @@
+/* ============================================================================
+   JomaTheme — admin panel theme
+   Applied via the Blueprint `admin.css` field (injected into the admin layout).
+   Mirrors the dashboard's dark JomaMC aesthetic so the admin area feels like
+   the same product.
+   ============================================================================ */
+
+:root {
+  --blueprint-primary-500: 124 92 252;
+  --blueprint-primary-600: 109 76 247;
+  --blueprint-primary-700: 91 63 211;
+  --blueprint-neutral-50:  20 20 32;
+  --blueprint-neutral-100: 26 26 40;
+  --blueprint-neutral-200: 40 40 58;
+  --blueprint-neutral-700: 190 190 206;
+  --blueprint-neutral-900: 235 235 245;
+  --blueprint-white: 28 28 42;
+  --blueprint-black: 5 5 9;
+}
+
+html { color-scheme: dark; }
+
+body {
+  background-color: rgb(9 9 16) !important;
+  background-image:
+    radial-gradient(50rem 50rem at 8% -10%, rgb(124 92 252 / 0.16), transparent 60%),
+    radial-gradient(45rem 45rem at 110% 5%, rgb(56 189 248 / 0.12), transparent 55%);
+  background-attachment: fixed;
+  color: rgb(236 236 245) !important;
+}
+
+/* Surfaces --------------------------------------------------------------- */
+.bg-white,
+[class*="bg-white"] {
+  background-color: rgb(28 28 42 / 0.66) !important;
+  backdrop-filter: blur(14px) saturate(150%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  border: 1px solid rgb(255 255 255 / 0.07) !important;
+  box-shadow: 0 8px 28px rgb(0 0 0 / 0.4) !important;
+}
+.bg-neutral-100,
+.bg-neutral-50 { background-color: rgb(22 22 34 / 0.6) !important; }
+.bg-neutral-800,
+.bg-neutral-900 { background-color: rgb(16 16 26 / 0.8) !important; }
+
+/* Text normalization ---------------------------------------------------- */
+.text-white, .text-neutral-50, .text-neutral-100 { color: rgb(248 248 252) !important; }
+.text-neutral-300, .text-neutral-400 { color: rgb(210 210 224) !important; }
+.text-neutral-500, .text-neutral-600 { color: rgb(150 150 170) !important; }
+.text-neutral-700, .text-neutral-800, .text-neutral-900, .text-neutral-950 { color: rgb(236 236 245) !important; }
+h1, h2, h3, h4, h5, h6 { color: rgb(248 248 252) !important; }
+
+/* Borders --------------------------------------------------------------- */
+.border, [class*="border-neutral"], [class*="border-white"] { border-color: rgb(255 255 255 / 0.08) !important; }
+
+/* Sidebar / nav --------------------------------------------------------- */
+nav, aside, [class*="sidebar"], [class*="Sidebar"] {
+  background: rgb(13 13 22 / 0.7) !important;
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  border-color: rgb(255 255 255 / 0.07) !important;
+}
+nav a, aside a { color: rgb(200 200 214) !important; transition: color 0.16s ease, background-color 0.16s ease; }
+nav a:hover, aside a:hover { color: rgb(248 248 252) !important; background: rgb(124 92 252 / 0.12) !important; }
+
+/* Buttons --------------------------------------------------------------- */
+.btn-primary,
+button[class*="primary"] {
+  background-image: linear-gradient(135deg, rgb(124 92 252), rgb(91 63 211)) !important;
+  color: rgb(255 255 255) !important;
+  border: 1px solid rgb(165 139 252 / 0.5) !important;
+  box-shadow: 0 8px 22px rgb(124 92 252 / 0.32) !important;
+}
+
+/* Forms ----------------------------------------------------------------- */
+input, textarea, select {
+  background-color: rgb(16 16 26 / 0.7) !important;
+  border: 1px solid rgb(255 255 255 / 0.1) !important;
+  color: rgb(236 236 245) !important;
+}
+input:focus, textarea:focus, select:focus {
+  border-color: rgb(124 92 252 / 0.6) !important;
+  box-shadow: 0 0 0 3px rgb(124 92 252 / 0.22) !important;
+  outline: none !important;
+}
+
+/* Tables ---------------------------------------------------------------- */
+thead th { color: rgb(150 150 170) !important; border-bottom: 1px solid rgb(255 255 255 / 0.1) !important; }
+tbody tr:hover { background-color: rgb(255 255 255 / 0.04) !important; }
+tbody td { border-color: rgb(255 255 255 / 0.06) !important; }
+
+/* Rounded corners ------------------------------------------------------- */
+.rounded-md, .rounded-lg, .rounded-xl, .rounded-2xl { border-radius: 16px !important; }
+
+/* Scrollbar ------------------------------------------------------------- */
+* { scrollbar-width: thin; scrollbar-color: rgb(124 92 252 / 0.5) transparent; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: rgb(124 92 252 / 0.5); border-radius: 999px; }
+
+::selection { background: rgb(124 92 252 / 0.35); color: #fff; }
+:focus-visible { outline: 2px solid rgb(124 92 252 / 0.7); outline-offset: 2px; }
