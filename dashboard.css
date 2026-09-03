@@ -534,7 +534,64 @@ code, pre, kbd {
 }
 
 /* ----------------------------------------------------------------------------
-   15. Reduced-motion safety
+   15. v1.1 — full-screen coverage & expanded design tokens
+   No gray/white Pterodactyl default surfaces may leak through anywhere.
+   ---------------------------------------------------------------------------- */
+:root {
+  --joma-radius-sm:     10px;
+  --joma-radius-md:     14px;
+  --joma-radius-lg:     18px;
+  --joma-radius-xl:     22px;
+  --joma-radius-modal:  24px;
+  --joma-blur-sm:       10px;
+  --joma-blur-md:       18px;
+  --joma-blur-lg:       28px;
+  --joma-transition-fast:   120ms;
+  --joma-transition-normal: 200ms;
+  --joma-primary-soft: 124 92 252;
+}
+
+/* structural canvas — dark on every page, full viewport */
+html, body, #app, #root, [id$="app"], main, [role="main"], .main, .content,
+footer, .footer, [class*="Footer"] {
+  background-color: rgb(var(--joma-bg)) !important;
+}
+html, body { min-height: 100%; }
+
+/* every other Tailwind gray family Pterodactyl might use → dark glass */
+.bg-gray-50, .bg-gray-100, .bg-gray-200, .bg-gray-300,
+.bg-slate-50, .bg-slate-100, .bg-slate-200, .bg-slate-300,
+.bg-zinc-50, .bg-zinc-100, .bg-zinc-200, .bg-zinc-300,
+.bg-stone-50, .bg-stone-100, .bg-stone-200, .bg-stone-300 {
+  background-color: rgb(28 28 42 / 0.66) !important;
+  backdrop-filter: blur(var(--joma-blur-md)) saturate(150%);
+  -webkit-backdrop-filter: blur(var(--joma-blur-md)) saturate(150%);
+  border: 1px solid rgb(255 255 255 / 0.07) !important;
+}
+.bg-gray-400, .bg-gray-500, .bg-gray-600,
+.bg-slate-400, .bg-slate-500, .bg-slate-600,
+.bg-zinc-400, .bg-zinc-500, .bg-zinc-600,
+.bg-stone-400, .bg-stone-500, .bg-stone-600 {
+  background-color: rgb(40 40 58 / 0.72) !important;
+}
+.bg-gray-700, .bg-gray-800, .bg-gray-900, .bg-gray-950,
+.bg-slate-700, .bg-slate-800, .bg-slate-900, .bg-slate-950,
+.bg-zinc-700, .bg-zinc-800, .bg-zinc-900,
+.bg-stone-700, .bg-stone-800, .bg-stone-900 {
+  background-color: rgb(16 16 26 / 0.82) !important;
+  backdrop-filter: blur(var(--joma-blur-sm)) saturate(150%);
+  -webkit-backdrop-filter: blur(var(--joma-blur-sm)) saturate(150%);
+}
+
+/* footer — seamless, no default band */
+footer, .footer, [class*="Footer"] {
+  border-top: 1px solid rgb(255 255 255 / 0.06) !important;
+  color: rgb(150 150 170) !important;
+  background: transparent !important;
+}
+
+/* ----------------------------------------------------------------------------
+   16. Reduced-motion safety
    ---------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -544,4 +601,6 @@ code, pre, kbd {
     scroll-behavior: auto !important;
   }
   .jomatheme-welcome__aurora { animation: none; }
+  .jomatheme-ripple { animation: none !important; opacity: 0 !important; }
+  .jomatheme-cmdk__panel, .jomatheme-cmdk__backdrop { animation: none !important; }
 }

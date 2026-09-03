@@ -120,8 +120,8 @@
   <div class="ja-grid">
     <div class="ja-stat">
       <p class="ja-stat__label">Version</p>
-      <p class="ja-stat__value">1.0.0</p>
-      <p class="ja-stat__hint">Initial release</p>
+      <p class="ja-stat__value">1.1.0</p>
+      <p class="ja-stat__hint">Premium button system · command palette</p>
     </div>
     <div class="ja-stat">
       <p class="ja-stat__label">Blueprint Target</p>

@@ -136,6 +136,193 @@ button[class*="primary"]:not(:disabled):hover::after,
   border: 1px solid rgb(255 255 255 / 0.08) !important;
   box-shadow: inset 0 0 40px rgb(0 0 0 / 0.6) !important;
 }
+
+/* ============================================================================
+   JomaTheme v1.1 — premium button system · ripple · command palette
+   ============================================================================ */
+:root {
+  --joma-radius-sm: 10px; --joma-radius-md: 14px; --joma-radius-lg: 18px;
+  --joma-radius-xl: 22px; --joma-radius-modal: 24px;
+  --joma-blur-sm: 10px; --joma-blur-md: 18px; --joma-blur-lg: 28px;
+  --joma-transition-fast: 120ms; --joma-transition-normal: 200ms;
+}
+
+/* ---- button foundation (enables ripple + shine, keeps box-shadow) ---- */
+button, .btn, [class*="Button"], a[class*="btn"], [role="button"] {
+  position: relative;
+  overflow: hidden;
+}
+
+/* ---- click ripple (spawned by JS at the cursor) ---- */
+.jomatheme-ripple {
+  position: absolute; border-radius: 50%; pointer-events: none;
+  transform: scale(0); opacity: 0.9; z-index: 0;
+  background: radial-gradient(circle, rgb(255 255 255 / 0.55), transparent 72%);
+  animation: joma-ripple 0.62s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+button[class*="primary"] .jomatheme-ripple,
+.btn-primary .jomatheme-ripple,
+[class*="PrimaryButton"] .jomatheme-ripple {
+  background: radial-gradient(circle, rgb(255 255 255 / 0.75), transparent 72%);
+}
+@keyframes joma-ripple { to { transform: scale(2.8); opacity: 0; } }
+
+/* ---- premium primary: animated gradient + glow on hover, 3D press on click ---- */
+button[class*="primary"], .btn-primary, [class*="PrimaryButton"] {
+  background-size: 200% 200% !important;
+  transition: transform var(--joma-transition-normal) cubic-bezier(0.34,1.56,0.64,1),
+              box-shadow var(--joma-transition-normal) ease,
+              filter var(--joma-transition-normal) ease,
+              background-position 0.6s ease !important;
+}
+button[class*="primary"]:not(:disabled):hover,
+.btn-primary:hover,
+[class*="PrimaryButton"]:not(:disabled):hover {
+  background-position: 100% 0% !important;
+  filter: brightness(1.07);
+  box-shadow: 0 16px 36px rgb(124 92 252 / 0.5), 0 0 0 1px rgb(165 139 252 / 0.45),
+              inset 0 1px 0 rgb(255 255 255 / 0.25) !important;
+}
+button[class*="primary"]:not(:disabled):active,
+.btn-primary:active,
+[class*="PrimaryButton"]:not(:disabled):active {
+  transform: translateY(0) scale(0.96);
+  box-shadow: 0 4px 14px rgb(124 92 252 / 0.4) !important;
+}
+
+/* ---- secondary / ghost / danger press ---- */
+button[class*="secondary"]:not(:disabled):active,
+.btn-secondary:active,
+[class*="SecondaryButton"]:not(:disabled):active,
+button[class*="ghost"]:not(:disabled):active,
+button[class*="danger"]:not(:disabled):active,
+.btn-danger:active,
+[class*="DangerButton"]:not(:disabled):active {
+  transform: translateY(0) scale(0.96);
+}
+
+/* ---- icon nudge inside buttons on hover ---- */
+button:not(:disabled):hover svg,
+.btn:hover svg,
+[class*="Button"]:not(:disabled):hover svg {
+  transform: translateX(2px);
+  transition: transform var(--joma-transition-normal) ease;
+}
+
+/* ---- card micro-interactions (scoped to safe selectors) ---- */
+.jomatheme-welcome { transition: transform var(--joma-transition-normal) ease, box-shadow var(--joma-transition-normal) ease; }
+.jomatheme-welcome:hover { transform: translateY(-2px); }
+
+[class*="ServerCard"], [class*="server-card"], [class*="ServerRow"] {
+  transition: transform var(--joma-transition-normal) cubic-bezier(0.34,1.56,0.64,1),
+              box-shadow var(--joma-transition-normal) ease,
+              border-color var(--joma-transition-normal) ease !important;
+}
+[class*="ServerCard"]:hover, [class*="server-card"]:hover, [class*="ServerRow"]:hover {
+  transform: translateY(-3px) !important;
+  border-color: rgb(124 92 252 / 0.28) !important;
+  box-shadow: 0 22px 46px rgb(0 0 0 / 0.5), 0 0 0 1px rgb(124 92 252 / 0.22) !important;
+}
+
+/* ---- gradient-border utility ---- */
+.jomatheme-grad-border { position: relative; border: 1px solid transparent !important; background-clip: padding-box; }
+.jomatheme-grad-border::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
+  padding: 1px; margin: -1px; pointer-events: none;
+  background: linear-gradient(135deg, rgb(124 92 252), rgb(56 189 248), rgb(217 70 239));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+}
+
+/* ---- status glow dots ---- */
+.jomatheme-dot { width: 8px; height: 8px; border-radius: 999px; display: inline-block; }
+.jomatheme-dot--online { background: rgb(34 197 94); box-shadow: 0 0 0 4px rgb(34 197 94 / 0.18), 0 0 12px rgb(34 197 94 / 0.6); animation: joma-pulse 2s infinite; }
+.jomatheme-dot--offline { background: rgb(239 68 68); box-shadow: 0 0 0 4px rgb(239 68 68 / 0.18); }
+.jomatheme-dot--starting { background: rgb(245 158 11); box-shadow: 0 0 0 4px rgb(245 158 11 / 0.18), 0 0 12px rgb(245 158 11 / 0.6); animation: joma-pulse 1.4s infinite; }
+
+/* ---- animated progress bar ---- */
+.jomatheme-progress { height: 6px; border-radius: 999px; background: rgb(255 255 255 / 0.08); overflow: hidden; }
+.jomatheme-progress__bar {
+  height: 100%; border-radius: 999px; transition: width 0.4s ease;
+  background: linear-gradient(90deg, rgb(124 92 252), rgb(56 189 248));
+  background-size: 200% 100%; animation: joma-gradient-shift 2.4s linear infinite;
+}
+
+/* ---- tooltip utility ---- */
+.jomatheme-tip { position: relative; }
+.jomatheme-tip::after {
+  content: attr(data-joma-tip); position: absolute; left: 50%; bottom: calc(100% + 8px);
+  transform: translateX(-50%) translateY(4px); z-index: 50;
+  background: rgb(8 8 14 / 0.92); color: rgb(236 236 245);
+  border: 1px solid rgb(255 255 255 / 0.1); border-radius: 8px;
+  padding: .25rem .5rem; font-size: .72rem; white-space: nowrap;
+  opacity: 0; pointer-events: none;
+  transition: opacity var(--joma-transition-fast) ease, transform var(--joma-transition-fast) ease;
+}
+.jomatheme-tip:hover::after { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ---- command palette (Ctrl + K) ---- */
+#jomatheme-cmdk { position: fixed; inset: 0; z-index: 99997; display: none; }
+#jomatheme-cmdk.is-open { display: block; }
+.jomatheme-cmdk__backdrop {
+  position: absolute; inset: 0;
+  background: rgb(5 5 9 / 0.55);
+  backdrop-filter: blur(8px) saturate(120%); -webkit-backdrop-filter: blur(8px) saturate(120%);
+  animation: joma-fade 0.2s ease both;
+}
+.jomatheme-cmdk__panel {
+  position: relative; width: calc(100% - 2rem); max-width: 38rem; margin: 12vh auto 0;
+  background: rgb(18 18 28 / 0.86);
+  backdrop-filter: blur(var(--joma-blur-lg)) saturate(160%); -webkit-backdrop-filter: blur(var(--joma-blur-lg)) saturate(160%);
+  border: 1px solid rgb(255 255 255 / 0.1); border-radius: var(--joma-radius-modal);
+  box-shadow: 0 30px 80px rgb(0 0 0 / 0.6), 0 0 0 1px rgb(124 92 252 / 0.12), inset 0 1px 0 rgb(255 255 255 / 0.06);
+  overflow: hidden; animation: joma-cmdk-in 0.32s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.jomatheme-cmdk__head {
+  display: flex; align-items: center; gap: .6rem; padding: .9rem 1rem;
+  border-bottom: 1px solid rgb(255 255 255 / 0.07);
+}
+.jomatheme-cmdk__icon { color: rgb(150 150 170); font-size: 1.05rem; }
+.jomatheme-cmdk__input {
+  flex: 1; background: transparent !important; border: 0 !important; box-shadow: none !important;
+  color: rgb(236 236 245) !important; font-size: 1rem; outline: none !important;
+}
+.jomatheme-cmdk__input::placeholder { color: rgb(120 120 138) !important; }
+.jomatheme-cmdk__kbd {
+  font-size: .68rem; color: rgb(150 150 170); border: 1px solid rgb(255 255 255 / 0.12);
+  border-radius: 6px; padding: .1rem .35rem; background: rgb(255 255 255 / 0.04);
+}
+.jomatheme-cmdk__list { max-height: 22rem; overflow-y: auto; padding: .4rem; }
+.jomatheme-cmdk__group { font-size: .66rem; text-transform: uppercase; letter-spacing: .1em; color: rgb(120 120 138); padding: .6rem .6rem .3rem; }
+.jomatheme-cmdk__item {
+  display: flex; align-items: center; gap: .65rem; padding: .55rem .6rem; border-radius: var(--joma-radius-sm);
+  color: rgb(210 210 222); cursor: pointer; border: 1px solid transparent;
+  transition: background var(--joma-transition-fast) ease, border-color var(--joma-transition-fast) ease, transform var(--joma-transition-fast) ease, color var(--joma-transition-fast) ease;
+}
+.jomatheme-cmdk__item.is-active {
+  background: linear-gradient(135deg, rgb(124 92 252 / 0.22), rgb(56 189 248 / 0.1));
+  border-color: rgb(124 92 252 / 0.35); color: rgb(248 248 252); transform: translateX(2px);
+}
+.jomatheme-cmdk__item-icon { width: 1.2rem; text-align: center; }
+.jomatheme-cmdk__item-label { flex: 1; }
+.jomatheme-cmdk__item-hint { font-size: .7rem; color: rgb(120 120 138); }
+.jomatheme-cmdk__empty { padding: 1.4rem; text-align: center; color: rgb(140 140 160); font-size: .85rem; }
+@keyframes joma-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes joma-cmdk-in { from { opacity: 0; transform: translateY(-12px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+/* ---- command palette hint (bottom-left, subtle) ---- */
+#jomatheme-cmdk-hint {
+  position: fixed; left: 1.25rem; bottom: 1.25rem; z-index: 99990;
+  display: inline-flex; align-items: center; gap: .4rem;
+  padding: .35rem .6rem; border-radius: 8px; cursor: pointer;
+  background: rgb(22 22 34 / 0.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgb(255 255 255 / 0.1); color: rgb(200 200 214); font-size: .72rem;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.35);
+  transition: border-color var(--joma-transition-normal) ease, transform var(--joma-transition-normal) ease, color var(--joma-transition-normal) ease;
+}
+#jomatheme-cmdk-hint:hover { border-color: rgb(124 92 252 / 0.5); color: rgb(248 248 252); transform: translateY(-1px); }
+#jomatheme-cmdk-hint kbd { font-size: .66rem; border: 1px solid rgb(255 255 255 / 0.14); border-radius: 5px; padding: .05rem .3rem; background: rgb(255 255 255 / 0.06); color: rgb(165 139 252); }
+@media (max-width: 640px) { #jomatheme-cmdk-hint { display: none; } }
 </style>
 
 <div id="jomatheme-progress" aria-hidden="true"><div id="jomatheme-progress__bar"></div></div>
@@ -481,6 +668,180 @@ button[class*="primary"]:not(:disabled):hover::after,
     }, 900);
   });
 
+})();
+</script>
+
+<script>
+/* ============================================================================
+   JomaTheme v1.1 runtime — button ripples + command palette (Ctrl/⌘ + K).
+   Purely additive; everything is guarded so Pterodactyl is never affected.
+   ============================================================================ */
+(function () {
+  "use strict";
+  function safe(fn) { try { fn(); } catch (e) { /* silent */ } }
+
+  /* ---- Button click ripples (event delegation, every button-like el) ---- */
+  safe(function () {
+    var SEL = "button, .btn, [class*='Button'], a[class*='btn'], [role='button']";
+    document.addEventListener("pointerdown", function (e) {
+      safe(function () {
+        if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        var t = e.target && e.target.closest ? e.target.closest(SEL) : null;
+        if (!t) return;
+        if (t.disabled) return;
+        var rect = t.getBoundingClientRect();
+        var size = Math.max(rect.width, rect.height) * 1.1;
+        var x = (e.clientX - rect.left) - size / 2;
+        var y = (e.clientY - rect.top) - size / 2;
+        var r = document.createElement("span");
+        r.className = "jomatheme-ripple";
+        r.style.width = r.style.height = size + "px";
+        r.style.left = x + "px";
+        r.style.top = y + "px";
+        t.appendChild(r);
+        setTimeout(function () { if (r.parentNode) r.parentNode.removeChild(r); }, 680);
+      });
+    }, true);
+  });
+
+  /* ---- Command palette (Ctrl/⌘ + K) -------------------------------- */
+  safe(function () {
+    function go(p) { try { window.location.href = p; } catch (e) {} }
+
+    var cmds = [
+      { group: "Navigate", icon: "🏠", label: "Dashboard", hint: "/", run: function () { go("/"); } },
+      { group: "Account",  icon: "👤", label: "Account Settings", hint: "/account", run: function () { go("/account"); } },
+      { group: "Account",  icon: "🔑", label: "API Credentials", hint: "/account/api", run: function () { go("/account/api"); } },
+      { group: "Account",  icon: "🧩", label: "SSH Keys", hint: "/account/ssh", run: function () { go("/account/ssh"); } },
+      { group: "Actions",   icon: "✨", label: "Create Server", hint: "new", run: function () { go("/"); } },
+      { group: "Actions",   icon: "🔄", label: "Reload page", hint: "refresh", run: function () { window.location.reload(); } }
+    ];
+
+    /* server-aware: if we're on /server/<id>, offer that server's tabs first */
+    var m = location.pathname.match(/\/server\/([^/]+)/);
+    if (m && m[1]) {
+      var id = m[1];
+      var tabs = [
+        ["Console", ""], ["Files", "/files"], ["Backups", "/backups"],
+        ["Schedules", "/schedules"], ["Users", "/users"], ["Network", "/network"],
+        ["Startup", "/startup"], ["Settings", "/settings"]
+      ];
+      var serverCmds = tabs.map(function (t) {
+        var path = "/server/" + id + t[1];
+        var ic = ({
+          "Console": "🖥️", "Files": "📁", "Backups": "💾", "Schedules": "⏰",
+          "Users": "👥", "Network": "🌐", "Startup": "🚀", "Settings": "⚙️"
+        })[t[0]];
+        return { group: "Server", icon: ic, label: t[0], hint: path, run: function () { go(path); } };
+      });
+      cmds = serverCmds.concat(cmds);
+    }
+
+    /* admin-only commands */
+    var isAdmin = false;
+    try {
+      var u = window.PterodactylUser;
+      isAdmin = !!(u && (u.root_admin || u.rootAdmin || u.admin));
+    } catch (e) {}
+    if (isAdmin) {
+      var admin = [
+        ["Admin Dashboard", "/admin", "⚙️"], ["Admin Users", "/admin/users", "👤"],
+        ["Admin Servers", "/admin/servers", "🖥️"], ["Admin Nodes", "/admin/nodes", "🌐"],
+        ["Admin Locations", "/admin/locations", "📍"], ["Admin Nests", "/admin/nests", "🪆"],
+        ["Admin Eggs", "/admin/eggs", "🥚"], ["Admin Databases", "/admin/databases", "🗄️"],
+        ["Admin Mounts", "/admin/mounts", "📦"], ["Blueprint Extensions", "/admin/extensions", "🧩"],
+        ["JomaTheme Settings", "/admin/extensions/jomatheme", "🎨"]
+      ];
+      admin.forEach(function (a) {
+        cmds.push({ group: "Admin", icon: a[2], label: a[0], hint: a[1], run: function () { go(a[1]); } });
+      });
+    }
+
+    /* build DOM */
+    var root = document.createElement("div");
+    root.id = "jomatheme-cmdk";
+    root.innerHTML =
+      '<div class="jomatheme-cmdk__backdrop" data-cmdk-close></div>' +
+      '<div class="jomatheme-cmdk__panel" role="dialog" aria-modal="true" aria-label="JomaMC command palette">' +
+        '<div class="jomatheme-cmdk__head">' +
+          '<span class="jomatheme-cmdk__icon" aria-hidden="true">⌕</span>' +
+          '<input class="jomatheme-cmdk__input" id="jomatheme-cmdk-input" placeholder="Search or run a command..." autocomplete="off" spellcheck="false">' +
+          '<span class="jomatheme-cmdk__kbd">ESC</span>' +
+        '</div>' +
+        '<div class="jomatheme-cmdk__list" id="jomatheme-cmdk-list"></div>' +
+      '</div>';
+    document.body.appendChild(root);
+
+    var hint = document.createElement("button");
+    hint.type = "button"; hint.id = "jomatheme-cmdk-hint"; hint.setAttribute("aria-label", "Open command palette");
+    hint.innerHTML = 'Menu <kbd>Ctrl K</kbd>';
+    hint.addEventListener("click", open);
+    document.body.appendChild(hint);
+
+    var input = document.getElementById("jomatheme-cmdk-input");
+    var list = document.getElementById("jomatheme-cmdk-list");
+    var active = 0; var filtered = [];
+
+    function open() { root.classList.add("is-open"); setTimeout(function () { input.focus(); input.select(); }, 30); render(""); }
+    function close() { root.classList.remove("is-open"); input.value = ""; }
+    function isOpen() { return root.classList.contains("is-open"); }
+
+    function render(q) {
+      q = (q || "").toLowerCase().trim();
+      filtered = cmds.filter(function (c) {
+        return !q || (c.label + " " + c.group + " " + c.hint).toLowerCase().indexOf(q) > -1;
+      });
+      active = 0;
+      if (!filtered.length) { list.innerHTML = '<div class="jomatheme-cmdk__empty">No commands found</div>'; return; }
+      var groups = {}; var order = [];
+      filtered.forEach(function (c) { if (!groups[c.group]) { groups[c.group] = []; order.push(c.group); } groups[c.group].push(c); });
+      var html = "";
+      order.forEach(function (g) {
+        html += '<div class="jomatheme-cmdk__group">' + g + '</div>';
+        groups[g].forEach(function (c) {
+          var idx = filtered.indexOf(c);
+          html += '<div class="jomatheme-cmdk__item' + (idx === active ? " is-active" : "") + '" data-idx="' + idx + '" role="option">' +
+            '<span class="jomatheme-cmdk__item-icon">' + c.icon + '</span>' +
+            '<span class="jomatheme-cmdk__item-label">' + c.label + '</span>' +
+            '<span class="jomatheme-cmdk__item-hint">' + c.hint + '</span>' +
+          '</div>';
+        });
+      });
+      list.innerHTML = html;
+      var items = list.querySelectorAll(".jomatheme-cmdk__item");
+      for (var i = 0; i < items.length; i++) {
+        (function (el) {
+          el.addEventListener("mouseenter", function () { setActive(parseInt(el.dataset.idx, 10)); });
+          el.addEventListener("click", function () { runActive(parseInt(el.dataset.idx, 10)); });
+        })(items[i]);
+      }
+    }
+    function setActive(i) {
+      active = Math.max(0, Math.min(filtered.length - 1, i));
+      var items = list.querySelectorAll(".jomatheme-cmdk__item");
+      for (var k = 0; k < items.length; k++) {
+        var idx = parseInt(items[k].dataset.idx, 10);
+        var on = idx === active;
+        items[k].classList.toggle("is-active", on);
+        if (on) items[k].scrollIntoView({ block: "nearest" });
+      }
+    }
+    function runActive(i) { var c = filtered[i]; if (c) { close(); c.run(); } }
+
+    input.addEventListener("input", function () { render(input.value); });
+    root.querySelector("[data-cmdk-close]").addEventListener("click", close);
+
+    document.addEventListener("keydown", function (e) {
+      if ((e.ctrlKey || e.metaKey) && (e.key === "k" || e.key === "K" || e.keyCode === 75)) {
+        e.preventDefault(); if (isOpen()) close(); else open(); return;
+      }
+      if (!isOpen()) return;
+      if (e.key === "Escape") { e.preventDefault(); close(); }
+      else if (e.key === "ArrowDown") { e.preventDefault(); setActive(active + 1); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); setActive(active - 1); }
+      else if (e.key === "Enter") { e.preventDefault(); runActive(active); }
+    });
+  });
 })();
 </script>
 @endverbatim

@@ -7,7 +7,7 @@ info:
   identifier: 'jomatheme'
   description: 'Modern dark SaaS-style theme for JomaMC — glassmorphism, animated aurora background, layout slide transitions, skeleton loaders, toast notifications and a slick server dashboard.'
   flags: ''
-  version: '1.0.0'
+  version: '1.1.0'
   target: 'beta-2026-08'
   author: 'JomaMC'
   icon: ''

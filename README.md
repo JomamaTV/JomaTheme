@@ -2,7 +2,7 @@
 
 > A modern, dark, **SaaS-style** Blueprint extension theme for **Pterodactyl 1.15.1** running **Blueprint beta-2026-08**. Glassmorphism, animated aurora backgrounds, layout slide transitions, toast notifications, skeleton loaders and a slick live welcome banner — without touching a single Pterodactyl core file.
 
-![status](https://img.shields.io/badge/status-active-22c55e) ![target](https://img.shields.io/badge/blueprint-beta--2026--08-7c5cfc) ![pterodactyl](https://img.shields.io/badge/pterodactyl-1.15.1-38bdf8)
+![status](https://img.shields.io/badge/status-active-22c55e) ![version](https://img.shields.io/badge/version-1.1.0-7c5cfc) ![target](https://img.shields.io/badge/blueprint-beta--2026--08-7c5cfc) ![pterodactyl](https://img.shields.io/badge/pterodactyl-1.15.1-38bdf8)
 
 ---
 
@@ -20,6 +20,8 @@
 
 - 🌌 **Animated aurora background** — a drifting violet/cyan/fuchsia gradient mesh on every page.
 - 🪟 **Glassmorphism surfaces** — frosted, blurred cards with subtle borders and soft shadows.
+- 🖱️ **Premium button system** — gradient-shift + glow on hover, 3D press on click, and a **click ripple** that fires on every button across the panel.
+- ⌘ **Command palette** — `Ctrl`/`⌘` + `K` opens a glassy, keyboard-navigable palette (server-aware: on `/server/<id>` it lists that server's tabs first; admin commands appear for admins).
 - ✨ **Layout slide transitions** — content slides + fades on every client-side route change (history-aware).
 - 🔔 **Toast notifications** — power actions (start/stop/restart/kill) surface as auto-dismissing toasts; full JS API (`window.JomaTheme.toast`).
 - ⏳ **Loading states** — a top gradient progress bar tracks in-flight `fetch`/XHR requests; skeleton shimmer utility for your own content.
