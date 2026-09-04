@@ -13,10 +13,18 @@ node preview/server.js --no-open  # don't auto-open the browser
 | Route | What it previews |
 |-------|------------------|
 | `/` | Dashboard — hero (aurora, liquid ring, stats), server cards, badges, inputs |
-| `/server/a1b2c3d4` | Console page — power buttons (fire real toasts), stat cards, glass terminal incl. copy button |
-| `/server/a1b2c3d4/files` | **File manager** — always-visible checkboxes, selection dock (select all/none, Shift+Klick range, two-step delete) |
-| `/account` | Forms — inputs, labels, buttons |
+| `/server/a1b2c3d4` | Console — glass sidebar, terminal incl. copy button, power buttons (fire real toasts), CPU/RAM/Disk rail |
+| `/server/a1b2c3d4/files` | **File manager** — always-visible checkboxes, selection dock (select all/none, Shift+Klick range, two-step delete), per-row download/delete |
+| `/server/a1b2c3d4/backups` | Backups — table with icon actions |
+| `/server/a1b2c3d4/schedules` | Schedules — cron table |
+| `/server/a1b2c3d4/users` | Subusers — table with roles |
+| `/server/a1b2c3d4/network` | Network — allocations table |
+| `/server/a1b2c3d4/startup` | Startup — variables + container info |
+| `/server/a1b2c3d4/settings` | Settings — general + danger zone |
+| `/account` | Profile form + API keys |
 | `/admin/extensions/jomatheme` | The real admin page rendered from `view.blade.php` + `admin.css` |
+
+All server tabs share the Pterodactyl-like layout: sticky glass navbar, glass sidebar with Bootstrap-Icon navigation, page header with actions, rounded glass cards. Layout-only CSS lives in `preview/preview.css` (also read live); every color/surface/button style comes from the actual theme.
 
 ## How it works
 

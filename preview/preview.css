@@ -1,0 +1,110 @@
+/* ============================================================================
+   JomaTheme preview shell — LAYOUT ONLY.
+   Colors / cards / buttons / tables all come from the real theme
+   (dashboard.css + wrapper). This file only provides the Pterodactyl-like
+   page structure (navbar, sidebar, rails, grids) that the panel's own
+   Tailwind build would normally supply.
+   ============================================================================ */
+
+.jpv-container { max-width: 1280px; margin: 0 auto; padding: 1.4rem 1.4rem 2rem; }
+
+/* ---- navbar ---- */
+.jpv-navbar {
+  display: flex; align-items: center; gap: .9rem;
+  padding: .62rem 1.3rem; position: sticky; top: 0; z-index: 60;
+}
+.jpv-logo { display: flex; align-items: center; gap: .55rem; text-decoration: none; font-weight: 800; letter-spacing: -.02em; }
+.jpv-logo__mark {
+  width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center;
+  font-size: .95rem; color: #fff;
+  background: linear-gradient(135deg, #06b6d4, #2dd4bf);
+  box-shadow: 0 6px 18px rgb(6 182 212 / .45), inset 0 1px 0 rgb(255 255 255 / .3);
+}
+.jpv-nav { display: flex; gap: .25rem; margin-left: .9rem; }
+.jpv-nav a { padding: .45rem .8rem; text-decoration: none; font-size: .9rem; }
+.jpv-user {
+  margin-left: auto; display: flex; align-items: center; gap: .55rem;
+  padding: .32rem .8rem .32rem .38rem; border-radius: 999px;
+  background: rgb(255 255 255 / .05); border: 1px solid rgb(255 255 255 / .08);
+  font-size: .84rem; font-weight: 600;
+}
+.jpv-user__ava {
+  width: 26px; height: 26px; border-radius: 999px; display: grid; place-items: center;
+  font-size: .7rem; font-weight: 800; color: #fff;
+  background: linear-gradient(135deg, #0ea5e9, #06b6d4);
+}
+
+/* ---- server layout: sidebar + main ---- */
+.jpv-server {
+  display: grid; grid-template-columns: 242px minmax(0, 1fr);
+  gap: 1.25rem; align-items: start;
+}
+.jpv-side { position: sticky; top: 78px; padding: .9rem .8rem; }
+.jpv-side__head {
+  display: flex; align-items: center; gap: .6rem;
+  padding: .25rem .45rem .8rem; margin-bottom: .6rem;
+  border-bottom: 1px solid rgb(255 255 255 / .07);
+}
+.jpv-side__icon {
+  width: 38px; height: 38px; border-radius: 12px; flex: 0 0 auto;
+  display: grid; place-items: center; font-size: 1.05rem;
+  color: rgb(103 232 249);
+  background: linear-gradient(135deg, rgb(14 165 233 / .22), rgb(45 212 191 / .16));
+  border: 1px solid rgb(6 182 212 / .25);
+}
+.jpv-side__name { font-weight: 700; font-size: .92rem; line-height: 1.2; }
+.jpv-side__sub { font-size: .72rem; color: rgb(122 152 178); }
+.jpv-side a {
+  display: flex; align-items: center; gap: .6rem;
+  padding: .55rem .7rem; text-decoration: none; font-size: .88rem;
+}
+.jpv-side a i { font-size: .95rem; width: 1.1rem; text-align: center; color: rgb(122 152 178); }
+.jpv-side a.is-active { box-shadow: inset 0 0 0 1px rgb(6 182 212 / .3); }
+.jpv-side a.is-active i { color: rgb(103 232 249); }
+
+/* ---- page head + cards ---- */
+.jpv-pagehead { display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; margin-bottom: 1.15rem; }
+.jpv-pagehead h1 { font-size: 1.32rem; margin: 0; display: flex; align-items: center; gap: .6rem; }
+.jpv-pagehead__actions { margin-left: auto; display: flex; gap: .5rem; flex-wrap: wrap; }
+.jpv-card { padding: 1.25rem 1.35rem; }
+.jpv-card h2 { margin: 0 0 1rem; font-size: 1.02rem; }
+.jpv-card--danger h2 { color: rgb(252 165 165) !important; }
+
+/* ---- console layout ---- */
+.jpv-console { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 1.25rem; align-items: start; }
+.jpv-rail { display: grid; gap: 1rem; }
+.jpv-power { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+.jpv-power button { padding: .55rem .5rem; font-size: .82rem !important; }
+.jpv-statgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.25rem; }
+
+/* ---- files / tables ---- */
+.jpv-toolbar { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.jpv-crumb { font-size: .85rem; color: rgb(122 152 178); display: inline-flex; align-items: center; gap: .4rem; }
+.jpv-crumb strong { color: rgb(226 242 250); }
+.jpv-spacer { flex: 1; }
+.jpv-fname { display: inline-flex; align-items: center; gap: .55rem; }
+.jpv-fname i { color: rgb(103 232 249); }
+.jpv-rowactions { display: flex; gap: .35rem; justify-content: flex-end; }
+.jpv-iconbtn { width: 34px; height: 34px; display: grid; place-items: center; padding: 0 !important; }
+
+/* ---- misc ---- */
+.jpv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 1rem; }
+.jpv-empty { text-align: center; padding: 3rem 1rem; color: rgb(122 152 178); }
+.jpv-empty i { display: block; font-size: 2rem; margin-bottom: .7rem; color: rgb(6 182 212 / .75); }
+.jpv-hint { font-size: .78rem; color: rgb(122 152 178); margin: .9rem 0 0; }
+.jpv-kv { display: flex; justify-content: space-between; gap: 1rem; padding: .55rem 0; border-bottom: 1px solid rgb(255 255 255 / .06); font-size: .88rem; }
+.jpv-kv:last-child { border-bottom: 0; }
+.jpv-kv span:first-child { color: rgb(158 186 208); }
+.jpv-kv span:last-child { font-weight: 600; }
+
+.jpv-footer { text-align: center; padding: 2.5rem 1rem 2rem; font-size: .78rem; color: rgb(122 152 178); }
+
+@media (max-width: 920px) {
+  .jpv-server { grid-template-columns: 1fr; }
+  .jpv-side { position: static; }
+  .jpv-side__head { border-bottom: 0; margin-bottom: .2rem; }
+  .jpv-side nav, .jpv-side__links { display: flex; flex-wrap: wrap; gap: .3rem; }
+  .jpv-side a { padding: .45rem .7rem; }
+  .jpv-console { grid-template-columns: 1fr; }
+  .jpv-nav { display: none; }
+}
