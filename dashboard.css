@@ -312,6 +312,9 @@ button, .btn, a[class*="btn"], [class*="Button"], [role="button"] {
   border-radius: var(--joma-radius-pill) !important;
   font-weight: 600 !important;
   letter-spacing: -0.01em;
+  /* seamless edges: no hard border line on buttons — depth comes from the
+     gradient fill + outer glow, not a 1px stroke */
+  border: 1px solid transparent !important;
   /* smooth, non-bouncy hover — spring overshoot felt jittery on glass buttons */
   transition: transform var(--joma-transition-normal) var(--joma-ease),
               box-shadow var(--joma-transition-normal) ease,
@@ -326,52 +329,51 @@ button:not(:disabled):active, .btn:active, [class*="Button"]:not(:disabled):acti
   transform: translateY(0) scale(0.97);
 }
 
-/* Default button — navy glass → indigo on hover */
+/* Default button — solid navy, indigo glow on hover */
 button:not([class*="primary"]):not([class*="secondary"]):not([class*="danger"]):not([class*="ghost"]):not([class*="success"]):not([class*="warning"]),
 .btn:not(.btn-primary):not(.btn-secondary):not(.btn-danger):not(.btn-success):not(.btn-warning) {
-  background: linear-gradient(135deg, rgb(28 36 64 / 0.9), rgb(18 24 44 / 0.9)) !important;
+  background: linear-gradient(135deg, rgb(28 36 64), rgb(18 24 44)) !important;
   color: rgb(226 232 240) !important;
-  border: 1px solid rgb(255 255 255 / 0.08) !important;
+  border-color: transparent !important;
 }
 button:not([class*="primary"]):not([class*="secondary"]):not([class*="danger"]):not([class*="ghost"]):not([class*="success"]):not([class*="warning"]):not(:disabled):hover,
 .btn:not(.btn-primary):not(.btn-secondary):not(.btn-danger):not(.btn-success):not(.btn-warning):hover {
-  background: linear-gradient(135deg, rgb(40 50 84 / 0.95), rgb(28 36 64 / 0.95)) !important;
-  border-color: rgb(99 102 241 / 0.4) !important;
+  background: linear-gradient(135deg, rgb(40 50 84), rgb(28 36 64)) !important;
   color: rgb(245 247 252) !important;
-  box-shadow: 0 8px 24px rgb(99 102 241 / 0.2) !important;
+  box-shadow: 0 8px 24px rgb(99 102 241 / 0.22) !important;
 }
 
-/* Primary — indigo→violet gradient + glow */
+/* Primary — indigo→violet gradient + glow, no edge line */
 button[class*="primary"], .btn-primary, [class*="PrimaryButton"], a[class*="btn-primary"] {
   background: var(--joma-grad-primary) !important;
   background-size: 200% 200% !important;
   color: rgb(255 255 255) !important;
-  border: 1px solid rgb(129 140 248 / 0.55) !important;
-  box-shadow: 0 10px 28px rgb(99 102 241 / 0.4), inset 0 1px 0 rgb(255 255 255 / 0.3) !important;
+  border-color: transparent !important;
+  box-shadow: 0 10px 28px rgb(99 102 241 / 0.4), inset 0 1px 0 rgb(255 255 255 / 0.18) !important;
 }
 button[class*="primary"]:not(:disabled):hover, .btn-primary:hover, [class*="PrimaryButton"]:not(:disabled):hover {
   background-position: 100% 0% !important;
   filter: brightness(1.08);
-  box-shadow: 0 16px 38px rgb(99 102 241 / 0.55), inset 0 1px 0 rgb(255 255 255 / 0.35) !important;
+  box-shadow: 0 16px 38px rgb(99 102 241 / 0.55), inset 0 1px 0 rgb(255 255 255 / 0.22) !important;
 }
 
-/* Secondary / ghost — subtle glass */
+/* Secondary / ghost — solid subtle surface */
 button[class*="secondary"], .btn-secondary, [class*="SecondaryButton"], button[class*="ghost"] {
-  background: linear-gradient(135deg, rgb(22 30 54 / 0.8), rgb(14 20 38 / 0.8)) !important;
+  background: linear-gradient(135deg, rgb(22 30 54), rgb(14 20 38)) !important;
   color: rgb(226 232 240) !important;
-  border: 1px solid rgb(255 255 255 / 0.08) !important;
+  border-color: transparent !important;
 }
 button[class*="secondary"]:not(:disabled):hover, .btn-secondary:hover, [class*="SecondaryButton"]:not(:disabled):hover, button[class*="ghost"]:not(:disabled):hover {
-  background: linear-gradient(135deg, rgb(34 44 74 / 0.9), rgb(22 30 54 / 0.9)) !important;
-  border-color: rgb(99 102 241 / 0.4) !important;
+  background: linear-gradient(135deg, rgb(34 44 74), rgb(22 30 54)) !important;
   color: rgb(245 247 252) !important;
+  box-shadow: 0 8px 24px rgb(99 102 241 / 0.18) !important;
 }
 
-/* Danger — red gradient */
+/* Danger — red gradient, no edge line */
 button[class*="danger"], .btn-danger, [class*="DangerButton"] {
   background: linear-gradient(135deg, rgb(239 68 68), rgb(220 38 38)) !important;
   color: rgb(255 255 255) !important;
-  border: 1px solid rgb(248 113 113 / 0.5) !important;
+  border-color: transparent !important;
   box-shadow: 0 10px 28px rgb(239 68 68 / 0.32) !important;
 }
 button[class*="danger"]:not(:disabled):hover, .btn-danger:hover, [class*="DangerButton"]:not(:disabled):hover {
@@ -383,13 +385,13 @@ button[class*="danger"]:not(:disabled):hover, .btn-danger:hover, [class*="Danger
 button[class*="success"], .btn-success, [class*="SuccessButton"] {
   background: linear-gradient(135deg, rgb(34 197 94), rgb(22 163 74)) !important;
   color: rgb(255 255 255) !important;
-  border: 1px solid rgb(74 222 128 / 0.5) !important;
+  border-color: transparent !important;
   box-shadow: 0 10px 28px rgb(34 197 94 / 0.3) !important;
 }
 button[class*="warning"], .btn-warning, [class*="WarningButton"] {
   background: linear-gradient(135deg, rgb(245 158 11), rgb(217 119 6)) !important;
   color: rgb(20 12 0) !important;
-  border: 1px solid rgb(251 191 36 / 0.5) !important;
+  border-color: transparent !important;
 }
 
 /* disabled */
@@ -708,7 +710,7 @@ tbody td { border-color: rgb(255 255 255 / 0.06) !important; }
   display: inline-flex; align-items: center; gap: 0.4rem;
   padding: 0.5rem 0.95rem; border-radius: var(--joma-radius-pill);
   font-size: 0.84rem; font-weight: 600; cursor: pointer; text-decoration: none;
-  border: 1px solid rgb(255 255 255 / 0.1);
+  border: 1px solid transparent;
   background: linear-gradient(135deg, rgb(28 36 64), rgb(18 24 44));
   color: rgb(226 232 240);
   transition: transform var(--joma-transition-normal) var(--joma-ease),

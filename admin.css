@@ -170,10 +170,11 @@ header, [class*="navbar"], [class*="Navbar"], [class*="topbar"] {
   box-shadow: 0 10px 30px rgb(0 0 0 / 0.4) !important;
 }
 
-/* Buttons --------------------------------------------------------------- */
+/* Buttons — seamless edges, no hard border line -------------------------- */
 button, .btn, a[class*="btn"], [role="button"] {
   border-radius: var(--joma-radius-pill) !important; font-weight: 600 !important;
-  transition: transform var(--joma-transition-normal) var(--joma-ease-spring),
+  border: 1px solid transparent !important;
+  transition: transform var(--joma-transition-normal) var(--joma-ease),
               box-shadow var(--joma-transition-normal) ease,
               background-color var(--joma-transition-normal) ease, filter var(--joma-transition-normal) ease !important;
 }
@@ -182,36 +183,36 @@ button:not(:disabled):active, .btn:active { transform: translateY(0) scale(0.97)
 
 button:not([class*="primary"]):not([class*="secondary"]):not([class*="danger"]):not([class*="success"]):not([class*="warning"]),
 .btn:not(.btn-primary):not(.btn-secondary):not(.btn-danger):not(.btn-success):not(.btn-warning) {
-  background: linear-gradient(135deg, rgb(28 36 64 / 0.9), rgb(18 24 44 / 0.9)) !important;
-  color: rgb(226 232 240) !important; border: 1px solid rgb(255 255 255 / 0.08) !important;
+  background: linear-gradient(135deg, rgb(28 36 64), rgb(18 24 44)) !important;
+  color: rgb(226 232 240) !important; border-color: transparent !important;
 }
 button:not([class*="primary"]):not([class*="secondary"]):not([class*="danger"]):not([class*="success"]):not([class*="warning"]):not(:disabled):hover,
 .btn:not(.btn-primary):not(.btn-secondary):not(.btn-danger):not(.btn-success):not(.btn-warning):hover {
-  border-color: rgb(99 102 241 / 0.4) !important; color: rgb(245 247 252) !important;
-  box-shadow: 0 8px 24px rgb(99 102 241 / 0.2) !important;
+  color: rgb(245 247 252) !important;
+  box-shadow: 0 8px 24px rgb(99 102 241 / 0.22) !important;
 }
 
 .btn-primary, button[class*="primary"], a[class*="btn-primary"] {
   background: var(--joma-grad-primary) !important; color: rgb(255 255 255) !important;
-  border: 1px solid rgb(129 140 248 / 0.55) !important;
-  box-shadow: 0 10px 28px rgb(99 102 241 / 0.4), inset 0 1px 0 rgb(255 255 255 / 0.3) !important;
+  border-color: transparent !important;
+  box-shadow: 0 10px 28px rgb(99 102 241 / 0.4), inset 0 1px 0 rgb(255 255 255 / 0.18) !important;
 }
 .btn-primary:hover, button[class*="primary"]:not(:disabled):hover {
-  filter: brightness(1.08); box-shadow: 0 16px 38px rgb(99 102 241 / 0.55) !important;
+  filter: brightness(1.08); box-shadow: 0 16px 38px rgb(99 102 241 / 0.55), inset 0 1px 0 rgb(255 255 255 / 0.22) !important;
 }
 .btn-secondary, button[class*="secondary"] {
-  background: linear-gradient(135deg, rgb(22 30 54 / 0.8), rgb(14 20 38 / 0.8)) !important;
-  color: rgb(226 232 240) !important; border: 1px solid rgb(255 255 255 / 0.08) !important;
+  background: linear-gradient(135deg, rgb(22 30 54), rgb(14 20 38)) !important;
+  color: rgb(226 232 240) !important; border-color: transparent !important;
 }
 .btn-secondary:hover, button[class*="secondary"]:not(:disabled):hover {
-  border-color: rgb(99 102 241 / 0.4) !important; color: rgb(245 247 252) !important;
+  color: rgb(245 247 252) !important; box-shadow: 0 8px 24px rgb(99 102 241 / 0.18) !important;
 }
 .btn-danger, button[class*="danger"] {
   background: linear-gradient(135deg, rgb(239 68 68), rgb(220 38 38)) !important;
-  color: rgb(255 255 255) !important; box-shadow: 0 10px 28px rgb(239 68 68 / 0.32) !important;
+  color: rgb(255 255 255) !important; border-color: transparent !important; box-shadow: 0 10px 28px rgb(239 68 68 / 0.32) !important;
 }
 .btn-success, button[class*="success"] {
-  background: linear-gradient(135deg, rgb(34 197 94), rgb(22 163 74)) !important; color: rgb(255 255 255) !important;
+  background: linear-gradient(135deg, rgb(34 197 94), rgb(22 163 74)) !important; color: rgb(255 255 255) !important; border-color: transparent !important;
 }
 button:disabled, .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 

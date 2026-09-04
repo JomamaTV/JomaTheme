@@ -99,7 +99,7 @@
 .ja-note { font-size: .8rem; color: rgb(140 150 176); margin: .8rem 0 0; line-height: 1.5; }
 .ja-note code { background: rgb(7 11 24 / 0.7); border: 1px solid rgb(255 255 255 / 0.08); border-radius: 6px; padding: .05rem .35rem; color: rgb(165 180 254); font-size: .78rem; }
 
-.ja-btn { display: inline-flex; align-items: center; gap: .4rem; padding: .45rem .9rem; border-radius: 100px; font-size: .82rem; font-weight: 600; cursor: pointer; text-decoration: none; border: 1px solid rgb(129 140 248 / 0.5); background: linear-gradient(135deg, rgb(99 102 241), rgb(79 70 229)); color: #fff; box-shadow: 0 8px 22px rgb(99 102 241 / 0.32); transition: filter .2s ease, transform .2s ease; }
+.ja-btn { display: inline-flex; align-items: center; gap: .4rem; padding: .45rem .9rem; border-radius: 100px; font-size: .82rem; font-weight: 600; cursor: pointer; text-decoration: none; border: 1px solid transparent; background: linear-gradient(135deg, rgb(99 102 241), rgb(79 70 229)); color: #fff; box-shadow: 0 8px 22px rgb(99 102 241 / 0.32); transition: filter .2s ease, transform .2s ease; }
 .ja-btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
 
 @keyframes ja-drift { 0% { transform: translate3d(-3%, -2%, 0) scale(1.05); } 50% { transform: translate3d(5%, 4%, 0) scale(1.12); } 100% { transform: translate3d(-3%, -2%, 0) scale(1.05); } }
