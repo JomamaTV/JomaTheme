@@ -66,10 +66,25 @@ JomaTheme/
 │   ├── tsconfig.json        # TS config for injected components
 │   └── elements/
 │       └── JomaWelcome.tsx  # personalised welcome banner
+├── preview/
+│   ├── server.js            # local preview server (zero dependencies)
+│   └── README.md            # preview usage & routes
 ├── .gitignore
 ├── LICENSE
 └── README.md
 ```
+
+---
+
+## Local preview
+
+Preview the theme **without a panel** — a zero-dependency Node server serves a clickable mock of the panel (dashboard, server console, file manager with the working selection dock, account and the real admin page) using the live theme files. Mock API endpoints make toasts, power actions and file deletion actually work:
+
+```bash
+node preview/server.js        # → http://localhost:7575 (opens your browser)
+```
+
+`dashboard.css`, `wrapper.blade.php`, `admin.css` and `view.blade.php` are re-read on **every request** — edit and refresh, no build needed. See [`preview/README.md`](./preview/README.md) for all routes.
 
 ---
 
