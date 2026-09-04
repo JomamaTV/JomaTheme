@@ -4,7 +4,7 @@
    JomaTheme — runtime animations & enhancements
    Served as a <style> tag via the Blueprint dashboard wrapper (every page).
    Heavy keyframes live here so they can never break the React CSS bundle.
-   v4.0 — midnight marine / cyan-teal-sky / liquid glass
+   v4.1 — midnight marine / cyan-teal-sky / liquid glass / file-manager dock
    ============================================================================ */
 
 /* ---- web fonts: Inter (UI) + Bootstrap Icons ---- */
@@ -147,8 +147,8 @@ button[class*="primary"]:not(:disabled):hover::after, .btn-primary:hover::after,
    JomaTheme runtime UI — ripples · command palette · tooltips
    ============================================================================ */
 :root {
-  --joma-radius-sm: 10px; --joma-radius-md: 14px; --joma-radius-lg: 18px;
-  --joma-radius-xl: 22px; --joma-radius-modal: 24px;
+  --joma-radius-sm: 14px; --joma-radius-md: 18px; --joma-radius-lg: 24px;
+  --joma-radius-xl: 28px; --joma-radius-modal: 28px;
   --joma-blur-sm: 10px; --joma-blur-md: 16px; --joma-blur-lg: 26px;
   --joma-transition-fast: 120ms; --joma-transition-normal: 200ms;
 }
@@ -252,8 +252,45 @@ button:not(:disabled):hover svg, .btn:hover svg, [class*="Button"]:not(:disabled
 #jomatheme-cmdk-hint kbd { font-size: .66rem; border: 1px solid rgb(255 255 255 / 0.14); border-radius: 5px; padding: .05rem .3rem; background: rgb(255 255 255 / 0.06); color: rgb(34 211 238); }
 @media (max-width: 640px) { #jomatheme-cmdk-hint { display: none; } }
 
+/* ============================================================================
+   File manager — always-visible selection checkboxes + selection dock
+   (body.joma-files is toggled by JS on /server/<id>/files pages only)
+   ============================================================================ */
+body.joma-files table td:first-child,
+body.joma-files table th:first-child { opacity: 1 !important; }
+body.joma-files input[type="checkbox"] {
+  opacity: 1 !important; visibility: visible !important;
+  width: 1.15em; height: 1.15em;
+}
+
+#jomatheme-filebar {
+  position: fixed; left: 50%; bottom: 1.1rem; transform: translateX(-50%);
+  z-index: 99989; display: none; align-items: center; gap: .5rem;
+  padding: .55rem .8rem; border-radius: var(--joma-radius-pill);
+  background: linear-gradient(135deg, rgb(13 34 54 / 0.92), rgb(9 26 42 / 0.95));
+  backdrop-filter: blur(var(--joma-blur-md)) saturate(180%); -webkit-backdrop-filter: blur(var(--joma-blur-md)) saturate(180%);
+  border: 1px solid rgb(255 255 255 / 0.1);
+  box-shadow: 0 18px 44px rgb(0 0 0 / 0.55), 0 0 40px rgb(6 182 212 / 0.08), inset 0 1px 0 rgb(255 255 255 / 0.1);
+  max-width: calc(100vw - 2rem);
+}
+#jomatheme-filebar.is-visible { display: flex; animation: joma-rise 0.3s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.jomatheme-filebar__count {
+  font-size: .8rem; font-weight: 700; color: rgb(226 242 250);
+  padding: 0 .3rem; white-space: nowrap;
+}
+.jomatheme-filebar__count.is-some { color: rgb(103 232 249); }
+.jomatheme-filebar__btn { font-size: .74rem !important; padding: .38rem .85rem !important; }
+.joma-fb-del.is-confirm { animation: joma-del-pulse 1s ease-in-out infinite; }
+.jomatheme-filebar__hint { font-size: .68rem; color: rgb(122 152 178); padding: 0 .3rem; white-space: nowrap; }
+@media (max-width: 720px) {
+  .jomatheme-filebar__hint { display: none; }
+  #jomatheme-filebar { flex-wrap: wrap; justify-content: center; }
+}
+@keyframes joma-del-pulse { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.4); } }
+
 @media (prefers-reduced-motion: reduce) {
   body::after, .jomatheme-ripple { animation: none !important; }
+  #jomatheme-filebar.is-visible, .joma-fb-del.is-confirm { animation: none !important; }
 }
 </style>
 
@@ -670,6 +707,184 @@ button:not(:disabled):hover svg, .btn:hover svg, [class*="Button"]:not(:disabled
       else if (e.key === "Enter") { e.preventDefault(); runActive(active); }
     });
   });
+})();
+</script>
+
+<script>
+/* ============================================================================
+   JomaTheme runtime UI — file manager selection dock (/server/<id>/files).
+   Adds: always-visible checkboxes (CSS via body.joma-files), select all/none,
+   shift-click range selection and a two-step mass delete that calls the
+   official Pterodactyl client API (DELETE .../files/delete). Selection is
+   driven through native .click() so Pterodactyl's React state stays in sync.
+   Purely additive; every block is guarded.
+   ============================================================================ */
+(function () {
+  "use strict";
+  function safe(fn) { try { fn(); } catch (e) { /* silent */ } }
+
+  function pathOK() { return /^\/server\/[^\/]+\/files/.test(location.pathname); }
+
+  var bar = null, countEl = null, delBtn = null, confirmTimer = null, lastIdx = null;
+
+  function boxes() {
+    return Array.prototype.slice.call(
+      document.querySelectorAll("table tbody input[type='checkbox'], [role='table'] input[type='checkbox']")
+    );
+  }
+  function selected() {
+    return boxes().filter(function (b) { return b.checked; });
+  }
+  function dir() {
+    var d = "/";
+    safe(function () { d = new URLSearchParams(location.search).get("dir") || "/"; });
+    if (!d) d = "/";
+    if (d.charAt(0) !== "/") d = "/" + d;
+    d = d.replace(/\/+$/, "");
+    return d || "/";
+  }
+  /* file name = first non-checkbox cell text of the row */
+  function fileName(box) {
+    var tr = box.closest ? box.closest("tr, [role='row']") : null;
+    if (!tr) return "";
+    var cells = tr.cells || tr.children || [];
+    for (var i = 0; i < cells.length; i++) {
+      if (cells[i].contains(box)) continue;
+      var t = (cells[i].textContent || "").replace(/\s+/g, " ").trim();
+      if (t) return t;
+    }
+    return "";
+  }
+  function csrf() {
+    var m = document.cookie.match(/(?:^|;\s*)XSRF-TOKEN=([^;]+)/);
+    return m ? decodeURIComponent(m[1]) : "";
+  }
+
+  function resetConfirm() {
+    if (confirmTimer) { clearTimeout(confirmTimer); confirmTimer = null; }
+    if (delBtn) { delBtn.classList.remove("is-confirm"); delBtn.textContent = "Löschen"; }
+  }
+  function refresh() {
+    safe(function () {
+      if (!bar) return;
+      var bs = boxes();
+      var show = pathOK() && bs.length > 0;
+      bar.classList.toggle("is-visible", show);
+      if (!show) { lastIdx = null; return; }
+      var n = selected().length;
+      countEl.textContent = n === 0 ? "Keine Datei ausgewählt" : n + (n === 1 ? " Datei" : " Dateien") + " ausgewählt";
+      countEl.classList.toggle("is-some", n > 0);
+      resetConfirm();
+      delBtn.disabled = n === 0;
+    });
+  }
+
+  function doDelete() {
+    safe(function () {
+      var files = selected().map(fileName).filter(function (n) {
+        return n && n !== ".." && n !== "../" && n !== ".";
+      });
+      if (!files.length) return;
+      var id = (location.pathname.match(/^\/server\/([^\/]+)/) || [])[1];
+      if (!id) return;
+      delBtn.disabled = true; delBtn.textContent = "Lösche…";
+      fetch("/api/client/servers/" + encodeURIComponent(id) + "/files/delete", {
+        method: "DELETE",
+        credentials: "same-origin",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "X-XSRF-TOKEN": csrf()
+        },
+        body: JSON.stringify({ root: dir(), files: files })
+      }).then(function (res) {
+        safe(function () {
+          if (res.ok) {
+            if (window.JomaTheme) window.JomaTheme.toast({ type: "success", title: "Dateien", message: files.length + " gelöscht." });
+            setTimeout(function () { window.location.reload(); }, 650);
+          } else {
+            if (window.JomaTheme) window.JomaTheme.toast({ type: "error", title: "Löschen fehlgeschlagen", message: "Status " + res.status });
+            delBtn.disabled = false; resetConfirm();
+          }
+        });
+      }, function () {
+        safe(function () {
+          if (window.JomaTheme) window.JomaTheme.toast({ type: "error", title: "Netzwerkfehler", message: "Server nicht erreichbar." });
+          delBtn.disabled = false; resetConfirm();
+        });
+      });
+    });
+  }
+
+  function build() {
+    if (bar || !document.body) return;
+    bar = document.createElement("div");
+    bar.id = "jomatheme-filebar";
+    bar.setAttribute("role", "toolbar");
+    bar.setAttribute("aria-label", "Datei-Auswahl");
+    bar.innerHTML =
+      '<span class="jomatheme-filebar__count">Keine Datei ausgewählt</span>' +
+      '<button type="button" class="btn-secondary jomatheme-filebar__btn" data-act="all">Alle auswählen</button>' +
+      '<button type="button" class="btn-secondary jomatheme-filebar__btn" data-act="none">Auswahl aufheben</button>' +
+      '<button type="button" class="btn-danger jomatheme-filebar__btn joma-fb-del" data-act="delete" disabled>Löschen</button>' +
+      '<span class="jomatheme-filebar__hint">Shift+Klick = Bereich</span>';
+    document.body.appendChild(bar);
+    countEl = bar.querySelector(".jomatheme-filebar__count");
+    delBtn = bar.querySelector(".joma-fb-del");
+    bar.addEventListener("click", function (e) {
+      safe(function () {
+        var t = e.target && e.target.closest ? e.target.closest("[data-act]") : null;
+        if (!t) return;
+        var act = t.getAttribute("data-act");
+        if (act === "all") {
+          boxes().forEach(function (b) { if (!b.checked) b.click(); });
+          refresh();
+        } else if (act === "none") {
+          boxes().forEach(function (b) { if (b.checked) b.click(); });
+          refresh();
+        } else if (act === "delete" && t === delBtn) {
+          if (!selected().length) return;
+          if (!t.classList.contains("is-confirm")) {
+            t.classList.add("is-confirm");
+            t.textContent = "Wirklich löschen?";
+            if (confirmTimer) clearTimeout(confirmTimer);
+            confirmTimer = setTimeout(resetConfirm, 3500);
+          } else {
+            doDelete();
+          }
+        }
+      });
+    });
+  }
+
+  /* shift-click range select on file checkboxes */
+  document.addEventListener("click", function (e) {
+    safe(function () {
+      if (!pathOK()) return;
+      var t = e.target;
+      if (!t || t.type !== "checkbox" || !t.closest || !t.closest("tbody, [role='table']")) return;
+      var bs = boxes();
+      var idx = bs.indexOf(t);
+      if (e.shiftKey && lastIdx !== null && lastIdx !== idx) {
+        var a = Math.min(lastIdx, idx), b = Math.max(lastIdx, idx);
+        for (var i = a; i <= b; i++) {
+          if (bs[i] && bs[i].checked !== t.checked) bs[i].click();
+        }
+      }
+      lastIdx = idx;
+      setTimeout(refresh, 60);
+    });
+  }, true);
+
+  function syncBody() {
+    safe(function () { document.body.classList.toggle("joma-files", pathOK()); });
+  }
+  function boot() { syncBody(); build(); refresh(); }
+
+  if (document.readyState !== "loading") boot();
+  else document.addEventListener("DOMContentLoaded", boot);
+  window.addEventListener("popstate", syncBody);
+  setInterval(function () { safe(function () { syncBody(); if (!bar) build(); refresh(); }); }, 800);
 })();
 </script>
 @endverbatim

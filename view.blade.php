@@ -16,7 +16,7 @@
 
 /* ---- hero ---- */
 .ja-hero {
-  position: relative; overflow: hidden; border-radius: var(--joma-radius-xl, 22px);
+  position: relative; overflow: hidden; border-radius: var(--joma-radius-xl, 28px);
   padding: 2.25rem 2.25rem; margin-bottom: 1.5rem;
   border: 1px solid rgb(255 255 255 / 0.09);
   background: linear-gradient(135deg, rgb(15 40 64 / 0.82), rgb(9 26 42 / 0.9));
@@ -41,7 +41,7 @@
 }
 .ja-hero__inner { position: relative; z-index: 1; display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; }
 .ja-mark {
-  width: 64px; height: 64px; border-radius: 18px; display: grid; place-items: center;
+  width: 64px; height: 64px; border-radius: var(--joma-radius-lg, 24px); display: grid; place-items: center;
   background: linear-gradient(135deg, rgb(6 182 212), rgb(45 212 191));
   box-shadow: 0 12px 30px rgb(6 182 212 / 0.5), inset 0 1px 0 rgb(255 255 255 / 0.3);
   font-size: 1.9rem; font-weight: 800; color: #fff; flex: 0 0 auto;
@@ -64,7 +64,7 @@
 .ja-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
 .ja-stat {
   position: relative; overflow: hidden;
-  border-radius: 14px; padding: 1.1rem 1.2rem; border: 1px solid rgb(255 255 255 / 0.07);
+  border-radius: var(--joma-radius-lg, 24px); padding: 1.1rem 1.2rem; border: 1px solid rgb(255 255 255 / 0.07);
   background: linear-gradient(135deg, rgb(16 40 62 / 0.72), rgb(9 26 42 / 0.8));
   backdrop-filter: blur(12px);
   transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
@@ -75,12 +75,12 @@
 .ja-stat__hint { font-size: .78rem; color: rgb(100 132 158); margin: .25rem 0 0; }
 
 /* ---- sections ---- */
-.ja-section { border-radius: 14px; padding: 1.4rem 1.5rem; margin-bottom: 1.5rem; border: 1px solid rgb(255 255 255 / 0.07); background: linear-gradient(135deg, rgb(13 34 54 / 0.66), rgb(9 26 42 / 0.72)); backdrop-filter: blur(12px); }
+.ja-section { border-radius: var(--joma-radius-lg, 24px); padding: 1.4rem 1.5rem; margin-bottom: 1.5rem; border: 1px solid rgb(255 255 255 / 0.07); background: linear-gradient(135deg, rgb(13 34 54 / 0.66), rgb(9 26 42 / 0.72)); backdrop-filter: blur(12px); }
 .ja-section h2 { margin: 0 0 1rem; font-size: 1.05rem; font-weight: 700; color: rgb(240 250 253); display: flex; align-items: center; gap: .5rem; }
 .ja-section h2::before { content: ""; width: 4px; height: 16px; border-radius: 4px; background: linear-gradient(rgb(6 182 212), rgb(34 211 238)); }
 
 .ja-features { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: .75rem; }
-.ja-feature { display: flex; gap: .75rem; align-items: flex-start; padding: .8rem .9rem; border-radius: 12px; background: rgb(255 255 255 / 0.03); border: 1px solid rgb(255 255 255 / 0.06); transition: border-color .2s ease, background .2s ease; }
+.ja-feature { display: flex; gap: .75rem; align-items: flex-start; padding: .8rem .9rem; border-radius: var(--joma-radius-md, 18px); background: rgb(255 255 255 / 0.03); border: 1px solid rgb(255 255 255 / 0.06); transition: border-color .2s ease, background .2s ease; }
 .ja-feature:hover { border-color: rgb(6 182 212 / 0.3); background: rgb(6 182 212 / 0.06); }
 .ja-feature__icon { font-size: 1.15rem; line-height: 1.4; }
 .ja-feature__t { font-weight: 600; color: rgb(226 242 250); font-size: .9rem; }
@@ -125,8 +125,8 @@
   <div class="ja-grid">
     <div class="ja-stat">
       <p class="ja-stat__label">Version</p>
-      <p class="ja-stat__value">4.0.0</p>
-      <p class="ja-stat__hint">Midnight marine · liquid glass</p>
+      <p class="ja-stat__value">4.1.0</p>
+      <p class="ja-stat__hint">Runder · cleaner · File-Dock</p>
     </div>
     <div class="ja-stat">
       <p class="ja-stat__label">Blueprint Target</p>
@@ -156,6 +156,8 @@
       <div class="ja-feature"><span class="ja-feature__icon">🖥️</span><div><div class="ja-feature__t">Cloud Console</div><div class="ja-feature__d">Auto-Scroll &amp; One-Click Copy, Glass-Terminal.</div></div></div>
       <div class="ja-feature"><span class="ja-feature__icon">⌘</span><div><div class="ja-feature__t">Command Palette</div><div class="ja-feature__d">Ctrl/⌘ + K — Server- &amp; Admin-aware Navigation.</div></div></div>
       <div class="ja-feature"><span class="ja-feature__icon">♿</span><div><div class="ja-feature__t">Accessible &amp; Responsive</div><div class="ja-feature__d">Reduced-motion guard, ab 320px nutzbar.</div></div></div>
+      <div class="ja-feature"><span class="ja-feature__icon">🗂️</span><div><div class="ja-feature__t">File-Manager-Dock</div><div class="ja-feature__d">Alle/Keine auswählen, Shift-Bereichsauswahl &amp; Massen-Löschen mit Bestätigung.</div></div></div>
+      <div class="ja-feature"><span class="ja-feature__icon">🫧</span><div><div class="ja-feature__t">Extra Rounded</div><div class="ja-feature__d">24–28px Radien, pill-runde Tabellen-Zeilen &amp; Buttons.</div></div></div>
     </div>
   </div>
 
@@ -170,7 +172,7 @@
     </div>
     <div class="ja-row">
       <span class="ja-row__label">Border radius</span>
-      <span class="ja-row__value">18–22px (glass cards)</span>
+      <span class="ja-row__value">24–28px (extra-round glass)</span>
     </div>
     <div class="ja-row">
       <span class="ja-row__label">Glass effect</span>

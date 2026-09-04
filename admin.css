@@ -1,5 +1,5 @@
 /* ============================================================================
-   JomaTheme v4.0 — admin panel theme — MIDNIGHT MARINE · LIQUID GLASS
+   JomaTheme v4.1 — admin panel theme — MIDNIGHT MARINE · LIQUID GLASS
    Applied via the Blueprint `admin.css` field (injected into the admin layout).
    Mirrors the dashboard's abyssal-midnight + cyan/teal/sky + liquid-glass
    system so the admin area feels like the same product.
@@ -55,8 +55,8 @@
   --joma-warning: 245 158 11;
   --joma-info:    14 165 233;
 
-  --joma-radius-sm: 10px; --joma-radius-md: 14px; --joma-radius-lg: 18px;
-  --joma-radius-xl: 22px; --joma-radius-pill: 100px; --joma-radius-modal: 24px;
+  --joma-radius-sm: 14px; --joma-radius-md: 18px; --joma-radius-lg: 24px;
+  --joma-radius-xl: 28px; --joma-radius-pill: 100px; --joma-radius-modal: 28px;
   --joma-blur-sm: 10px; --joma-blur-md: 16px; --joma-blur-lg: 26px;
   --joma-transition-fast: 120ms; --joma-transition-normal: 200ms;
   --joma-ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -249,6 +249,13 @@ thead th {
 tbody tr { transition: background-color var(--joma-transition-normal) ease; }
 tbody tr:hover { background-color: rgb(6 182 212 / 0.06) !important; }
 tbody td { border-color: rgb(255 255 255 / 0.06) !important; }
+/* pill-rounded row ends — visible on hover/striped backgrounds */
+thead th:first-child, tbody td:first-child {
+  border-top-left-radius: var(--joma-radius-sm); border-bottom-left-radius: var(--joma-radius-sm);
+}
+thead th:last-child, tbody td:last-child {
+  border-top-right-radius: var(--joma-radius-sm); border-bottom-right-radius: var(--joma-radius-sm);
+}
 
 /* Badges ---------------------------------------------------------------- */
 [class*="Badge"], [class*="badge"] {

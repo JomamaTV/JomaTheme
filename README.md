@@ -2,7 +2,7 @@
 
 > A premium, dark, **liquid glass** Blueprint extension theme for **Pterodactyl 1.15.1** running **Blueprint beta-2026-08**. **Midnight Marine**: an abyssal midnight-blue base with cyan→teal→sky gradients, true liquid glass (frosted blur, specular top-light, refraction hairline edges), animated deep-sea caustics, live dashboard statistics, quick actions, premium glass server cards, a cloud-style console, command palette, toast notifications and page transitions — without touching a single Pterodactyl core file.
 
-![status](https://img.shields.io/badge/status-active-22c55e) ![version](https://img.shields.io/badge/version-4.0.0-06b6d4) ![target](https://img.shields.io/badge/blueprint-beta--2026--08-06b6d4) ![pterodactyl](https://img.shields.io/badge/pterodactyl-1.15.1-38bdf8)
+![status](https://img.shields.io/badge/status-active-22c55e) ![version](https://img.shields.io/badge/version-4.1.0-06b6d4) ![target](https://img.shields.io/badge/blueprint-beta--2026--08-06b6d4) ![pterodactyl](https://img.shields.io/badge/pterodactyl-1.15.1-38bdf8)
 
 ---
 
@@ -27,6 +27,8 @@
 - 🔔 **Toast notifications** — power actions (start/stop/restart/kill) surface as auto-dismissing toasts; full JS API (`window.JomaTheme.toast`).
 - ⏳ **Loading states** — a top gradient progress bar tracks in-flight `fetch`/XHR requests; skeleton shimmer utility for your own content.
 - 🖥️ **Cloud console** — dark glass terminal with inner glow, auto-scroll to the latest line and a one-click **Copy** button.
+- 🗂️ **File-manager selection dock** — on `/server/<id>/files`: selection checkboxes are always visible (not hover-only), plus a floating glass dock with **Alle auswählen / Auswahl aufheben**, **Shift+Klick range select** and a two-step **mass delete** via the official client API.
+- 🫧 **Extra rounded** — 24–28px glass radii, pill-rounded table rows and pill buttons for a cleaner, softer look.
 - 🎯 **Premium dashboard hero** — "JOMAMC · CONTROL PANEL" with an animated gradient heading, sparkle, **live server/online stats** (real Pterodactyl data) and quick-action buttons, injected above the server list (`Dashboard.Serverlist.BeforeContent`).
 - 📊 **Statistics cards** — glass stat tiles with gradient icons and subtle ambient glow.
 - 🎛️ **Animated admin page** at `/admin/extensions/jomatheme` with a live accent-color preview.
