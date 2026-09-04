@@ -4,26 +4,60 @@
    JomaTheme — runtime animations & enhancements
    Served as a <style> tag via the Blueprint dashboard wrapper (every page).
    Heavy keyframes live here so they can never break the React CSS bundle.
+   v3.0 — deep navy / indigo-violet-cyan / glassmorphism
    ============================================================================ */
 
-/* ---- web fonts: Inter (UI) + Bootstrap Icons (Nebula-style iconography) ---- */
+/* ---- web fonts: Inter (UI) + Bootstrap Icons ---- */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css");
 
-/* ---- magic-pattern background overlay (original, Nebula-inspired) ---- */
+/* ---- ambient background: subtle dot grid + drifting aurora blobs ---- */
 body::before {
   content: "";
-  position: fixed; inset: 0; z-index: -1; pointer-events: none;
-  background-image: radial-gradient(rgb(122 152 255 / 0.05) 1px, transparent 1px);
-  background-size: 26px 26px;
-  opacity: 0.55;
+  position: fixed; inset: 0; z-index: -2; pointer-events: none;
+  background-image: radial-gradient(rgb(129 140 248 / 0.05) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: 0.5;
+}
+body::after {
+  content: "";
+  position: fixed; inset: -20%; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(38% 42% at 14% 18%, rgb(99 102 241 / 0.16), transparent 70%),
+    radial-gradient(36% 40% at 86% 14%, rgb(139 92 246 / 0.14), transparent 70%),
+    radial-gradient(34% 40% at 60% 96%, rgb(34 211 238 / 0.07), transparent 70%);
+  filter: blur(8px);
+  animation: joma-ambient 26s ease-in-out infinite alternate;
 }
 
-/* ---- keyframes referenced by dashboard.css ---- */
+/* ============================================================================
+   Keyframes (referenced by dashboard.css + components below)
+   ============================================================================ */
 @keyframes joma-aurora-drift {
   0%   { transform: translate3d(-4%, -2%, 0) scale(1.05); }
   50%  { transform: translate3d(6%, 4%, 0) scale(1.12); }
   100% { transform: translate3d(-4%, -2%, 0) scale(1.05); }
+}
+@keyframes joma-ambient {
+  0%   { transform: translate3d(-2%, -1%, 0) scale(1.04); }
+  50%  { transform: translate3d(3%, 3%, 0) scale(1.08); }
+  100% { transform: translate3d(-2%, -1%, 0) scale(1.04); }
+}
+@keyframes joma-status-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 currentColor; opacity: 1; }
+  50%      { box-shadow: 0 0 0 5px transparent; opacity: 0.85; }
+}
+@keyframes joma-hero-gradient {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+@keyframes joma-twinkle {
+  0%, 100% { opacity: 0.55; transform: scale(0.92) rotate(0deg); }
+  50%      { opacity: 1;    transform: scale(1.12) rotate(12deg); }
+}
+@keyframes joma-modal-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 @keyframes joma-pulse {
   0%, 100% { box-shadow: 0 0 0 0 rgb(34 197 94 / 0.5); }
@@ -37,100 +71,66 @@ body::before {
   40%           { transform: rotate(-4deg); }
   50%           { transform: rotate(10deg); }
 }
-@keyframes joma-shimmer {
-  100% { transform: translateX(100%); }
-}
-@keyframes joma-spin {
-  to { transform: rotate(360deg); }
-}
+@keyframes joma-shimmer { 100% { transform: translateX(100%); } }
+@keyframes joma-spin { to { transform: rotate(360deg); } }
 @keyframes joma-slide-up {
   0%   { opacity: 0; transform: translate3d(0, 18px, 0); filter: blur(6px); }
   100% { opacity: 1; transform: translate3d(0, 0, 0); filter: blur(0); }
 }
-@keyframes joma-fade-up {
-  0%   { opacity: 0; transform: translate3d(0, 12px, 0); }
-  100% { opacity: 1; transform: translate3d(0, 0, 0); }
-}
-@keyframes joma-toast-in {
-  0%   { opacity: 0; transform: translate3d(120%, 0, 0) scale(0.96); }
-  100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
-}
-@keyframes joma-toast-out {
-  0%   { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
-  100% { opacity: 0; transform: translate3d(120%, 0, 0) scale(0.96); }
-}
-@keyframes joma-toast-bar {
-  from { transform: scaleX(1); }
-  to   { transform: scaleX(0); }
-}
-@keyframes joma-progress-grow {
-  0%   { transform: translateX(-100%); }
-  50%  { transform: translateX(-30%); }
-  100% { transform: translateX(0%); }
-}
-@keyframes joma-gradient-shift {
-  0%, 100% { background-position: 0% 50%; }
-  50%      { background-position: 100% 50%; }
-}
-@keyframes joma-rise {
-  0%   { opacity: 0; transform: translate3d(0, 16px, 0); }
-  100% { opacity: 1; transform: translate3d(0, 0, 0); }
-}
+@keyframes joma-fade-up { 0% { opacity: 0; transform: translate3d(0, 12px, 0); } 100% { opacity: 1; transform: translate3d(0, 0, 0); } }
+@keyframes joma-toast-in { 0% { opacity: 0; transform: translate3d(120%, 0, 0) scale(0.96); } 100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); } }
+@keyframes joma-toast-out { 0% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); } 100% { opacity: 0; transform: translate3d(120%, 0, 0) scale(0.96); } }
+@keyframes joma-toast-bar { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+@keyframes joma-gradient-shift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+@keyframes joma-rise { 0% { opacity: 0; transform: translate3d(0, 16px, 0); } 100% { opacity: 1; transform: translate3d(0, 0, 0); } }
+@keyframes joma-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes joma-cmdk-in { from { opacity: 0; transform: translateY(-12px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes joma-ripple { to { transform: scale(2.8); opacity: 0; } }
 
 /* ---- whole-app entrance (runs once on full page load) ---- */
 #app { animation: joma-fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
 
-/* ---- subtle glass-surface hover polish (no transform on unknown els) ---- */
-.bg-white,
-[class*="bg-white"] {
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+/* ---- glass-surface hover polish (skip server cards — they have their own
+   hover treatment; animating box-shadow on a backdrop-filter element causes a
+   costly blur repaint that flickers "through" the card) ---- */
+.bg-white, [class*="bg-white"] {
+  transition: border-color 0.2s ease, filter 0.2s ease;
 }
-.bg-white:hover,
-[class*="bg-white"]:hover {
-  border-color: rgb(122 152 255 / 0.28) !important;
-  box-shadow: 0 14px 38px rgb(0 0 0 / 0.5), 0 0 0 1px rgb(122 152 255 / 0.18) !important;
+.bg-white:not([class*="ServerCard"]):not([class*="server-card"]):not([class*="ServerRow"]):hover,
+[class*="bg-white"]:not([class*="ServerCard"]):not([class*="server-card"]):not([class*="ServerRow"]):hover {
+  border-color: rgb(99 102 241 / 0.32) !important;
+  filter: brightness(1.04);
 }
 
-/* ---- primary button shine sweep on hover ---- */
-button[class*="primary"]::after,
-.btn-primary::after,
-[class*="PrimaryButton"]::after {
-  content: "";
-  position: absolute; inset: 0;
-  background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 0.35) 50%, transparent 70%);
-  transform: translateX(-120%);
-  opacity: 0;
-  pointer-events: none;
-  border-radius: inherit;
+/* ---- primary button gloss sweep on hover (subtle, symmetric) ---- */
+button[class*="primary"]::after, .btn-primary::after, [class*="PrimaryButton"]::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
+  background: linear-gradient(110deg, transparent 38%, rgb(255 255 255 / 0.18) 50%, transparent 62%);
+  transform: translateX(-130%); opacity: 0;
+  transition: transform 0.45s ease, opacity 0.2s ease;
 }
-button[class*="primary"],
-.btn-primary,
-[class*="PrimaryButton"] { position: relative; overflow: hidden; }
-button[class*="primary"]:not(:disabled):hover::after,
-.btn-primary:hover::after,
-[class*="PrimaryButton"]:not(:disabled):hover::after {
-  opacity: 1;
-  transform: translateX(120%);
-  transition: transform 0.7s ease, opacity 0.2s ease;
+button[class*="primary"], .btn-primary, [class*="PrimaryButton"] { position: relative; overflow: hidden; }
+button[class*="primary"]:not(:disabled):hover::after, .btn-primary:hover::after, [class*="PrimaryButton"]:not(:disabled):hover::after {
+  transform: translateX(130%); opacity: 1;
+  transition: transform 0.45s ease, opacity 0.15s ease;
 }
 
 /* ---- top loading bar ---- */
 #jomatheme-progress {
   position: fixed; bottom: 0; left: 0; right: 0; height: 2px; z-index: 99998;
-  pointer-events: none; opacity: 0;
-  transition: opacity 0.3s ease;
+  pointer-events: none; opacity: 0; transition: opacity 0.3s ease;
 }
 #jomatheme-progress.is-loading { opacity: 1; }
 #jomatheme-progress__bar {
   height: 100%; width: 100%; transform-origin: left center; transform: translateX(-100%);
-  background: rgb(122 152 255);
-  box-shadow: 0 0 10px rgb(122 152 255 / 0.8);
+  background: linear-gradient(90deg, rgb(99 102 241), rgb(139 92 246), rgb(34 211 238));
+  box-shadow: 0 0 12px rgb(99 102 241 / 0.8);
   transition: transform 0.25s ease;
 }
 #jomatheme-progress.is-loading #jomatheme-progress__bar { transform: translateX(-30%); }
 #jomatheme-progress.is-done #jomatheme-progress__bar { transform: translateX(0%); }
 
-/* ---- staggered rise utility (Nebula-style 30ms steps) ---- */
+/* ---- staggered rise utility ---- */
 .jomatheme-rise { animation: joma-rise 0.3s cubic-bezier(0.22, 1, 0.36, 1) both; opacity: 0; }
 .jomatheme-rise:nth-child(1) { animation-delay: 0ms; }
 .jomatheme-rise:nth-child(2) { animation-delay: 30ms; }
@@ -141,132 +141,51 @@ button[class*="primary"]:not(:disabled):hover::after,
 .jomatheme-rise:nth-child(7) { animation-delay: 180ms; }
 .jomatheme-rise:nth-child(8) { animation-delay: 210ms; }
 
-/* ---- console tweaks (safe, selector-tolerant) ---- */
-[class*="terminal"],
-[class*="console"] {
-  border-radius: 12px !important;
-  background: rgb(6 6 12 / 0.85) !important;
-  border: 1px solid rgb(255 255 255 / 0.08) !important;
-  box-shadow: inset 0 0 40px rgb(0 0 0 / 0.6) !important;
-}
-
 /* ============================================================================
-   JomaTheme v1.1 — premium button system · ripple · command palette
+   JomaTheme runtime UI — ripples · command palette · tooltips
    ============================================================================ */
 :root {
   --joma-radius-sm: 10px; --joma-radius-md: 14px; --joma-radius-lg: 18px;
   --joma-radius-xl: 22px; --joma-radius-modal: 24px;
-  --joma-blur-sm: 10px; --joma-blur-md: 18px; --joma-blur-lg: 28px;
+  --joma-blur-sm: 10px; --joma-blur-md: 16px; --joma-blur-lg: 26px;
   --joma-transition-fast: 120ms; --joma-transition-normal: 200ms;
 }
 
-/* ---- button foundation (enables ripple + shine, keeps box-shadow) ---- */
-button, .btn, [class*="Button"], a[class*="btn"], [role="button"] {
-  position: relative;
-  overflow: hidden;
-}
+/* button foundation (enables ripple + shine) */
+button, .btn, [class*="Button"], a[class*="btn"], [role="button"] { position: relative; overflow: hidden; }
 
-/* ---- click ripple (spawned by JS at the cursor) ---- */
+/* click ripple (spawned by JS at the cursor) */
 .jomatheme-ripple {
   position: absolute; border-radius: 50%; pointer-events: none;
   transform: scale(0); opacity: 0.9; z-index: 0;
   background: radial-gradient(circle, rgb(255 255 255 / 0.55), transparent 72%);
   animation: joma-ripple 0.62s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
-button[class*="primary"] .jomatheme-ripple,
-.btn-primary .jomatheme-ripple,
-[class*="PrimaryButton"] .jomatheme-ripple {
+button[class*="primary"] .jomatheme-ripple, .btn-primary .jomatheme-ripple, [class*="PrimaryButton"] .jomatheme-ripple {
   background: radial-gradient(circle, rgb(255 255 255 / 0.75), transparent 72%);
 }
-@keyframes joma-ripple { to { transform: scale(2.8); opacity: 0; } }
 
-/* ---- premium primary: animated gradient + glow on hover, 3D press on click ---- */
-button[class*="primary"], .btn-primary, [class*="PrimaryButton"] {
-  background-size: 200% 200% !important;
-  transition: transform var(--joma-transition-normal) cubic-bezier(0.34,1.56,0.64,1),
-              box-shadow var(--joma-transition-normal) ease,
-              filter var(--joma-transition-normal) ease,
-              background-position 0.6s ease !important;
-}
-button[class*="primary"]:not(:disabled):hover,
-.btn-primary:hover,
-[class*="PrimaryButton"]:not(:disabled):hover {
-  background-position: 100% 0% !important;
-  filter: brightness(1.07);
-  box-shadow: 0 16px 36px rgb(122 152 255 / 0.5), 0 0 0 1px rgb(122 152 255 / 0.45),
-              inset 0 1px 0 rgb(255 255 255 / 0.25) !important;
-}
-button[class*="primary"]:not(:disabled):active,
-.btn-primary:active,
-[class*="PrimaryButton"]:not(:disabled):active {
-  transform: translateY(0) scale(0.96);
-  box-shadow: 0 4px 14px rgb(122 152 255 / 0.4) !important;
+/* icon nudge inside buttons on hover */
+button:not(:disabled):hover svg, .btn:hover svg, [class*="Button"]:not(:disabled):hover svg {
+  transform: translateX(2px); transition: transform var(--joma-transition-normal) ease;
 }
 
-/* ---- secondary / ghost / danger press ---- */
-button[class*="secondary"]:not(:disabled):active,
-.btn-secondary:active,
-[class*="SecondaryButton"]:not(:disabled):active,
-button[class*="ghost"]:not(:disabled):active,
-button[class*="danger"]:not(:disabled):active,
-.btn-danger:active,
-[class*="DangerButton"]:not(:disabled):active {
-  transform: translateY(0) scale(0.96);
-}
-
-/* ---- icon nudge inside buttons on hover ---- */
-button:not(:disabled):hover svg,
-.btn:hover svg,
-[class*="Button"]:not(:disabled):hover svg {
-  transform: translateX(2px);
-  transition: transform var(--joma-transition-normal) ease;
-}
-
-/* ---- card micro-interactions (scoped to safe selectors) ---- */
-.jomatheme-welcome { transition: transform var(--joma-transition-normal) ease, box-shadow var(--joma-transition-normal) ease; }
-.jomatheme-welcome:hover { transform: translateY(-2px); }
-
-[class*="ServerCard"], [class*="server-card"], [class*="ServerRow"] {
-  transition: transform var(--joma-transition-normal) cubic-bezier(0.34,1.56,0.64,1),
-              box-shadow var(--joma-transition-normal) ease,
-              border-color var(--joma-transition-normal) ease !important;
-}
-[class*="ServerCard"]:hover, [class*="server-card"]:hover, [class*="ServerRow"]:hover {
-  transform: translateY(-3px) !important;
-  border-color: rgb(122 152 255 / 0.28) !important;
-  box-shadow: 0 22px 46px rgb(0 0 0 / 0.5), 0 0 0 1px rgb(122 152 255 / 0.22) !important;
-}
-
-/* ---- gradient-border utility ---- */
+/* gradient-border utility */
 .jomatheme-grad-border { position: relative; border: 1px solid transparent !important; background-clip: padding-box; }
 .jomatheme-grad-border::before {
   content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
   padding: 1px; margin: -1px; pointer-events: none;
-  background: linear-gradient(135deg, rgb(122 152 255), rgb(79 98 149), rgb(100 134 230));
+  background: linear-gradient(135deg, rgb(99 102 241), rgb(139 92 246), rgb(34 211 238));
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor; mask-composite: exclude;
 }
 
-/* ---- status glow dots ---- */
-.jomatheme-dot { width: 8px; height: 8px; border-radius: 999px; display: inline-block; }
-.jomatheme-dot--online { background: rgb(34 197 94); box-shadow: 0 0 0 4px rgb(34 197 94 / 0.18), 0 0 12px rgb(34 197 94 / 0.6); animation: joma-pulse 2s infinite; }
-.jomatheme-dot--offline { background: rgb(239 68 68); box-shadow: 0 0 0 4px rgb(239 68 68 / 0.18); }
-.jomatheme-dot--starting { background: rgb(245 158 11); box-shadow: 0 0 0 4px rgb(245 158 11 / 0.18), 0 0 12px rgb(245 158 11 / 0.6); animation: joma-pulse 1.4s infinite; }
-
-/* ---- animated progress bar ---- */
-.jomatheme-progress { height: 6px; border-radius: 999px; background: rgb(255 255 255 / 0.08); overflow: hidden; }
-.jomatheme-progress__bar {
-  height: 100%; border-radius: 999px; transition: width 0.4s ease;
-  background: linear-gradient(90deg, rgb(122 152 255), rgb(79 98 149));
-  background-size: 200% 100%; animation: joma-gradient-shift 2.4s linear infinite;
-}
-
-/* ---- tooltip utility ---- */
+/* tooltip utility */
 .jomatheme-tip { position: relative; }
 .jomatheme-tip::after {
   content: attr(data-joma-tip); position: absolute; left: 50%; bottom: calc(100% + 8px);
   transform: translateX(-50%) translateY(4px); z-index: 50;
-  background: rgb(8 8 14 / 0.92); color: rgb(236 236 245);
+  background: rgb(10 16 32 / 0.94); color: rgb(232 238 246);
   border: 1px solid rgb(255 255 255 / 0.1); border-radius: 8px;
   padding: .25rem .5rem; font-size: .72rem; white-space: nowrap;
   opacity: 0; pointer-events: none;
@@ -274,68 +193,66 @@ button:not(:disabled):hover svg,
 }
 .jomatheme-tip:hover::after { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-/* ---- command palette (Ctrl + K) ---- */
+/* command palette (Ctrl + K) */
 #jomatheme-cmdk { position: fixed; inset: 0; z-index: 99997; display: none; }
 #jomatheme-cmdk.is-open { display: block; }
 .jomatheme-cmdk__backdrop {
-  position: absolute; inset: 0;
-  background: rgb(5 5 9 / 0.55);
+  position: absolute; inset: 0; background: rgb(5 9 20 / 0.6);
   backdrop-filter: blur(8px) saturate(120%); -webkit-backdrop-filter: blur(8px) saturate(120%);
   animation: joma-fade 0.2s ease both;
 }
 .jomatheme-cmdk__panel {
   position: relative; width: calc(100% - 2rem); max-width: 38rem; margin: 12vh auto 0;
-  background: rgb(18 18 28 / 0.86);
+  background: linear-gradient(135deg, rgb(20 28 50 / 0.92), rgb(12 18 36 / 0.95));
   backdrop-filter: blur(var(--joma-blur-lg)) saturate(160%); -webkit-backdrop-filter: blur(var(--joma-blur-lg)) saturate(160%);
   border: 1px solid rgb(255 255 255 / 0.1); border-radius: var(--joma-radius-modal);
-  box-shadow: 0 30px 80px rgb(0 0 0 / 0.6), 0 0 0 1px rgb(122 152 255 / 0.12), inset 0 1px 0 rgb(255 255 255 / 0.06);
+  box-shadow: 0 30px 80px rgb(0 0 0 / 0.6), 0 0 0 1px rgb(99 102 241 / 0.14), inset 0 1px 0 rgb(255 255 255 / 0.06);
   overflow: hidden; animation: joma-cmdk-in 0.32s cubic-bezier(0.34,1.56,0.64,1) both;
 }
-.jomatheme-cmdk__head {
-  display: flex; align-items: center; gap: .6rem; padding: .9rem 1rem;
-  border-bottom: 1px solid rgb(255 255 255 / 0.07);
-}
-.jomatheme-cmdk__icon { color: rgb(150 150 170); font-size: 1.05rem; }
+.jomatheme-cmdk__head { display: flex; align-items: center; gap: .6rem; padding: .9rem 1rem; border-bottom: 1px solid rgb(255 255 255 / 0.07); }
+.jomatheme-cmdk__icon { color: rgb(129 140 248); font-size: 1.05rem; }
 .jomatheme-cmdk__input {
   flex: 1; background: transparent !important; border: 0 !important; box-shadow: none !important;
-  color: rgb(236 236 245) !important; font-size: 1rem; outline: none !important;
+  color: rgb(232 238 246) !important; font-size: 1rem; outline: none !important;
 }
-.jomatheme-cmdk__input::placeholder { color: rgb(120 120 138) !important; }
+.jomatheme-cmdk__input::placeholder { color: rgb(110 122 150) !important; }
 .jomatheme-cmdk__kbd {
-  font-size: .68rem; color: rgb(150 150 170); border: 1px solid rgb(255 255 255 / 0.12);
+  font-size: .68rem; color: rgb(140 150 176); border: 1px solid rgb(255 255 255 / 0.12);
   border-radius: 6px; padding: .1rem .35rem; background: rgb(255 255 255 / 0.04);
 }
 .jomatheme-cmdk__list { max-height: 22rem; overflow-y: auto; padding: .4rem; }
-.jomatheme-cmdk__group { font-size: .66rem; text-transform: uppercase; letter-spacing: .1em; color: rgb(120 120 138); padding: .6rem .6rem .3rem; }
+.jomatheme-cmdk__group { font-size: .66rem; text-transform: uppercase; letter-spacing: .1em; color: rgb(110 122 150); padding: .6rem .6rem .3rem; }
 .jomatheme-cmdk__item {
   display: flex; align-items: center; gap: .65rem; padding: .55rem .6rem; border-radius: var(--joma-radius-sm);
-  color: rgb(210 210 222); cursor: pointer; border: 1px solid transparent;
+  color: rgb(202 210 226); cursor: pointer; border: 1px solid transparent;
   transition: background var(--joma-transition-fast) ease, border-color var(--joma-transition-fast) ease, transform var(--joma-transition-fast) ease, color var(--joma-transition-fast) ease;
 }
 .jomatheme-cmdk__item.is-active {
-  background: linear-gradient(135deg, rgb(122 152 255 / 0.22), rgb(79 98 149 / 0.1));
-  border-color: rgb(122 152 255 / 0.35); color: rgb(248 248 252); transform: translateX(2px);
+  background: linear-gradient(135deg, rgb(99 102 241 / 0.24), rgb(139 92 246 / 0.1));
+  border-color: rgb(99 102 241 / 0.38); color: rgb(245 247 252); transform: translateX(2px);
 }
-.jomatheme-cmdk__item-icon { width: 1.2rem; text-align: center; }
+.jomatheme-cmdk__item-icon { width: 1.2rem; text-align: center; color: rgb(129 140 248); }
 .jomatheme-cmdk__item-label { flex: 1; }
-.jomatheme-cmdk__item-hint { font-size: .7rem; color: rgb(120 120 138); }
-.jomatheme-cmdk__empty { padding: 1.4rem; text-align: center; color: rgb(140 140 160); font-size: .85rem; }
-@keyframes joma-fade { from { opacity: 0; } to { opacity: 1; } }
-@keyframes joma-cmdk-in { from { opacity: 0; transform: translateY(-12px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.jomatheme-cmdk__item-hint { font-size: .7rem; color: rgb(110 122 150); }
+.jomatheme-cmdk__empty { padding: 1.4rem; text-align: center; color: rgb(140 150 176); font-size: .85rem; }
 
-/* ---- command palette hint (bottom-left, subtle) ---- */
+/* command palette hint (bottom-left) */
 #jomatheme-cmdk-hint {
   position: fixed; left: 1.25rem; bottom: 1.25rem; z-index: 99990;
   display: inline-flex; align-items: center; gap: .4rem;
   padding: .35rem .6rem; border-radius: 8px; cursor: pointer;
-  background: rgb(22 22 34 / 0.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgb(255 255 255 / 0.1); color: rgb(200 200 214); font-size: .72rem;
+  background: rgb(14 20 38 / 0.78); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgb(255 255 255 / 0.1); color: rgb(202 210 226); font-size: .72rem;
   box-shadow: 0 8px 24px rgb(0 0 0 / 0.35);
   transition: border-color var(--joma-transition-normal) ease, transform var(--joma-transition-normal) ease, color var(--joma-transition-normal) ease;
 }
-#jomatheme-cmdk-hint:hover { border-color: rgb(122 152 255 / 0.5); color: rgb(248 248 252); transform: translateY(-1px); }
-#jomatheme-cmdk-hint kbd { font-size: .66rem; border: 1px solid rgb(255 255 255 / 0.14); border-radius: 5px; padding: .05rem .3rem; background: rgb(255 255 255 / 0.06); color: rgb(122 152 255); }
+#jomatheme-cmdk-hint:hover { border-color: rgb(99 102 241 / 0.5); color: rgb(245 247 252); transform: translateY(-1px); }
+#jomatheme-cmdk-hint kbd { font-size: .66rem; border: 1px solid rgb(255 255 255 / 0.14); border-radius: 5px; padding: .05rem .3rem; background: rgb(255 255 255 / 0.06); color: rgb(129 140 248); }
 @media (max-width: 640px) { #jomatheme-cmdk-hint { display: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  body::after, .jomatheme-ripple { animation: none !important; }
+}
 </style>
 
 <div id="jomatheme-progress" aria-hidden="true"><div id="jomatheme-progress__bar"></div></div>
@@ -350,22 +267,15 @@ button:not(:disabled):hover svg,
   "use strict";
 
   var REDUCED = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
   function safe(fn) { try { fn(); } catch (e) { /* silent */ } }
 
   /* ---- Toast system --------------------------------------------------- */
-  var ICONS = { success: "✓", warning: "⚠", error: "✕", info: "ℹ" };
+  var ICONS = { success: "bi-check-circle-fill", warning: "bi-exclamation-triangle-fill", error: "bi-x-circle-fill", info: "bi-info-circle-fill" };
   var container = document.getElementById("jomatheme-toasts");
-
   function ensureContainer() {
-    if (!container) {
-      container = document.createElement("div");
-      container.id = "jomatheme-toasts";
-      document.body.appendChild(container);
-    }
+    if (!container) { container = document.createElement("div"); container.id = "jomatheme-toasts"; document.body.appendChild(container); }
     return container;
   }
-
   function toast(opts) {
     safe(function () {
       var o = opts || {};
@@ -374,40 +284,28 @@ button:not(:disabled):hover svg,
       var message = o.message || "";
       var duration = o.duration || 3600;
       var host = ensureContainer();
-
       var el = document.createElement("div");
       el.className = "jomatheme-toast";
       el.setAttribute("data-type", type);
       el.setAttribute("role", type === "error" ? "alert" : "status");
 
       var icon = document.createElement("span");
-      icon.className = "jomatheme-toast__icon";
-      icon.textContent = ICONS[type] || "ℹ";
+      icon.className = "jomatheme-toast__icon jomatheme-toast__icon--" + type;
+      icon.setAttribute("aria-hidden", "true");
+      icon.innerHTML = '<i class="bi ' + (ICONS[type] || ICONS.info) + '"></i>';
 
       var body = document.createElement("div");
       body.className = "jomatheme-toast__body";
-      if (title) {
-        var t = document.createElement("div");
-        t.className = "jomatheme-toast__title";
-        t.textContent = title;
-        body.appendChild(t);
-      }
-      if (message) {
-        var m = document.createElement("div");
-        m.className = "jomatheme-toast__message";
-        m.textContent = message;
-        body.appendChild(m);
-      }
+      if (title) { var t = document.createElement("div"); t.className = "jomatheme-toast__title"; t.textContent = title; body.appendChild(t); }
+      if (message) { var m = document.createElement("div"); m.className = "jomatheme-toast__message"; m.textContent = message; body.appendChild(m); }
 
       var close = document.createElement("button");
       close.className = "jomatheme-toast__close";
       close.setAttribute("aria-label", "Close");
-      close.textContent = "✕";
+      close.innerHTML = '<i class="bi bi-x"></i>';
       close.addEventListener("click", function () { dismiss(); });
 
-      el.appendChild(icon);
-      el.appendChild(body);
-      el.appendChild(close);
+      el.appendChild(icon); el.appendChild(body); el.appendChild(close);
 
       var bar = document.createElement("span");
       bar.className = "jomatheme-toast__bar";
@@ -416,7 +314,6 @@ button:not(:disabled):hover svg,
       el.appendChild(bar);
 
       host.appendChild(el);
-
       var timer = null;
       function dismiss() {
         if (timer) { clearTimeout(timer); timer = null; }
@@ -432,10 +329,8 @@ button:not(:disabled):hover svg,
   var SIGNALS = { start: "Start", stop: "Stop", restart: "Neustart", kill: "Kill" };
   function humanSignal(s) { return SIGNALS[(s || "").toLowerCase()] || s; }
 
-  /* expose a tiny public API */
   window.JomaTheme = {
-    toast: toast,
-    notify: toast,
+    toast: toast, notify: toast,
     success: function (t, m) { toast({ type: "success", title: t, message: m }); },
     warning: function (t, m) { toast({ type: "warning", title: t, message: m }); },
     error:   function (t, m) { toast({ type: "error",   title: t, message: m }); },
@@ -444,15 +339,13 @@ button:not(:disabled):hover svg,
 
   /* ---- Top loading bar ------------------------------------------------ */
   var progress = document.getElementById("jomatheme-progress");
-  var inflight = 0;
-  var progressTimer = null;
+  var inflight = 0; var progressTimer = null;
   function progressStart() {
     safe(function () {
       inflight++;
       if (!progress) progress = document.getElementById("jomatheme-progress");
       if (!progress) return;
-      progress.classList.remove("is-done");
-      progress.classList.add("is-loading");
+      progress.classList.remove("is-done"); progress.classList.add("is-loading");
     });
   }
   function progressDone() {
@@ -463,10 +356,7 @@ button:not(:disabled):hover svg,
       if (!progress) return;
       progress.classList.add("is-done");
       if (progressTimer) clearTimeout(progressTimer);
-      progressTimer = setTimeout(function () {
-        progress.classList.remove("is-loading");
-        progress.classList.remove("is-done");
-      }, 320);
+      progressTimer = setTimeout(function () { progress.classList.remove("is-loading"); progress.classList.remove("is-done"); }, 320);
     });
   }
 
@@ -475,47 +365,34 @@ button:not(:disabled):hover svg,
     if (!window.fetch || window.fetch.__joma) return;
     var orig = window.fetch;
     function wrapped(input, init) {
-      var url = "";
-      var method = "GET";
+      var url = ""; var method = "GET";
       try {
         if (typeof input === "string") { url = input; }
         else if (input && input.url) { url = input.url; method = input.method || "GET"; }
         if (init && init.method) method = (init.method || "GET").toUpperCase();
       } catch (e) {}
-
       var isPower = false, signal = null;
       try {
         if (method !== "GET" && /\/api\/client\/servers\/[^\/]+\/power/.test(url)) {
           isPower = true;
-          if (init && init.body) {
-            try { signal = JSON.parse(init.body).signal; }
-            catch (e) { try { signal = String(init.body); } catch (e2) {} }
-          }
+          if (init && init.body) { try { signal = JSON.parse(init.body).signal; } catch (e) { try { signal = String(init.body); } catch (e2) {} } }
         }
       } catch (e) {}
-
       var isWrite = method !== "GET" && method !== "HEAD";
       if (isWrite) progressStart();
-
       var p = orig.apply(this, arguments);
       if (isWrite) p.then(progressDone, progressDone);
       if (isPower && signal) {
         p.then(function (res) {
           safe(function () {
-            if (res && res.ok) {
-              toast({ type: "success", title: "Server", message: humanSignal(signal) + " erfolgreich." });
-            } else {
-              toast({ type: "error", title: "Aktion fehlgeschlagen", message: "Status " + (res && res.status) });
-            }
+            if (res && res.ok) { toast({ type: "success", title: "Server", message: humanSignal(signal) + " erfolgreich." }); }
+            else { toast({ type: "error", title: "Aktion fehlgeschlagen", message: "Status " + (res && res.status) }); }
           });
-        }, function () {
-          safe(function () { toast({ type: "error", title: "Netzwerkfehler", message: "Server nicht erreichbar." }); });
-        });
+        }, function () { safe(function () { toast({ type: "error", title: "Netzwerkfehler", message: "Server nicht erreichbar." }); }); });
       }
       return p;
     }
-    wrapped.__joma = true;
-    window.fetch = wrapped;
+    wrapped.__joma = true; window.fetch = wrapped;
   });
 
   /* ---- XHR interceptor (covers axios-style requests) ------------------ */
@@ -526,31 +403,23 @@ button:not(:disabled):hover svg,
     var send = XMLHttpRequest.prototype.send;
     XMLHttpRequest.prototype.__joma = true;
     XMLHttpRequest.prototype.open = function (method, url) {
-      try {
-        this.__joma_method = (method || "GET").toUpperCase();
-        this.__joma_url = String(url || "");
-      } catch (e) {}
+      try { this.__joma_method = (method || "GET").toUpperCase(); this.__joma_url = String(url || ""); } catch (e) {}
       return open.apply(this, arguments);
     };
     XMLHttpRequest.prototype.send = function (body) {
-      var self = this;
-      var isWrite = false, isPower = false, signal = null;
+      var self = this; var isWrite = false, isPower = false, signal = null;
       try {
         isWrite = self.__joma_method && self.__joma_method !== "GET" && self.__joma_method !== "HEAD";
         if (isWrite && /\/api\/client\/servers\/[^\/]+\/power/.test(self.__joma_url)) {
-          isPower = true;
-          try { signal = JSON.parse(body).signal; } catch (e) { try { signal = String(body); } catch (e2) {} }
+          isPower = true; try { signal = JSON.parse(body).signal; } catch (e) { try { signal = String(body); } catch (e2) {} }
         }
       } catch (e) {}
       if (isWrite) progressStart();
       if (isPower) {
         self.addEventListener("loadend", function () {
           safe(function () {
-            if (self.status >= 200 && self.status < 300) {
-              toast({ type: "success", title: "Server", message: humanSignal(signal) + " erfolgreich." });
-            } else {
-              toast({ type: "error", title: "Aktion fehlgeschlagen", message: "Status " + self.status });
-            }
+            if (self.status >= 200 && self.status < 300) { toast({ type: "success", title: "Server", message: humanSignal(signal) + " erfolgreich." }); }
+            else { toast({ type: "error", title: "Aktion fehlgeschlagen", message: "Status " + self.status }); }
           });
         });
       }
@@ -565,23 +434,12 @@ button:not(:disabled):hover svg,
       var app = document.getElementById("app");
       if (!app) return;
       var target = app.firstElementChild || app;
-      try {
-        target.classList.remove("jomatheme-slide");
-        void target.offsetWidth; /* reflow to restart animation */
-        target.classList.add("jomatheme-slide");
-      } catch (e) {}
+      try { target.classList.remove("jomatheme-slide"); void target.offsetWidth; target.classList.add("jomatheme-slide"); } catch (e) {}
     }
-    function wrapHistory(fn) {
-      return function () {
-        var r = fn.apply(this, arguments);
-        try { setTimeout(triggerSlide, 0); } catch (e) {}
-        return r;
-      };
-    }
+    function wrapHistory(fn) { return function () { var r = fn.apply(this, arguments); try { setTimeout(triggerSlide, 0); } catch (e) {} return r; }; }
     if (history.pushState) history.pushState = wrapHistory(history.pushState);
     if (history.replaceState) history.replaceState = wrapHistory(history.replaceState);
     window.addEventListener("popstate", function () { try { triggerSlide(); } catch (e) {} });
-    /* initial paint */
     setTimeout(triggerSlide, 30);
   });
 
@@ -589,44 +447,38 @@ button:not(:disabled):hover svg,
   safe(function () {
     function findConsole() {
       var sels = ["[class*='terminal']", "[class*='Terminal']", "[class*='console']", "#terminal", ".terminal"];
-      for (var i = 0; i < sels.length; i++) {
-        var el = document.querySelector(sels[i]);
-        if (el) return el;
-      }
+      for (var i = 0; i < sels.length; i++) { var el = document.querySelector(sels[i]); if (el) return el; }
       return null;
     }
-    function textOf(el) {
-      return (el && (el.innerText || el.textContent)) || "";
-    }
+    function textOf(el) { return (el && (el.innerText || el.textContent)) || ""; }
     function maybeAddCopy() {
       var con = findConsole();
       if (!con || con.__jomaCopy) return;
       con.__jomaCopy = true;
-      var wrap = con.parentNode;
-      if (!wrap) return;
+      var wrap = con.parentNode; if (!wrap) return;
       var btn = document.createElement("button");
       btn.type = "button";
-      btn.textContent = "Copy";
+      btn.innerHTML = '<i class="bi bi-clipboard"></i>';
       btn.setAttribute("aria-label", "Copy console output");
-      btn.style.cssText = "position:absolute;top:8px;right:8px;z-index:5;" +
-        "padding:.25rem .6rem;font-size:.72rem;border-radius:8px;" +
-        "background:rgb(255 255 255 / 0.06);color:rgb(210 210 222);" +
-        "border:1px solid rgb(255 255 255 / 0.12);cursor:pointer;";
+      btn.style.cssText = "position:absolute;top:10px;right:10px;z-index:5;display:inline-flex;align-items:center;gap:.3rem;" +
+        "padding:.3rem .6rem;font-size:.72rem;font-weight:600;border-radius:8px;" +
+        "background:rgb(14 20 38 / 0.8);color:rgb(202 210 226);" +
+        "border:1px solid rgb(255 255 255 / 0.12);cursor:pointer;backdrop-filter:blur(8px);" +
+        "transition:color .2s ease,border-color .2s ease,background .2s ease;";
+      btn.addEventListener("mouseenter", function () { btn.style.color = "rgb(245 247 252)"; btn.style.borderColor = "rgb(99 102 241 / 0.5)"; });
+      btn.addEventListener("mouseleave", function () { btn.style.color = "rgb(202 210 226)"; btn.style.borderColor = "rgb(255 255 255 / 0.12)"; });
       btn.addEventListener("click", function () {
         safe(function () {
           var txt = textOf(con);
-          var done = function () { btn.textContent = "✓ Copied"; setTimeout(function () { btn.textContent = "Copy"; }, 1400); };
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(txt).then(done, function () {});
-          }
+          var done = function () { btn.innerHTML = '<i class="bi bi-check2"></i> Kopiert'; setTimeout(function () { btn.innerHTML = '<i class="bi bi-clipboard"></i>'; }, 1400); };
+          if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, function () {});
         });
       });
       if (getComputedStyle(wrap).position === "static") wrap.style.position = "relative";
       wrap.appendChild(btn);
     }
     function autoscroll() {
-      var con = findConsole();
-      if (!con) return;
+      var con = findConsole(); if (!con) return;
       var near = (con.scrollHeight - con.scrollTop - con.clientHeight) < 80;
       if (near) con.scrollTop = con.scrollHeight;
     }
@@ -638,7 +490,6 @@ button:not(:disabled):hover svg,
     }
     if (document.readyState !== "loading") boot();
     document.addEventListener("DOMContentLoaded", boot);
-    /* re-check as React mounts the console lazily */
     var retries = 0; var iv = setInterval(function () {
       if (findConsole()) { boot(); if (++retries > 8) clearInterval(iv); }
       else if (++retries > 12) clearInterval(iv);
@@ -661,10 +512,7 @@ button:not(:disabled):hover svg,
       }
       requestAnimationFrame(step);
     }
-    function scan(root) {
-      var els = (root || document).querySelectorAll("[data-joma-count]");
-      for (var i = 0; i < els.length; i++) run(els[i]);
-    }
+    function scan(root) { var els = (root || document).querySelectorAll("[data-joma-count]"); for (var i = 0; i < els.length; i++) run(els[i]); }
     if (document.readyState !== "loading") scan(document);
     document.addEventListener("DOMContentLoaded", function () { scan(document); });
   });
@@ -672,12 +520,7 @@ button:not(:disabled):hover svg,
   /* ---- Welcome toast on first load ----------------------------------- */
   safe(function () {
     setTimeout(function () {
-      toast({
-        type: "info",
-        title: "JomaTheme aktiv",
-        message: "Willkommen beim JomaMC Panel-Theme. 🔥",
-        duration: 4200
-      });
+      toast({ type: "info", title: "JomaTheme aktiv", message: "Willkommen beim JomaMC Control Panel.", duration: 4200 });
     }, 900);
   });
 
@@ -686,22 +529,21 @@ button:not(:disabled):hover svg,
 
 <script>
 /* ============================================================================
-   JomaTheme v1.1 runtime — button ripples + command palette (Ctrl/⌘ + K).
+   JomaTheme runtime UI — button ripples + command palette (Ctrl/⌘ + K).
    Purely additive; everything is guarded so Pterodactyl is never affected.
    ============================================================================ */
 (function () {
   "use strict";
   function safe(fn) { try { fn(); } catch (e) { /* silent */ } }
 
-  /* ---- Button click ripples (event delegation, every button-like el) ---- */
+  /* ---- Button click ripples (event delegation) ---- */
   safe(function () {
     var SEL = "button, .btn, [class*='Button'], a[class*='btn'], [role='button']";
     document.addEventListener("pointerdown", function (e) {
       safe(function () {
         if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
         var t = e.target && e.target.closest ? e.target.closest(SEL) : null;
-        if (!t) return;
-        if (t.disabled) return;
+        if (!t) return; if (t.disabled) return;
         var rect = t.getBoundingClientRect();
         var size = Math.max(rect.width, rect.height) * 1.1;
         var x = (e.clientX - rect.left) - size / 2;
@@ -709,8 +551,7 @@ button:not(:disabled):hover svg,
         var r = document.createElement("span");
         r.className = "jomatheme-ripple";
         r.style.width = r.style.height = size + "px";
-        r.style.left = x + "px";
-        r.style.top = y + "px";
+        r.style.left = x + "px"; r.style.top = y + "px";
         t.appendChild(r);
         setTimeout(function () { if (r.parentNode) r.parentNode.removeChild(r); }, 680);
       });
@@ -720,57 +561,31 @@ button:not(:disabled):hover svg,
   /* ---- Command palette (Ctrl/⌘ + K) -------------------------------- */
   safe(function () {
     function go(p) { try { window.location.href = p; } catch (e) {} }
-
     var cmds = [
       { group: "Navigate", icon: "bi-house", label: "Dashboard", hint: "/", run: function () { go("/"); } },
       { group: "Account",  icon: "bi-person", label: "Account Settings", hint: "/account", run: function () { go("/account"); } },
       { group: "Account",  icon: "bi-key", label: "API Credentials", hint: "/account/api", run: function () { go("/account/api"); } },
       { group: "Account",  icon: "bi-terminal", label: "SSH Keys", hint: "/account/ssh", run: function () { go("/account/ssh"); } },
-      { group: "Actions",   icon: "bi-plus-circle", label: "Create Server", hint: "new", run: function () { go("/"); } },
       { group: "Actions",   icon: "bi-arrow-clockwise", label: "Reload page", hint: "refresh", run: function () { window.location.reload(); } }
     ];
-
-    /* server-aware: if we're on /server/<id>, offer that server's tabs first */
     var m = location.pathname.match(/\/server\/([^/]+)/);
     if (m && m[1]) {
       var id = m[1];
-      var tabs = [
-        ["Console", ""], ["Files", "/files"], ["Backups", "/backups"],
-        ["Schedules", "/schedules"], ["Users", "/users"], ["Network", "/network"],
-        ["Startup", "/startup"], ["Settings", "/settings"]
-      ];
+      var tabs = [["Console",""],["Files","/files"],["Backups","/backups"],["Schedules","/schedules"],["Users","/users"],["Network","/network"],["Startup","/startup"],["Settings","/settings"]];
       var serverCmds = tabs.map(function (t) {
         var path = "/server/" + id + t[1];
-        var ic = ({
-          "Console": "bi-terminal", "Files": "bi-folder", "Backups": "bi-archive", "Schedules": "bi-clock",
-          "Users": "bi-people", "Network": "bi-globe", "Startup": "bi-rocket-takeoff", "Settings": "bi-gear"
-        })[t[0]];
+        var ic = ({"Console":"bi-terminal","Files":"bi-folder","Backups":"bi-archive","Schedules":"bi-clock","Users":"bi-people","Network":"bi-globe","Startup":"bi-rocket-takeoff","Settings":"bi-gear"})[t[0]];
         return { group: "Server", icon: ic, label: t[0], hint: path, run: function () { go(path); } };
       });
       cmds = serverCmds.concat(cmds);
     }
-
-    /* admin-only commands */
     var isAdmin = false;
-    try {
-      var u = window.PterodactylUser;
-      isAdmin = !!(u && (u.root_admin || u.rootAdmin || u.admin));
-    } catch (e) {}
+    try { var u = window.PterodactylUser; isAdmin = !!(u && (u.root_admin || u.rootAdmin || u.admin)); } catch (e) {}
     if (isAdmin) {
-      var admin = [
-        ["Admin Dashboard", "/admin", "bi-speedometer2"], ["Admin Users", "/admin/users", "bi-people"],
-        ["Admin Servers", "/admin/servers", "bi-server"], ["Admin Nodes", "/admin/nodes", "bi-hdd-network"],
-        ["Admin Locations", "/admin/locations", "bi-geo-alt"], ["Admin Nests", "/admin/nests", "bi-collection"],
-        ["Admin Eggs", "/admin/eggs", "bi-egg"], ["Admin Databases", "/admin/databases", "bi-database"],
-        ["Admin Mounts", "/admin/mounts", "bi-box"], ["Blueprint Extensions", "/admin/extensions", "bi-puzzle"],
-        ["JomaTheme Settings", "/admin/extensions/jomatheme", "bi-palette"]
-      ];
-      admin.forEach(function (a) {
-        cmds.push({ group: "Admin", icon: a[2], label: a[0], hint: a[1], run: function () { go(a[1]); } });
-      });
+      var admin = [["Admin Dashboard","/admin","bi-speedometer2"],["Admin Users","/admin/users","bi-people"],["Admin Servers","/admin/servers","bi-server"],["Admin Nodes","/admin/nodes","bi-hdd-network"],["Admin Locations","/admin/locations","bi-geo-alt"],["Admin Nests","/admin/nests","bi-collection"],["Admin Eggs","/admin/eggs","bi-egg"],["Admin Databases","/admin/databases","bi-database"],["Admin Mounts","/admin/mounts","bi-box"],["Blueprint Extensions","/admin/extensions","bi-puzzle"],["JomaTheme Settings","/admin/extensions/jomatheme","bi-palette"]];
+      admin.forEach(function (a) { cmds.push({ group: "Admin", icon: a[2], label: a[0], hint: a[1], run: function () { go(a[1]); } }); });
     }
 
-    /* build DOM */
     var root = document.createElement("div");
     root.id = "jomatheme-cmdk";
     root.innerHTML =
@@ -801,9 +616,7 @@ button:not(:disabled):hover svg,
 
     function render(q) {
       q = (q || "").toLowerCase().trim();
-      filtered = cmds.filter(function (c) {
-        return !q || (c.label + " " + c.group + " " + c.hint).toLowerCase().indexOf(q) > -1;
-      });
+      filtered = cmds.filter(function (c) { return !q || (c.label + " " + c.group + " " + c.hint).toLowerCase().indexOf(q) > -1; });
       active = 0;
       if (!filtered.length) { list.innerHTML = '<div class="jomatheme-cmdk__empty">No commands found</div>'; return; }
       var groups = {}; var order = [];

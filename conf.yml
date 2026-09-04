@@ -5,9 +5,9 @@
 info:
   name: 'JomaTheme'
   identifier: 'jomatheme'
-  description: 'Modern dark SaaS-style theme for JomaMC — glassmorphism, animated aurora background, layout slide transitions, skeleton loaders, toast notifications and a slick server dashboard.'
+  description: 'Premium dark control panel for JomaMC — deep navy, indigo/violet/cyan gradients, real glassmorphism, animated aurora background, live dashboard stats, quick actions, premium server cards, cloud console and a slick server dashboard.'
   flags: ''
-  version: '2.0.0'
+  version: '3.0.0'
   target: 'beta-2026-08'
   author: 'JomaMC'
   icon: ''

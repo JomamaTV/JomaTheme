@@ -1,614 +1,844 @@
 /* ============================================================================
-   JomaTheme — global dashboard theme
+   JomaTheme v3.0 — global dashboard theme
    ----------------------------------------------------------------------------
-   This file is compiled into the Pterodactyl React bundle by Blueprint, so it
-   MUST stay plain, valid CSS (no SCSS, no invalid syntax). The heavy keyframe
-   animations and runtime JS live in wrapper.blade.php (served as a <style> tag
-   via the dashboard wrapper, which cannot break the React build).
+   Compiled into the Pterodactyl React bundle by Blueprint. MUST stay plain,
+   valid CSS (no SCSS, no invalid syntax). Heavy keyframes + runtime JS live in
+   wrapper.blade.php (served as a <style>/<script> via the dashboard wrapper).
    ----------------------------------------------------------------------------
-   Theming model (per https://blueprint.zip/docs/themes/colors):
+   Theming model (https://blueprint.zip/docs/themes/colors):
      - Colors are CSS variables named  --blueprint-<color>-<brightness>
-     - Values MUST be plain space-separated RGB channels, e.g.  122 152 255
+     - Values MUST be plain space-separated RGB channels, e.g.  99 102 241
      - Pterodactyl's Tailwind config maps bg-*/text-*/border-* onto these
        variables, so overriding them re-themes the whole panel.
+   Design direction: deep navy / midnight base, blue→indigo→violet gradients,
+   subtle cyan accents, real glassmorphism (frosted blur + gradient borders),
+   soft ambient glow. One coherent JomaTheme product, not a Pterodactyl skin.
    ============================================================================ */
 
 /* ----------------------------------------------------------------------------
-   1. JomaMC color system  (v2.0 — Nebula-inspired: navy / plum / periwinkle)
-   Design direction adapted from the Nebula aesthetic; implementation is original.
+   1. Design tokens — JomaTheme color system
    ---------------------------------------------------------------------------- */
 :root {
-  /* --- Primary accent (periwinkle indigo, ~#7a98ff) --- */
-  --blueprint-primary-50:  238 241 255;
-  --blueprint-primary-100: 226 232 255;
-  --blueprint-primary-200: 204 216 255;
-  --blueprint-primary-300: 178 195 255;
-  --blueprint-primary-400: 150 173 255;
-  --blueprint-primary-500: 122 152 255;   /* main accent */
-  --blueprint-primary-600: 100 134 230;
-  --blueprint-primary-700: 84 113 196;
-  --blueprint-primary-800: 70 95 162;
-  --blueprint-primary-900: 60 81 138;
-  --blueprint-primary-950: 40 54 92;
+  /* --- Primary: indigo (blue→indigo accent) --- */
+  --blueprint-primary-50:  237 240 255;
+  --blueprint-primary-100: 224 231 255;
+  --blueprint-primary-200: 199 210 254;
+  --blueprint-primary-300: 165 180 254;
+  --blueprint-primary-400: 129 140 254;
+  --blueprint-primary-500: 99 102 241;    /* indigo base */
+  --blueprint-primary-600: 79 70 229;
+  --blueprint-primary-700: 67 56 202;
+  --blueprint-primary-800: 55 48 163;
+  --blueprint-primary-900: 49 46 129;
+  --blueprint-primary-950: 30 27 75;
 
-  /* --- Neutral scale: navy body → plum surfaces → light text --- */
-  --blueprint-white: 37 31 48;      /* cards / raised surfaces (plum) */
-  --blueprint-black: 4 8 20;        /* page navy */
-  --blueprint-neutral-50:  4 8 20;     /* page body base (navy) */
-  --blueprint-neutral-100: 43 47 62;   /* hover / alt surface */
-  --blueprint-neutral-200: 50 46 66;   /* subtle borders */
-  --blueprint-neutral-300: 60 56 80;   /* dividers */
-  --blueprint-neutral-400: 90 86 112;  /* disabled / muted icons */
-  --blueprint-neutral-500: 120 116 140;
-  --blueprint-neutral-600: 150 146 168;
-  --blueprint-neutral-700: 180 176 196;
-  --blueprint-neutral-800: 210 210 224;
-  --blueprint-neutral-900: 233 234 238;  /* primary text */
-  --blueprint-neutral-950: 248 248 252;
+  /* --- Neutral scale: deep navy body → raised surfaces → light text --- */
+  --blueprint-white: 18 24 44;           /* cards / raised surfaces (navy) */
+  --blueprint-black: 5 9 20;             /* page base (midnight navy) */
+  --blueprint-neutral-50:  5 9 20;       /* page body base */
+  --blueprint-neutral-100: 9 14 28;      /* subtle raised */
+  --blueprint-neutral-200: 14 20 38;     /* surface */
+  --blueprint-neutral-300: 22 30 52;     /* dividers / borders */
+  --blueprint-neutral-400: 44 55 82;      /* disabled / muted icons */
+  --blueprint-neutral-500: 80 90 120;
+  --blueprint-neutral-600: 120 128 156;
+  --blueprint-neutral-700: 160 168 192;
+  --blueprint-neutral-800: 198 204 222;
+  --blueprint-neutral-900: 226 232 240;   /* primary text */
+  --blueprint-neutral-950: 245 247 252;
 
-  /* --- Semantic colors (Nebula status scale) --- */
-  --blueprint-success-500: 44 221 47;
-  --blueprint-success-600: 36 175 39;
-  --blueprint-warning-500: 219 192 37;
-  --blueprint-warning-600: 183 160 31;
-  --blueprint-danger-500:  188 54 47;
-  --blueprint-danger-600:  157 45 39;
-  --blueprint-info-500:    122 152 255;
-  --blueprint-info-600:    100 134 230;
+  /* --- Semantic colors --- */
+  --blueprint-success-500: 34 197 94;
+  --blueprint-success-600: 22 163 74;
+  --blueprint-warning-500: 245 158 11;
+  --blueprint-warning-600: 217 119 6;
+  --blueprint-danger-500:  239 68 68;
+  --blueprint-danger-600:  220 38 38;
+  --blueprint-info-500:    59 130 246;
+  --blueprint-info-600:    37 99 235;
 
-  /* JomaMC-local tokens */
-  --joma-bg:            4 8 20;        /* navy */
-  --joma-surface:        37 31 48;      /* plum (#251f30) */
-  --joma-surface-2:      43 47 62;      /* (#2b2f3e) */
-  --joma-surface-hover:  43 47 62;
-  --joma-surface-active: 48 52 67;      /* (#303443) inputs/active */
-  --joma-surface-selected: 54 62 87;    /* (#363e57) */
-  --joma-border:        255 255 255;
-  --joma-text:          233 234 238;    /* (#e9eaee) */
-  --joma-text-muted:    107 117 136;
-  --joma-primary:       122 152 255;   /* periwinkle accent */
-  --joma-primary-2:     79 98 149;     /* (#4f6295) button hover */
-  --joma-button:        58 67 92;      /* (#3a435c) default button */
-  --joma-success:       44 221 47;
-  --joma-warning:       219 192 37;
-  --joma-danger:        188 54 47;
-  --joma-info:          122 152 255;
-  --joma-radius:        10px;
-  --joma-radius-sm:     10px;
-  --joma-radius-pill:   100px;
-  --joma-shadow:        0 8px 24px rgb(0 0 0 / 0.35);
-  --joma-glow:          0 0 0 1px rgb(122 152 255 / 0.35), 0 12px 40px rgb(122 152 255 / 0.16);
+  /* --- JomaTheme local tokens --- */
+  --joma-bg:             5 9 20;         /* #050914 midnight */
+  --joma-bg-2:           7 11 24;        /* #070B18 */
+  --joma-bg-3:          10 16 32;        /* #0A1020 */
+  --joma-surface:       18 24 44;        /* glass base */
+  --joma-surface-2:     22 30 54;
+  --joma-surface-hover: 28 36 64;
+  --joma-surface-active:34 44 76;
+  --joma-border:       255 255 255;
+  --joma-text:         226 232 240;
+  --joma-text-secondary:164 176 199;
+  --joma-text-muted:   110 122 150;
+  --joma-primary:       99 102 241;       /* indigo */
+  --joma-primary-light:129 140 248;
+  --joma-primary-2:    79 70 229;
+  --joma-secondary:    139 92 246;       /* violet */
+  --joma-secondary-light:165 130 252;
+  --joma-accent:        34 211 238;      /* cyan */
+  --joma-accent-2:     59 130 246;       /* electric blue */
+  --joma-danger:       239 68 68;
+  --joma-success:      34 197 94;
+  --joma-warning:     245 158 11;
+  --joma-info:         59 130 246;
+
+  /* radii + blur + motion */
+  --joma-radius-xs:   8px;
+  --joma-radius-sm:   10px;
+  --joma-radius-md:   14px;
+  --joma-radius-lg:   18px;
+  --joma-radius-xl:   22px;
+  --joma-radius-pill: 100px;
+  --joma-radius-modal: 24px;
+  --joma-blur-sm:   10px;
+  --joma-blur-md:   16px;
+  --joma-blur-lg:   26px;
+  --joma-transition-fast:   120ms;
+  --joma-transition-normal: 200ms;
+  --joma-transition-slow:   320ms;
+  --joma-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --joma-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* gradients (reused) */
+  --joma-grad-primary: linear-gradient(135deg, rgb(99 102 241), rgb(139 92 246));
+  --joma-grad-blue:    linear-gradient(135deg, rgb(59 130 246), rgb(99 102 241));
+  --joma-grad-cyan:    linear-gradient(135deg, rgb(34 211 238), rgb(59 130 246));
+  --joma-grad-violet:  linear-gradient(135deg, rgb(139 92 246), rgb(217 70 239));
+  --joma-shadow-card: 0 18px 48px rgb(0 0 0 / 0.45), inset 0 1px 0 rgb(255 255 255 / 0.05);
+  --joma-glow-primary: 0 0 0 1px rgb(99 102 241 / 0.4), 0 12px 40px rgb(99 102 241 / 0.22);
 }
 
 /* ----------------------------------------------------------------------------
-   2. Base / body
+   2. Base / body — premium ambient background
    ---------------------------------------------------------------------------- */
 html { color-scheme: dark; }
 
-body {
-  background-color: rgb(var(--joma-bg)) !important;
-  background-image:
-    radial-gradient(70rem 70rem at 15% -15%, rgb(122 152 255 / 0.10), transparent 60%),
-    radial-gradient(55rem 55rem at 115% 5%, rgb(79 98 149 / 0.10), transparent 55%);
-  background-attachment: fixed;
-  color: rgb(var(--joma-text)) !important;
-  font-family: "Inter var", "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-
-/* ----------------------------------------------------------------------------
-   3. Text normalization
-   Pterodactyl assumes a light theme, so several text-* utilities resolve to
-   dark colors via the variables. We force them light for a coherent dark UI.
-   ---------------------------------------------------------------------------- */
-.text-white,
-.text-neutral-50,
-.text-neutral-100,
-.text-neutral-200 { color: rgb(248 248 252) !important; }
-
-.text-neutral-300,
-.text-neutral-400 { color: rgb(212 212 226) !important; }
-
-.text-neutral-500,
-.text-neutral-600 { color: rgb(150 150 170) !important; }
-
-.text-neutral-700 { color: rgb(185 185 202) !important; }
-
-.text-neutral-800,
-.text-neutral-900,
-.text-neutral-950 { color: rgb(236 236 245) !important; }
-
-/* Headings inherit a light tone */
-h1, h2, h3, h4, h5, h6 { color: rgb(248 248 252) !important; letter-spacing: -0.01em; }
-
-a { color: rgb(150 173 255); transition: color 0.18s ease; }
-a:hover { color: rgb(122 152 255); }
-
-::selection { background: rgb(122 152 255 / 0.35); color: rgb(255 255 255); }
-
-/* ----------------------------------------------------------------------------
-   4. Navigation bar
-   Pterodactyl renders the navbar in React (NavigationBar.tsx) using stable
-   Tailwind classes; we restyle purely via CSS without touching the component.
-   ---------------------------------------------------------------------------- */
-#NavigationBar,
-nav[class*="NavigationBar"],
-header[class*="NavigationBar"] {
-  background: rgb(4 8 20 / 0.92) !important;
-  backdrop-filter: blur(18px) saturate(160%);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
-  border-bottom: 1px solid rgb(255 255 255 / 0.06) !important;
-  box-shadow: 0 10px 30px rgb(0 0 0 / 0.35) !important;
-  position: relative;
-}
-
-#NavigationBar::after,
-nav[class*="NavigationBar"]::after,
-header[class*="NavigationBar"]::after {
-  content: "";
-  position: absolute;
-  left: 0; right: 0; bottom: -1px;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgb(122 152 255) 50%, transparent);
-  opacity: 0.7;
-  filter: blur(0.4px);
-}
-
-/* navbar links + brand */
-#NavigationBar a, #NavigationBar button,
-nav[class*="NavigationBar"] a, nav[class*="NavigationBar"] button {
-  color: rgb(210 210 222) !important;
-  transition: color 0.18s ease, background-color 0.18s ease, transform 0.18s ease;
-}
-#NavigationBar a:hover,
-nav[class*="NavigationBar"] a:hover { color: rgb(122 152 255) !important; }
-
-/* ----------------------------------------------------------------------------
-   5. Surfaces / cards / panels (solid plum — Nebula is flat, not glassy)
-   ---------------------------------------------------------------------------- */
-.bg-white,
-.bg-neutral-50,
-[class*="bg-white"],
-.bg-neutral-100 {
-  background-color: rgb(37 31 48) !important;
-  border: 1px solid rgb(255 255 255 / 0.05) !important;
-  border-radius: var(--joma-radius) !important;
-  box-shadow: 0 4px 16px rgb(0 0 0 / 0.25);
-}
-
-/* Dark navbar/menus (bg-neutral-800/900 are light in our scale) → force dark */
-.bg-neutral-800,
-.bg-neutral-900,
-.bg-neutral-950 {
-  background-color: rgb(4 8 20 / 0.95) !important;
-  border: 1px solid rgb(255 255 255 / 0.05) !important;
-}
-
-/* Borders: make existing border utilities visible on dark */
-.border,
-.border-t,
-.border-b,
-.border-l,
-.border-r,
-[class*="border-neutral"],
-[class*="border-white"] {
-  border-color: rgb(255 255 255 / 0.08) !important;
-}
-.border-neutral-300,
-.border-neutral-400 { border-color: rgb(255 255 255 / 0.14) !important; }
-
-/* Rounded corners across the board */
-.rounded { border-radius: var(--joma-radius-sm) !important; }
-.rounded-md,
-.rounded-lg { border-radius: var(--joma-radius-sm) !important; }
-.rounded-xl,
-.rounded-2xl,
-.rounded-3xl { border-radius: var(--joma-radius) !important; }
-
-/* ----------------------------------------------------------------------------
-   6. Buttons
-   ---------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------
-   6. Buttons  (Nebula-style: round pills, plum default, indigo hover)
-   ---------------------------------------------------------------------------- */
-button,
-.btn,
-a[class*="btn"],
-[class*="Button"] {
-  border-radius: var(--joma-radius-pill) !important;
-  font-weight: 600 !important;
-  text-transform: capitalize !important;
-  transition: transform 0.16s cubic-bezier(0.34, 1.56, 0.64, 1),
-              box-shadow 0.18s ease, background-color 0.18s ease, filter 0.18s ease;
-}
-button:not(:disabled):hover,
-.btn:hover,
-a[class*="btn"]:hover,
-[class*="Button"]:not(:disabled):hover {
-  transform: translateY(-1px);
-}
-button:not(:disabled):active,
-.btn:active,
-[class*="Button"]:not(:disabled):active {
-  transform: translateY(0) scale(0.97);
-}
-
-/* Default button surface (plum → indigo on hover) */
-button:not([class*="primary"]):not([class*="secondary"]):not([class*="danger"]):not([class*="ghost"]),
-.btn:not(.btn-primary):not(.btn-secondary):not(.btn-danger) {
-  background-color: rgb(58 67 92) !important;
-  color: rgb(233 234 238) !important;
-  border: 1px solid rgb(255 255 255 / 0.06) !important;
-}
-button:not([class*="primary"]):not([class*="secondary"]):not([class*="danger"]):not([class*="ghost"]):not(:disabled):hover,
-.btn:not(.btn-primary):not(.btn-secondary):not(.btn-danger):hover {
-  background-color: rgb(79 98 149) !important;
-  color: rgb(255 255 255) !important;
-}
-
-/* Primary / accent buttons */
-button[class*="primary"],
-.btn-primary,
-[class*="PrimaryButton"],
-a[class*="btn-primary"] {
-  background-color: rgb(122 152 255) !important;
-  background-image: linear-gradient(135deg, rgb(122 152 255), rgb(100 134 230)) !important;
-  color: rgb(4 8 20) !important;
-  border: 1px solid rgb(122 152 255 / 0.6) !important;
-  box-shadow: 0 8px 24px rgb(122 152 255 / 0.32), inset 0 1px 0 rgb(255 255 255 / 0.25) !important;
-}
-button[class*="primary"]:not(:disabled):hover,
-.btn-primary:hover,
-[class*="PrimaryButton"]:not(:disabled):hover {
-  filter: brightness(1.08);
-  background-color: rgb(100 134 230) !important;
-  box-shadow: 0 12px 30px rgb(122 152 255 / 0.45) !important;
-}
-
-/* Secondary / ghost buttons */
-button[class*="secondary"],
-.btn-secondary,
-[class*="SecondaryButton"],
-button[class*="ghost"] {
-  background-color: rgb(48 52 67) !important;
-  color: rgb(233 234 238) !important;
-  border: 1px solid rgb(255 255 255 / 0.06) !important;
-}
-button[class*="secondary"]:not(:disabled):hover,
-.btn-secondary:hover,
-[class*="SecondaryButton"]:not(:disabled):hover {
-  background-color: rgb(79 98 149) !important;
-  border-color: rgb(122 152 255 / 0.4) !important;
-  color: rgb(255 255 255) !important;
-}
-
-/* Danger buttons */
-button[class*="danger"],
-.btn-danger,
-[class*="DangerButton"] {
-  background-color: rgb(188 54 47) !important;
-  background-image: linear-gradient(135deg, rgb(188 54 47), rgb(157 45 39)) !important;
-  color: rgb(255 255 255) !important;
-  box-shadow: 0 8px 24px rgb(188 54 47 / 0.3) !important;
-}
-
-/* ----------------------------------------------------------------------------
-   7. Forms / inputs
-   ---------------------------------------------------------------------------- */
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="number"],
-input[type="search"],
-input[type="url"],
-input[type="tel"],
-textarea,
-select,
-[class*="Input"],
-[class*="Textarea"],
-[class*="Select"] {
-  background-color: rgb(48 52 67) !important;
-  border: 1px solid rgb(255 255 255 / 0.06) !important;
-  border-radius: var(--joma-radius) !important;
-  color: rgb(233 234 238) !important;
-  transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
-}
-input:focus,
-textarea:focus,
-select:focus,
-[class*="Input"]:focus,
-[class*="Textarea"]:focus,
-[class*="Select"]:focus {
-  outline: none !important;
-  border-color: rgb(122 152 255 / 0.6) !important;
-  box-shadow: 0 0 0 3px rgb(122 152 255 / 0.2) !important;
-  background-color: rgb(48 52 67) !important;
-}
-input::placeholder,
-textarea::placeholder { color: rgb(120 120 138) !important; }
-
-/* Checkboxes / toggles */
-input[type="checkbox"],
-input[type="radio"] { accent-color: rgb(122 152 255); }
-
-/* ----------------------------------------------------------------------------
-   8. Tables
-   ---------------------------------------------------------------------------- */
-table { border-collapse: separate !important; border-spacing: 0; }
-thead th {
-  color: rgb(150 150 170) !important;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  font-size: 0.72rem;
-  border-bottom: 1px solid rgb(255 255 255 / 0.1) !important;
-}
-tbody tr { transition: background-color 0.16s ease; }
-tbody tr:hover { background-color: rgb(255 255 255 / 0.04) !important; }
-tbody td { border-color: rgb(255 255 255 / 0.06) !important; }
-
-/* ----------------------------------------------------------------------------
-   9. Status indicators
-   ---------------------------------------------------------------------------- */
-[class*="status-running"],
-[class*="StatusRunning"],
-[class*="running"] { color: rgb(44 221 47) !important; }
-[class*="status-offline"],
-[class*="StatusOffline"],
-[class*="offline"] { color: rgb(120 116 116) !important; }
-[class*="status-starting"],
-[class*="StatusStarting"] { color: rgb(219 192 37) !important; }
-[class*="status-stopping"],
-[class*="StatusStopping"] { color: rgb(219 192 37) !important; }
-
-/* ----------------------------------------------------------------------------
-   10. Scrollbar, focus, misc
-   ---------------------------------------------------------------------------- */
-* { scrollbar-width: thin; scrollbar-color: rgb(122 152 255 / 0.5) transparent; }
-::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(rgb(122 152 255 / 0.55), rgb(79 98 149 / 0.45));
-  border-radius: 999px;
-  border: 2px solid transparent;
-  background-clip: padding-box;
-}
-::-webkit-scrollbar-thumb:hover { background: rgb(122 152 255 / 0.8); background-clip: padding-box; }
-
-:focus-visible {
-  outline: 2px solid rgb(122 152 255 / 0.7);
-  outline-offset: 2px;
-}
-
-code, pre, kbd {
-  background: rgb(8 8 14 / 0.6) !important;
-  border: 1px solid rgb(255 255 255 / 0.08) !important;
-  border-radius: var(--joma-radius-sm) !important;
-  color: rgb(150 173 255) !important;
-}
-
-/* Tooltips / badges */
-[class*="Badge"],
-[class*="badge"] {
-  background: rgb(122 152 255 / 0.16) !important;
-  color: rgb(150 173 255) !important;
-  border: 1px solid rgb(122 152 255 / 0.3) !important;
-  border-radius: 999px !important;
-}
-
-/* ----------------------------------------------------------------------------
-   11. JomaWelcome banner (injected React component)
-   ---------------------------------------------------------------------------- */
-.jomatheme-welcome {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--joma-radius);
-  border: 1px solid rgb(255 255 255 / 0.08);
-  background: linear-gradient(135deg, rgb(122 152 255 / 0.14), rgb(79 98 149 / 0.06) 60%, transparent);
-  box-shadow: var(--joma-shadow);
-  padding: 1.75rem 1.75rem;
-  margin: 0 0 1.5rem;
-  isolation: isolate;
-}
-.jomatheme-welcome__aurora {
-  position: absolute; inset: -40% -10% auto -10%;
-  height: 220%;
-  background:
-    radial-gradient(40% 60% at 20% 30%, rgb(122 152 255 / 0.55), transparent 70%),
-    radial-gradient(40% 60% at 80% 20%, rgb(79 98 149 / 0.45), transparent 70%),
-    radial-gradient(50% 60% at 60% 90%, rgb(100 134 230 / 0.35), transparent 70%);
-  filter: blur(48px);
-  opacity: 0.55;
-  z-index: -2;
-  animation: joma-aurora-drift 14s ease-in-out infinite alternate;
-}
-.jomatheme-welcome__grid {
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(rgb(255 255 255 / 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(255 255 255 / 0.04) 1px, transparent 1px);
-  background-size: 32px 32px;
-  mask-image: radial-gradient(120% 90% at 0% 0%, #000 30%, transparent 75%);
-  -webkit-mask-image: radial-gradient(120% 90% at 0% 0%, #000 30%, transparent 75%);
-  z-index: -1;
-}
-.jomatheme-welcome__inner { position: relative; z-index: 1; }
-.jomatheme-welcome__eyebrow {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  margin: 0 0 0.6rem;
-  font-size: 0.72rem; font-weight: 600;
-  letter-spacing: 0.12em; text-transform: uppercase;
-  color: rgb(122 152 255);
-}
-.jomatheme-welcome__dot {
-  width: 8px; height: 8px; border-radius: 999px;
-  background: rgb(34 197 94);
-  box-shadow: 0 0 0 4px rgb(34 197 94 / 0.18);
-  animation: joma-pulse 2s ease-in-out infinite;
-}
-.jomatheme-welcome__title {
-  font-size: clamp(1.5rem, 3vw, 2.1rem);
-  font-weight: 800;
-  margin: 0 0 0.5rem;
-  line-height: 1.15;
-  background: linear-gradient(120deg, #fff 10%, rgb(150 173 255) 55%, rgb(79 98 149));
-  -webkit-background-clip: text; background-clip: text;
-  color: transparent;
-}
-.jomatheme-welcome__name { color: rgb(122 152 255); -webkit-text-fill-color: rgb(122 152 255); }
-.jomatheme-welcome__wave { display: inline-block; animation: joma-wave 2.6s ease-in-out infinite; transform-origin: 70% 70%; }
-.jomatheme-welcome__sub {
-  margin: 0 0 1rem; max-width: 46rem;
-  color: rgb(170 170 188);
-  font-size: 0.98rem;
-}
-.jomatheme-welcome__pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-.jomatheme-welcome__pill {
-  font-size: 0.72rem; font-weight: 600;
-  padding: 0.3rem 0.7rem;
-  border-radius: 999px;
-  color: rgb(150 173 255);
-  background: rgb(122 152 255 / 0.12);
-  border: 1px solid rgb(122 152 255 / 0.28);
-}
-
-/* ----------------------------------------------------------------------------
-   12. Toast notifications (created by wrapper JS)
-   ---------------------------------------------------------------------------- */
-#jomatheme-toasts {
-  position: fixed; z-index: 99999;
-  right: 1.25rem; bottom: 1.25rem;
-  display: flex; flex-direction: column-reverse; gap: 0.6rem;
-  max-width: min(92vw, 24rem);
-  pointer-events: none;
-}
-.jomatheme-toast {
-  pointer-events: auto;
-  display: flex; align-items: flex-start; gap: 0.65rem;
-  padding: 0.85rem 0.95rem 0.85rem 0.85rem;
-  border-radius: var(--joma-radius-sm);
-  background: rgb(22 22 34 / 0.82);
-  backdrop-filter: blur(14px) saturate(160%);
-  -webkit-backdrop-filter: blur(14px) saturate(160%);
-  border: 1px solid rgb(255 255 255 / 0.1);
-  box-shadow: 0 14px 40px rgb(0 0 0 / 0.5);
-  color: rgb(236 236 245);
-  overflow: hidden; position: relative;
-  animation: joma-toast-in 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-}
-.jomatheme-toast.is-leaving { animation: joma-toast-out 0.35s ease forwards; }
-.jomatheme-toast::before {
-  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
-  background: rgb(122 152 255);
-}
-.jomatheme-toast[data-type="success"]::before { background: rgb(34 197 94); }
-.jomatheme-toast[data-type="warning"]::before { background: rgb(245 158 11); }
-.jomatheme-toast[data-type="error"]::before   { background: rgb(239 68 68); }
-.jomatheme-toast[data-type="info"]::before    { background: rgb(79 98 149); }
-.jomatheme-toast__icon { font-size: 1rem; line-height: 1.4; }
-.jomatheme-toast__body { flex: 1; min-width: 0; font-size: 0.9rem; line-height: 1.4; }
-.jomatheme-toast__title { font-weight: 700; margin-bottom: 0.1rem; }
-.jomatheme-toast__close {
-  background: none; border: 0; cursor: pointer; color: rgb(150 150 170);
-  font-size: 1rem; line-height: 1; padding: 0 0 0 0.25rem;
-}
-.jomatheme-toast__bar {
-  position: absolute; left: 0; bottom: 0; height: 2px;
-  background: rgb(255 255 255 / 0.5);
-  animation: joma-toast-bar linear forwards;
-}
-
-/* ----------------------------------------------------------------------------
-   13. Skeleton loaders + spinner
-   ---------------------------------------------------------------------------- */
-.jomatheme-skeleton {
-  position: relative; overflow: hidden;
-  background: rgb(255 255 255 / 0.06);
-  border-radius: var(--joma-radius-sm);
-  color: transparent !important;
-}
-.jomatheme-skeleton::after {
-  content: ""; position: absolute; inset: 0;
-  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.12), transparent);
-  transform: translateX(-100%);
-  animation: joma-shimmer 1.4s infinite;
-}
-.jomatheme-skeleton * { visibility: hidden; }
-
-.jomatheme-spinner {
-  width: 1.1em; height: 1.1em; border-radius: 999px;
-  border: 2px solid rgb(255 255 255 / 0.18);
-  border-top-color: rgb(122 152 255);
-  animation: joma-spin 0.8s linear infinite;
-  display: inline-block; vertical-align: -0.15em;
-}
-
-/* ----------------------------------------------------------------------------
-   14. Layout slide transition (driven by wrapper JS)
-   ---------------------------------------------------------------------------- */
-.jomatheme-slide {
-  animation: joma-slide-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-/* ----------------------------------------------------------------------------
-   15. v1.1 — full-screen coverage & expanded design tokens
-   No gray/white Pterodactyl default surfaces may leak through anywhere.
-   ---------------------------------------------------------------------------- */
-:root {
-  --joma-radius-sm:     10px;
-  --joma-radius-md:     14px;
-  --joma-radius-lg:     18px;
-  --joma-radius-xl:     22px;
-  --joma-radius-modal:  24px;
-  --joma-blur-sm:       10px;
-  --joma-blur-md:       18px;
-  --joma-blur-lg:       28px;
-  --joma-transition-fast:   120ms;
-  --joma-transition-normal: 200ms;
-  --joma-primary-soft: 122 152 255;
-}
-
-/* structural canvas — dark on every page, full viewport */
 html, body, #app, #root, [id$="app"], main, [role="main"], .main, .content,
 footer, .footer, [class*="Footer"] {
   background-color: rgb(var(--joma-bg)) !important;
 }
 html, body { min-height: 100%; }
 
-/* every other Tailwind gray family Pterodactyl might use → dark glass */
+body {
+  background-color: rgb(var(--joma-bg)) !important;
+  background-image:
+    radial-gradient(60rem 60rem at 12% -12%, rgb(99 102 241 / 0.14), transparent 60%),
+    radial-gradient(52rem 52rem at 112% 6%, rgb(139 92 246 / 0.12), transparent 55%),
+    radial-gradient(42rem 42rem at 50% 118%, rgb(34 211 238 / 0.07), transparent 60%);
+  background-attachment: fixed;
+  color: rgb(var(--joma-text)) !important;
+  font-family: "Inter var", "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  letter-spacing: -0.005em;
+}
+
+/* ----------------------------------------------------------------------------
+   3. Text normalization (Pterodactyl assumes light theme → force light)
+   ---------------------------------------------------------------------------- */
+.text-white, .text-neutral-50, .text-neutral-100, .text-neutral-200 { color: rgb(245 247 252) !important; }
+.text-neutral-300, .text-neutral-400 { color: rgb(196 204 222) !important; }
+.text-neutral-500, .text-neutral-600 { color: rgb(140 150 176) !important; }
+.text-neutral-700 { color: rgb(176 184 206) !important; }
+.text-neutral-800, .text-neutral-900, .text-neutral-950 { color: rgb(226 232 240) !important; }
+
+h1, h2, h3, h4, h5, h6 {
+  color: rgb(245 247 252) !important;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+a {
+  color: rgb(129 140 248);
+  transition: color var(--joma-transition-normal) ease;
+}
+a:hover { color: rgb(165 180 254); }
+
+::selection { background: rgb(99 102 241 / 0.38); color: rgb(255 255 255); }
+
+/* ----------------------------------------------------------------------------
+   4. Glass surface system — reusable JomaTheme component
+   ---------------------------------------------------------------------------- */
+.joma-glass,
+.joma-card {
+  background: linear-gradient(135deg, rgb(22 30 54 / 0.72), rgb(12 18 36 / 0.78));
+  backdrop-filter: blur(var(--joma-blur-md)) saturate(150%);
+  -webkit-backdrop-filter: blur(var(--joma-blur-md)) saturate(150%);
+  border: 1px solid rgb(255 255 255 / 0.08);
+  box-shadow: var(--joma-shadow-card);
+  border-radius: var(--joma-radius-lg);
+}
+
+/* Pterodactyl card / surface utilities → frosted glass */
+.bg-white,
+.bg-neutral-50,
+[class*="bg-white"],
+.bg-neutral-100 {
+  background: linear-gradient(135deg, rgb(22 30 54 / 0.70), rgb(12 18 36 / 0.76)) !important;
+  backdrop-filter: blur(var(--joma-blur-md)) saturate(150%);
+  -webkit-backdrop-filter: blur(var(--joma-blur-md)) saturate(150%);
+  border: 1px solid rgb(255 255 255 / 0.07) !important;
+  border-radius: var(--joma-radius-lg) !important;
+  box-shadow: var(--joma-shadow-card) !important;
+}
+
+/* Dark navbar/menus (bg-neutral-800/900 are light in our scale) → deep navy */
+.bg-neutral-800, .bg-neutral-900, .bg-neutral-950 {
+  background: rgb(7 11 24 / 0.96) !important;
+  border: 1px solid rgb(255 255 255 / 0.06) !important;
+}
+
+/* Borders: make existing border utilities visible on dark */
+.border, .border-t, .border-b, .border-l, .border-r,
+[class*="border-neutral"], [class*="border-white"] {
+  border-color: rgb(255 255 255 / 0.08) !important;
+}
+.border-neutral-300, .border-neutral-400 { border-color: rgb(255 255 255 / 0.14) !important; }
+
+/* Rounded corners across the board */
+.rounded { border-radius: var(--joma-radius-sm) !important; }
+.rounded-md, .rounded-lg { border-radius: var(--joma-radius-md) !important; }
+.rounded-xl { border-radius: var(--joma-radius-lg) !important; }
+.rounded-2xl, .rounded-3xl { border-radius: var(--joma-radius-xl) !important; }
+
+/* Footer — seamless, no default band */
+footer, .footer, [class*="Footer"] {
+  border-top: 1px solid rgb(255 255 255 / 0.06) !important;
+  color: rgb(140 150 176) !important;
+  background: transparent !important;
+}
+
+/* ----------------------------------------------------------------------------
+   5. Navigation bar — premium glass navbar with active glow
+   ---------------------------------------------------------------------------- */
+#NavigationBar,
+nav[class*="NavigationBar"],
+header[class*="NavigationBar"] {
+  background: rgb(7 11 24 / 0.82) !important;
+  backdrop-filter: blur(var(--joma-blur-lg)) saturate(170%);
+  -webkit-backdrop-filter: blur(var(--joma-blur-lg)) saturate(170%);
+  border-bottom: 1px solid rgb(255 255 255 / 0.07) !important;
+  box-shadow: 0 12px 36px rgb(0 0 0 / 0.42) !important;
+  position: relative;
+}
+#NavigationBar::after,
+nav[class*="NavigationBar"]::after,
+header[class*="NavigationBar"]::after {
+  content: "";
+  position: absolute; left: 0; right: 0; bottom: -1px; height: 2px;
+  background: linear-gradient(90deg, transparent, rgb(99 102 241) 30%, rgb(34 211 238) 50%, rgb(139 92 246) 70%, transparent);
+  opacity: 0.65; filter: blur(0.4px);
+}
+
+#NavigationBar a, #NavigationBar button,
+nav[class*="NavigationBar"] a, nav[class*="NavigationBar"] button {
+  color: rgb(198 204 222) !important;
+  border-radius: var(--joma-radius-sm) !important;
+  transition: color var(--joma-transition-normal) ease,
+              background-color var(--joma-transition-normal) ease,
+              transform var(--joma-transition-normal) var(--joma-ease),
+              box-shadow var(--joma-transition-normal) ease;
+}
+#NavigationBar a:hover,
+nav[class*="NavigationBar"] a:hover,
+#NavigationBar button:hover,
+nav[class*="NavigationBar"] button:hover {
+  color: rgb(245 247 252) !important;
+  background: rgb(99 102 241 / 0.12) !important;
+  transform: translateY(-1px);
+}
+/* active nav link — gradient glow */
+#NavigationBar a[aria-current="page"],
+nav[class*="NavigationBar"] a[class*="active"],
+nav[class*="NavigationBar"] a[style*="primary"] {
+  color: rgb(165 180 254) !important;
+  background: linear-gradient(135deg, rgb(99 102 241 / 0.22), rgb(139 92 246 / 0.12)) !important;
+  box-shadow: inset 0 0 0 1px rgb(99 102 241 / 0.35), 0 6px 20px rgb(99 102 241 / 0.22) !important;
+}
+
+/* brand/logo mark */
+#NavigationBar img, nav[class*="NavigationBar"] img { border-radius: var(--joma-radius-sm); }
+
+/* ----------------------------------------------------------------------------
+   6. Sidebar / server tab navigation
+   ---------------------------------------------------------------------------- */
+nav[class*="sub"], aside, [class*="Sidebar"], [class*="serverNav"],
+nav[class*="ServerNav"] {
+  background: rgb(10 16 32 / 0.6) !important;
+  backdrop-filter: blur(var(--joma-blur-sm)) saturate(150%);
+  -webkit-backdrop-filter: blur(var(--joma-blur-sm)) saturate(150%);
+  border: 1px solid rgb(255 255 255 / 0.06) !important;
+  border-radius: var(--joma-radius-lg) !important;
+}
+nav[class*="sub"] a, aside a, [class*="Sidebar"] a {
+  color: rgb(170 180 204) !important;
+  border-radius: var(--joma-radius-sm) !important;
+  transition: color var(--joma-transition-normal) ease, background-color var(--joma-transition-normal) ease;
+}
+nav[class*="sub"] a:hover, aside a:hover, [class*="Sidebar"] a:hover {
+  color: rgb(245 247 252) !important;
+  background: rgb(99 102 241 / 0.12) !important;
+}
+
+/* ----------------------------------------------------------------------------
+   7. Buttons — complete JomaTheme button system
+   ---------------------------------------------------------------------------- */
+button, .btn, a[class*="btn"], [class*="Button"], [role="button"] {
+  border-radius: var(--joma-radius-pill) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em;
+  /* smooth, non-bouncy hover — spring overshoot felt jittery on glass buttons */
+  transition: transform var(--joma-transition-normal) var(--joma-ease),
+              box-shadow var(--joma-transition-normal) ease,
+              background-color var(--joma-transition-normal) ease,
+              border-color var(--joma-transition-normal) ease,
+              filter var(--joma-transition-normal) ease !important;
+}
+button:not(:disabled):hover, .btn:hover, a[class*="btn"]:hover, [class*="Button"]:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+button:not(:disabled):active, .btn:active, [class*="Button"]:not(:disabled):active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* Default button — navy glass → indigo on hover */
+button:not([class*="primary"]):not([class*="secondary"]):not([class*="danger"]):not([class*="ghost"]):not([class*="success"]):not([class*="warning"]),
+.btn:not(.btn-primary):not(.btn-secondary):not(.btn-danger):not(.btn-success):not(.btn-warning) {
+  background: linear-gradient(135deg, rgb(28 36 64 / 0.9), rgb(18 24 44 / 0.9)) !important;
+  color: rgb(226 232 240) !important;
+  border: 1px solid rgb(255 255 255 / 0.08) !important;
+}
+button:not([class*="primary"]):not([class*="secondary"]):not([class*="danger"]):not([class*="ghost"]):not([class*="success"]):not([class*="warning"]):not(:disabled):hover,
+.btn:not(.btn-primary):not(.btn-secondary):not(.btn-danger):not(.btn-success):not(.btn-warning):hover {
+  background: linear-gradient(135deg, rgb(40 50 84 / 0.95), rgb(28 36 64 / 0.95)) !important;
+  border-color: rgb(99 102 241 / 0.4) !important;
+  color: rgb(245 247 252) !important;
+  box-shadow: 0 8px 24px rgb(99 102 241 / 0.2) !important;
+}
+
+/* Primary — indigo→violet gradient + glow */
+button[class*="primary"], .btn-primary, [class*="PrimaryButton"], a[class*="btn-primary"] {
+  background: var(--joma-grad-primary) !important;
+  background-size: 200% 200% !important;
+  color: rgb(255 255 255) !important;
+  border: 1px solid rgb(129 140 248 / 0.55) !important;
+  box-shadow: 0 10px 28px rgb(99 102 241 / 0.4), inset 0 1px 0 rgb(255 255 255 / 0.3) !important;
+}
+button[class*="primary"]:not(:disabled):hover, .btn-primary:hover, [class*="PrimaryButton"]:not(:disabled):hover {
+  background-position: 100% 0% !important;
+  filter: brightness(1.08);
+  box-shadow: 0 16px 38px rgb(99 102 241 / 0.55), inset 0 1px 0 rgb(255 255 255 / 0.35) !important;
+}
+
+/* Secondary / ghost — subtle glass */
+button[class*="secondary"], .btn-secondary, [class*="SecondaryButton"], button[class*="ghost"] {
+  background: linear-gradient(135deg, rgb(22 30 54 / 0.8), rgb(14 20 38 / 0.8)) !important;
+  color: rgb(226 232 240) !important;
+  border: 1px solid rgb(255 255 255 / 0.08) !important;
+}
+button[class*="secondary"]:not(:disabled):hover, .btn-secondary:hover, [class*="SecondaryButton"]:not(:disabled):hover, button[class*="ghost"]:not(:disabled):hover {
+  background: linear-gradient(135deg, rgb(34 44 74 / 0.9), rgb(22 30 54 / 0.9)) !important;
+  border-color: rgb(99 102 241 / 0.4) !important;
+  color: rgb(245 247 252) !important;
+}
+
+/* Danger — red gradient */
+button[class*="danger"], .btn-danger, [class*="DangerButton"] {
+  background: linear-gradient(135deg, rgb(239 68 68), rgb(220 38 38)) !important;
+  color: rgb(255 255 255) !important;
+  border: 1px solid rgb(248 113 113 / 0.5) !important;
+  box-shadow: 0 10px 28px rgb(239 68 68 / 0.32) !important;
+}
+button[class*="danger"]:not(:disabled):hover, .btn-danger:hover, [class*="DangerButton"]:not(:disabled):hover {
+  filter: brightness(1.08);
+  box-shadow: 0 16px 38px rgb(239 68 68 / 0.45) !important;
+}
+
+/* Success — emerald gradient */
+button[class*="success"], .btn-success, [class*="SuccessButton"] {
+  background: linear-gradient(135deg, rgb(34 197 94), rgb(22 163 74)) !important;
+  color: rgb(255 255 255) !important;
+  border: 1px solid rgb(74 222 128 / 0.5) !important;
+  box-shadow: 0 10px 28px rgb(34 197 94 / 0.3) !important;
+}
+button[class*="warning"], .btn-warning, [class*="WarningButton"] {
+  background: linear-gradient(135deg, rgb(245 158 11), rgb(217 119 6)) !important;
+  color: rgb(20 12 0) !important;
+  border: 1px solid rgb(251 191 36 / 0.5) !important;
+}
+
+/* disabled */
+button:disabled, .btn:disabled, [class*="Button"]:disabled {
+  opacity: 0.5; cursor: not-allowed; filter: saturate(0.6);
+}
+
+/* ----------------------------------------------------------------------------
+   8. Forms / inputs / selects / toggles
+   ---------------------------------------------------------------------------- */
+input[type="text"], input[type="email"], input[type="password"],
+input[type="number"], input[type="search"], input[type="url"],
+input[type="tel"], textarea, select,
+[class*="Input"], [class*="Textarea"], [class*="Select"] {
+  background: rgb(10 16 32 / 0.7) !important;
+  border: 1px solid rgb(255 255 255 / 0.08) !important;
+  border-radius: var(--joma-radius-md) !important;
+  color: rgb(226 232 240) !important;
+  transition: border-color var(--joma-transition-normal) ease,
+              box-shadow var(--joma-transition-normal) ease,
+              background-color var(--joma-transition-normal) ease !important;
+}
+input:focus, textarea:focus, select:focus,
+[class*="Input"]:focus, [class*="Textarea"]:focus, [class*="Select"]:focus {
+  outline: none !important;
+  border-color: rgb(99 102 241 / 0.65) !important;
+  box-shadow: 0 0 0 3px rgb(99 102 241 / 0.2), 0 0 22px rgb(99 102 241 / 0.18) !important;
+  background: rgb(12 18 36 / 0.85) !important;
+}
+input::placeholder, textarea::placeholder { color: rgb(110 122 150) !important; }
+
+select {
+  background-image: linear-gradient(45deg, transparent 50%, rgb(140 150 176) 50%),
+                    linear-gradient(135deg, rgb(140 150 176) 50%, transparent 50%) !important;
+  background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50% !important;
+  background-size: 5px 5px, 5px 5px !important;
+  background-repeat: no-repeat !important;
+  -webkit-appearance: none !important; appearance: none !important;
+}
+
+input[type="checkbox"], input[type="radio"] {
+  accent-color: rgb(99 102 241);
+  width: 1.1em; height: 1.1em;
+}
+
+/* Labels */
+label { color: rgb(196 204 222) !important; }
+
+/* ----------------------------------------------------------------------------
+   9. Tables — modern SaaS style
+   ---------------------------------------------------------------------------- */
+table { border-collapse: separate !important; border-spacing: 0; }
+thead th {
+  color: rgb(140 150 176) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.7rem;
+  font-weight: 600;
+  border-bottom: 1px solid rgb(255 255 255 / 0.1) !important;
+  background: rgb(255 255 255 / 0.02) !important;
+}
+tbody tr { transition: background-color var(--joma-transition-normal) ease; }
+tbody tr:hover { background-color: rgb(99 102 241 / 0.06) !important; }
+tbody td { border-color: rgb(255 255 255 / 0.06) !important; }
+.table > :not(caption) > * > * { background-color: transparent !important; }
+
+/* ----------------------------------------------------------------------------
+   10. Status indicators — animated pulse + glow
+   ---------------------------------------------------------------------------- */
+[class*="status-running"], [class*="StatusRunning"], [class*="running"] {
+  color: rgb(34 197 94) !important;
+}
+[class*="status-offline"], [class*="StatusOffline"], [class*="offline"] {
+  color: rgb(148 156 178) !important;
+}
+[class*="status-starting"], [class*="StatusStarting"] { color: rgb(59 130 246) !important; }
+[class*="status-stopping"], [class*="StatusStopping"] { color: rgb(245 158 11) !important; }
+
+/* status dot — reusable */
+.joma-dot { width: 9px; height: 9px; border-radius: 999px; display: inline-block; flex: 0 0 auto; }
+.joma-dot--online   { background: rgb(34 197 94); box-shadow: 0 0 0 4px rgb(34 197 94 / 0.18), 0 0 12px rgb(34 197 94 / 0.6); animation: joma-status-pulse 2s ease-in-out infinite; }
+.joma-dot--offline  { background: rgb(120 128 150); box-shadow: 0 0 0 4px rgb(120 128 150 / 0.16); }
+.joma-dot--starting{ background: rgb(59 130 246); box-shadow: 0 0 0 4px rgb(59 130 246 / 0.18), 0 0 12px rgb(59 130 246 / 0.6); animation: joma-status-pulse 1.4s ease-in-out infinite; }
+.joma-dot--stopping{ background: rgb(245 158 11); box-shadow: 0 0 0 4px rgb(245 158 11 / 0.18), 0 0 12px rgb(245 158 11 / 0.6); animation: joma-status-pulse 1.4s ease-in-out infinite; }
+.joma-dot--install { background: rgb(139 92 246); box-shadow: 0 0 0 4px rgb(139 92 246 / 0.18), 0 0 12px rgb(139 92 246 / 0.6); animation: joma-status-pulse 1.6s ease-in-out infinite; }
+
+/* ----------------------------------------------------------------------------
+   11. Badges / pills
+   ---------------------------------------------------------------------------- */
+[class*="Badge"], [class*="badge"]:not([class*="badgemen"]):not(button) {
+  background: rgb(99 102 241 / 0.16) !important;
+  color: rgb(165 180 254) !important;
+  border: 1px solid rgb(99 102 241 / 0.3) !important;
+  border-radius: var(--joma-radius-pill) !important;
+  font-weight: 600;
+}
+
+/* ----------------------------------------------------------------------------
+   12. Modals / dialogs — glass, fade + scale
+   ---------------------------------------------------------------------------- */
+[class*="Modal"], [class*="Dialog"], [role="dialog"], [class*="modal-content"] {
+  background: linear-gradient(135deg, rgb(20 28 50 / 0.92), rgb(12 18 36 / 0.95)) !important;
+  backdrop-filter: blur(var(--joma-blur-lg)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--joma-blur-lg)) saturate(160%);
+  border: 1px solid rgb(255 255 255 / 0.1) !important;
+  border-radius: var(--joma-radius-modal) !important;
+  box-shadow: 0 30px 80px rgb(0 0 0 / 0.6), 0 0 0 1px rgb(99 102 241 / 0.12), inset 0 1px 0 rgb(255 255 255 / 0.06) !important;
+  animation: joma-modal-in 0.28s var(--joma-ease-spring) both !important;
+}
+[class*="ModalOverlay"], [class*="DialogOverlay"], [class*="modal-backdrop"] {
+  background: rgb(5 9 20 / 0.6) !important;
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+}
+[class*="Modal"] header, [class*="Dialog"] header,
+[class*="modal-header"] {
+  border-bottom: 1px solid rgb(255 255 255 / 0.07) !important;
+}
+[class*="Modal"] footer, [class*="Dialog"] footer,
+[class*="modal-footer"] {
+  border-top: 1px solid rgb(255 255 255 / 0.07) !important;
+}
+
+/* ----------------------------------------------------------------------------
+   13. Dropdowns / menus — glass
+   ---------------------------------------------------------------------------- */
+[class*="Dropdown"], [class*="Menu"], [class*="popover"], [class*="Popover"],
+[class*="menu-content"], [role="menu"], [role="listbox"] {
+  background: rgb(14 20 38 / 0.92) !important;
+  backdrop-filter: blur(var(--joma-blur-md)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--joma-blur-md)) saturate(160%);
+  border: 1px solid rgb(255 255 255 / 0.1) !important;
+  border-radius: var(--joma-radius-md) !important;
+  box-shadow: 0 20px 50px rgb(0 0 0 / 0.5) !important;
+}
+[class*="Dropdown"] [role="menuitem"]:hover,
+[class*="Menu"] [role="menuitem"]:hover,
+[class*="menu-item"]:hover, [class*="menuItem"]:hover {
+  background: rgb(99 102 241 / 0.16) !important;
+  color: rgb(245 247 252) !important;
+}
+
+/* ----------------------------------------------------------------------------
+   14. Tabs
+   ---------------------------------------------------------------------------- */
+[class*="TabList"], [class*="tablist"], [role="tablist"] {
+  border-bottom: 1px solid rgb(255 255 255 / 0.08) !important;
+  gap: 0.25rem;
+}
+[role="tab"], [class*="Tab"]:not([class*="Table"]):not([class*="TableBody"]):not([class*="TableCell"]) {
+  color: rgb(140 150 176) !important;
+  border-radius: var(--joma-radius-sm) !important;
+  border: 1px solid transparent !important;
+  transition: color var(--joma-transition-normal) ease, background-color var(--joma-transition-normal) ease, border-color var(--joma-transition-normal) ease;
+}
+[role="tab"]:hover, [class*="Tab"]:hover { color: rgb(226 232 240) !important; background: rgb(99 102 241 / 0.1) !important; }
+[role="tab"][aria-selected="true"], [class*="Tab"][aria-selected="true"],
+[role="tab"][class*="active"], [class*="Tab"][class*="active"] {
+  color: rgb(245 247 252) !important;
+  background: linear-gradient(135deg, rgb(99 102 241 / 0.22), rgb(139 92 246 / 0.12)) !important;
+  border-color: rgb(99 102 241 / 0.35) !important;
+  box-shadow: inset 0 0 0 1px rgb(99 102 241 / 0.3);
+}
+
+/* ----------------------------------------------------------------------------
+   15. Server cards — premium glass cards (no per-card blur for perf)
+   ---------------------------------------------------------------------------- */
+[class*="ServerCard"], [class*="server-card"], [class*="ServerRow"], [class*="ServerContainer"] {
+  position: relative;
+  background: linear-gradient(135deg, rgb(20 28 50 / 0.82), rgb(10 16 32 / 0.9)) !important;
+  /* server cards skip live backdrop-blur (can be 50+ on screen) — translucent
+     gradient over the page aurora already reads as glass, cheaply. */
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid rgb(255 255 255 / 0.09) !important;
+  border-radius: var(--joma-radius-xl) !important;
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.38), inset 0 1px 0 rgb(255 255 255 / 0.04) !important;
+  overflow: hidden;
+  /* smooth (non-bouncy) hover — transform + border-color + shadow only, no
+     ::before overlay, so nothing renders "through" the card on hover */
+  transition: transform var(--joma-transition-normal) var(--joma-ease),
+              box-shadow var(--joma-transition-normal) ease,
+              border-color var(--joma-transition-normal) ease,
+              filter var(--joma-transition-normal) ease !important;
+}
+[class*="ServerCard"]:hover, [class*="server-card"]:hover, [class*="ServerRow"]:hover {
+  transform: translateY(-3px) !important;
+  border-color: rgb(99 102 241 / 0.45) !important;
+  box-shadow: 0 22px 48px rgb(0 0 0 / 0.5),
+              0 0 0 1px rgb(99 102 241 / 0.2),
+              0 0 28px rgb(99 102 241 / 0.12),
+              inset 0 1px 0 rgb(255 255 255 / 0.06) !important;
+}
+/* focus-within keeps the glow when hovering nested buttons/links inside the card */
+[class*="ServerCard"]:focus-within, [class*="server-card"]:focus-within, [class*="ServerRow"]:focus-within {
+  border-color: rgb(99 102 241 / 0.45) !important;
+  box-shadow: 0 22px 48px rgb(0 0 0 / 0.5), 0 0 0 1px rgb(99 102 241 / 0.2), inset 0 1px 0 rgb(255 255 255 / 0.06) !important;
+}
+
+/* ----------------------------------------------------------------------------
+   16. Progress / resource bars
+   ---------------------------------------------------------------------------- */
+[class*="progress"], [class*="Progress"], [role="progressbar"] {
+  background: rgb(255 255 255 / 0.06) !important;
+  border-radius: var(--joma-radius-pill) !important;
+  overflow: hidden;
+}
+[class*="progress-bar"], [class*="ProgressBar"], [class*="progress"] > [class*="bar"],
+[role="progressbar"] > * {
+  background: var(--joma-grad-blue) !important;
+  background-size: 200% 100% !important;
+  border-radius: inherit !important;
+  animation: joma-gradient-shift 2.6s linear infinite;
+}
+
+/* ----------------------------------------------------------------------------
+   17. Statistics cards
+   ---------------------------------------------------------------------------- */
+.joma-stat {
+  position: relative;
+  background: linear-gradient(135deg, rgb(22 30 54 / 0.72), rgb(12 18 36 / 0.8));
+  backdrop-filter: blur(var(--joma-blur-sm)) saturate(150%);
+  -webkit-backdrop-filter: blur(var(--joma-blur-sm)) saturate(150%);
+  border: 1px solid rgb(255 255 255 / 0.07);
+  border-radius: var(--joma-radius-lg);
+  padding: 1.1rem 1.25rem;
+  overflow: hidden;
+  transition: transform var(--joma-transition-normal) var(--joma-ease-spring),
+              border-color var(--joma-transition-normal) ease,
+              box-shadow var(--joma-transition-normal) ease;
+}
+.joma-stat::after {
+  content: ""; position: absolute; right: -20px; top: -20px; width: 90px; height: 90px;
+  border-radius: 999px; filter: blur(28px); opacity: 0.5; pointer-events: none;
+  background: radial-gradient(circle, rgb(99 102 241 / 0.5), transparent 70%);
+}
+.joma-stat:hover {
+  transform: translateY(-3px);
+  border-color: rgb(99 102 241 / 0.32);
+  box-shadow: 0 18px 42px rgb(99 102 241 / 0.18);
+}
+.joma-stat__label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; color: rgb(140 150 176); margin: 0 0 0.35rem; font-weight: 600; }
+.joma-stat__value { font-size: 1.6rem; font-weight: 800; color: rgb(245 247 252); margin: 0; line-height: 1.1; }
+.joma-stat__hint { font-size: 0.78rem; color: rgb(110 122 150); margin: 0.25rem 0 0; }
+
+/* ----------------------------------------------------------------------------
+   18. JomaWelcome hero (injected React component)
+   ---------------------------------------------------------------------------- */
+.jomatheme-welcome {
+  position: relative; overflow: hidden; isolation: isolate;
+  border-radius: var(--joma-radius-xl);
+  border: 1px solid rgb(255 255 255 / 0.09);
+  background: linear-gradient(135deg, rgb(24 32 58 / 0.82), rgb(12 18 36 / 0.9));
+  backdrop-filter: blur(var(--joma-blur-md)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--joma-blur-md)) saturate(160%);
+  box-shadow: 0 24px 60px rgb(0 0 0 / 0.5), inset 0 1px 0 rgb(255 255 255 / 0.06);
+  padding: 2rem 2rem 1.75rem;
+  margin: 0 0 1.5rem;
+}
+.jomatheme-welcome__aurora {
+  position: absolute; inset: -45% -10% auto -10%; height: 230%; z-index: -2;
+  background:
+    radial-gradient(40% 60% at 18% 28%, rgb(99 102 241 / 0.55), transparent 70%),
+    radial-gradient(40% 60% at 82% 18%, rgb(139 92 246 / 0.5), transparent 70%),
+    radial-gradient(50% 60% at 60% 92%, rgb(34 211 238 / 0.28), transparent 70%);
+  filter: blur(50px); opacity: 0.6;
+  animation: joma-aurora-drift 16s ease-in-out infinite alternate;
+}
+.jomatheme-welcome__grid {
+  position: absolute; inset: 0; z-index: -1;
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: radial-gradient(120% 90% at 0% 0%, #000 28%, transparent 75%);
+  -webkit-mask-image: radial-gradient(120% 90% at 0% 0%, #000 28%, transparent 75%);
+}
+.jomatheme-welcome__inner { position: relative; z-index: 1; }
+.jomatheme-welcome__eyebrow {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  margin: 0 0 0.6rem; font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgb(129 140 248);
+}
+.jomatheme-welcome__dot {
+  width: 8px; height: 8px; border-radius: 999px; background: rgb(34 197 94);
+  box-shadow: 0 0 0 4px rgb(34 197 94 / 0.18), 0 0 12px rgb(34 197 94 / 0.6);
+  animation: joma-status-pulse 2.2s ease-in-out infinite;
+}
+.jomatheme-welcome__title {
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem); font-weight: 800;
+  margin: 0 0 0.5rem; line-height: 1.12; letter-spacing: -0.025em;
+  background: linear-gradient(110deg, #fff 8%, rgb(165 180 254) 38%, rgb(129 140 248) 58%, rgb(139 92 246) 80%, #fff 100%);
+  background-size: 220% auto;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: joma-hero-gradient 7s ease-in-out infinite;
+}
+.jomatheme-welcome__name { color: rgb(129 140 248); -webkit-text-fill-color: rgb(129 140 248); }
+.jomatheme-welcome__sparkle { display: inline-block; color: rgb(34 211 238); -webkit-text-fill-color: rgb(34 211 238); animation: joma-twinkle 3s ease-in-out infinite; transform-origin: 50% 50%; }
+.jomatheme-welcome__wave { display: inline-block; animation: joma-wave 2.8s ease-in-out infinite; transform-origin: 70% 70%; }
+.jomatheme-welcome__sub { margin: 0 0 1.1rem; max-width: 48rem; color: rgb(170 180 204); font-size: 0.98rem; }
+
+.jomatheme-welcome__stats { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 0 0 1.1rem; }
+.jomatheme-welcome__stat {
+  display: flex; align-items: center; gap: 0.55rem;
+  padding: 0.5rem 0.85rem; border-radius: var(--joma-radius-md);
+  background: rgb(10 16 32 / 0.5); border: 1px solid rgb(255 255 255 / 0.07);
+  min-width: 7.5rem;
+}
+.jomatheme-welcome__stat-icon { color: rgb(129 140 248); font-size: 1rem; }
+.jomatheme-welcome__stat-num { font-weight: 800; font-size: 1.15rem; color: rgb(245 247 252); line-height: 1; }
+.jomatheme-welcome__stat-label { font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgb(140 150 176); }
+
+.jomatheme-welcome__actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.jomatheme-welcome__btn {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.5rem 0.95rem; border-radius: var(--joma-radius-pill);
+  font-size: 0.84rem; font-weight: 600; cursor: pointer; text-decoration: none;
+  border: 1px solid rgb(255 255 255 / 0.1);
+  background: linear-gradient(135deg, rgb(28 36 64 / 0.9), rgb(18 24 44 / 0.9));
+  color: rgb(226 232 240);
+  transition: transform var(--joma-transition-normal) var(--joma-ease-spring),
+              border-color var(--joma-transition-normal) ease,
+              box-shadow var(--joma-transition-normal) ease, color var(--joma-transition-normal) ease;
+}
+.jomatheme-welcome__btn:hover { transform: translateY(-2px); color: rgb(245 247 252); border-color: rgb(99 102 241 / 0.45); box-shadow: 0 10px 28px rgb(99 102 241 / 0.22); }
+.jomatheme-welcome__btn--primary { background: var(--joma-grad-primary); color: rgb(255 255 255); border-color: rgb(129 140 248 / 0.55); box-shadow: 0 10px 28px rgb(99 102 241 / 0.35); }
+.jomatheme-welcome__btn--primary:hover { filter: brightness(1.08); box-shadow: 0 16px 38px rgb(99 102 241 / 0.5); }
+
+.jomatheme-welcome__pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.jomatheme-welcome__pill {
+  font-size: 0.7rem; font-weight: 600; padding: 0.28rem 0.7rem; border-radius: 999px;
+  color: rgb(165 180 254); background: rgb(99 102 241 / 0.12); border: 1px solid rgb(99 102 241 / 0.26);
+}
+
+/* hero mini sparkline (decorative) */
+.jomatheme-welcome__spark { position: absolute; right: 1.5rem; top: 1.5rem; opacity: 0.18; pointer-events: none; z-index: 0; }
+
+/* ----------------------------------------------------------------------------
+   19. Console / terminal — modern cloud terminal
+   ---------------------------------------------------------------------------- */
+[class*="terminal"], [class*="Terminal"], [class*="console"]:not([class*="console-"]), #terminal {
+  border-radius: var(--joma-radius-md) !important;
+  background: linear-gradient(135deg, rgb(6 9 18 / 0.92), rgb(4 7 14 / 0.95)) !important;
+  border: 1px solid rgb(255 255 255 / 0.08) !important;
+  box-shadow: inset 0 0 50px rgb(0 0 0 / 0.6), 0 12px 30px rgb(0 0 0 / 0.3) !important;
+  color: rgb(202 214 234) !important;
+}
+[class*="terminal"]::-webkit-scrollbar-thumb, [class*="Terminal"]::-webkit-scrollbar-thumb { background: rgb(99 102 241 / 0.5); border-radius: 999px; }
+
+/* code blocks */
+code, pre, kbd {
+  background: rgb(7 11 24 / 0.7) !important;
+  border: 1px solid rgb(255 255 255 / 0.08) !important;
+  border-radius: var(--joma-radius-sm) !important;
+  color: rgb(165 180 254) !important;
+  font-family: ui-monospace, "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+/* ----------------------------------------------------------------------------
+   20. Toast notifications (created by wrapper JS)
+   ---------------------------------------------------------------------------- */
+#jomatheme-toasts {
+  position: fixed; z-index: 99999; right: 1.25rem; bottom: 1.25rem;
+  display: flex; flex-direction: column-reverse; gap: 0.6rem;
+  max-width: min(92vw, 24rem); pointer-events: none;
+}
+.jomatheme-toast {
+  pointer-events: auto; display: flex; align-items: flex-start; gap: 0.65rem;
+  padding: 0.85rem 0.95rem 0.85rem 0.95rem; border-radius: var(--joma-radius-md);
+  background: linear-gradient(135deg, rgb(20 28 50 / 0.9), rgb(12 18 36 / 0.92));
+  backdrop-filter: blur(var(--joma-blur-md)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--joma-blur-md)) saturate(160%);
+  border: 1px solid rgb(255 255 255 / 0.1);
+  box-shadow: 0 18px 44px rgb(0 0 0 / 0.55), inset 0 1px 0 rgb(255 255 255 / 0.06);
+  color: rgb(232 238 246); overflow: hidden; position: relative;
+  animation: joma-toast-in 0.42s var(--joma-ease-spring) both;
+}
+.jomatheme-toast.is-leaving { animation: joma-toast-out 0.34s ease forwards; }
+.jomatheme-toast::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: rgb(99 102 241); }
+.jomatheme-toast[data-type="success"]::before { background: rgb(34 197 94); }
+.jomatheme-toast[data-type="warning"]::before { background: rgb(245 158 11); }
+.jomatheme-toast[data-type="error"]::before   { background: rgb(239 68 68); }
+.jomatheme-toast[data-type="info"]::before    { background: rgb(59 130 246); }
+.jomatheme-toast__icon { font-size: 1rem; line-height: 1.4; }
+.jomatheme-toast__icon--success { color: rgb(74 222 128); }
+.jomatheme-toast__icon--warning { color: rgb(251 191 36); }
+.jomatheme-toast__icon--error   { color: rgb(248 113 113); }
+.jomatheme-toast__icon--info    { color: rgb(96 165 250); }
+.jomatheme-toast__body { flex: 1; min-width: 0; font-size: 0.9rem; line-height: 1.4; }
+.jomatheme-toast__title { font-weight: 700; margin-bottom: 0.1rem; }
+.jomatheme-toast__close {
+  background: none; border: 0; cursor: pointer; color: rgb(140 150 176);
+  font-size: 1rem; line-height: 1; padding: 0 0 0 0.25rem; border-radius: var(--joma-radius-xs) !important;
+}
+.jomatheme-toast__close:hover { color: rgb(245 247 252); background: rgb(255 255 255 / 0.06) !important; }
+.jomatheme-toast__bar { position: absolute; left: 0; bottom: 0; height: 2px; background: rgb(255 255 255 / 0.45); animation: joma-toast-bar linear forwards; }
+
+/* ----------------------------------------------------------------------------
+   21. Skeleton loaders + spinner
+   ---------------------------------------------------------------------------- */
+.jomatheme-skeleton {
+  position: relative; overflow: hidden;
+  background: rgb(255 255 255 / 0.06); border-radius: var(--joma-radius-sm);
+  color: transparent !important;
+}
+.jomatheme-skeleton::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.12), transparent);
+  transform: translateX(-100%); animation: joma-shimmer 1.4s infinite;
+}
+.jomatheme-skeleton * { visibility: hidden; }
+.jomatheme-spinner {
+  width: 1.1em; height: 1.1em; border-radius: 999px;
+  border: 2px solid rgb(255 255 255 / 0.18); border-top-color: rgb(99 102 241);
+  animation: joma-spin 0.8s linear infinite;
+  display: inline-block; vertical-align: -0.15em;
+}
+
+/* ----------------------------------------------------------------------------
+   22. Page transition (driven by wrapper JS)
+   ---------------------------------------------------------------------------- */
+.jomatheme-slide { animation: joma-slide-up 0.46s var(--joma-ease) both; }
+
+/* ----------------------------------------------------------------------------
+   23. Every other Tailwind gray family → dark glass (full coverage)
+   ---------------------------------------------------------------------------- */
 .bg-gray-50, .bg-gray-100, .bg-gray-200, .bg-gray-300,
 .bg-slate-50, .bg-slate-100, .bg-slate-200, .bg-slate-300,
 .bg-zinc-50, .bg-zinc-100, .bg-zinc-200, .bg-zinc-300,
 .bg-stone-50, .bg-stone-100, .bg-stone-200, .bg-stone-300 {
-  background-color: rgb(28 28 42 / 0.66) !important;
-  backdrop-filter: blur(var(--joma-blur-md)) saturate(150%);
-  -webkit-backdrop-filter: blur(var(--joma-blur-md)) saturate(150%);
+  background: linear-gradient(135deg, rgb(22 30 54 / 0.72), rgb(12 18 36 / 0.78)) !important;
   border: 1px solid rgb(255 255 255 / 0.07) !important;
 }
 .bg-gray-400, .bg-gray-500, .bg-gray-600,
 .bg-slate-400, .bg-slate-500, .bg-slate-600,
 .bg-zinc-400, .bg-zinc-500, .bg-zinc-600,
 .bg-stone-400, .bg-stone-500, .bg-stone-600 {
-  background-color: rgb(40 40 58 / 0.72) !important;
+  background: rgb(40 50 78 / 0.72) !important;
 }
 .bg-gray-700, .bg-gray-800, .bg-gray-900, .bg-gray-950,
 .bg-slate-700, .bg-slate-800, .bg-slate-900, .bg-slate-950,
 .bg-zinc-700, .bg-zinc-800, .bg-zinc-900,
 .bg-stone-700, .bg-stone-800, .bg-stone-900 {
-  background-color: rgb(16 16 26 / 0.82) !important;
-  backdrop-filter: blur(var(--joma-blur-sm)) saturate(150%);
-  -webkit-backdrop-filter: blur(var(--joma-blur-sm)) saturate(150%);
-}
-
-/* footer — seamless, no default band */
-footer, .footer, [class*="Footer"] {
-  border-top: 1px solid rgb(255 255 255 / 0.06) !important;
-  color: rgb(150 150 170) !important;
-  background: transparent !important;
+  background: rgb(7 11 24 / 0.9) !important;
 }
 
 /* ----------------------------------------------------------------------------
-   16. Reduced-motion safety
+   24. Scrollbar, focus, misc
+   ---------------------------------------------------------------------------- */
+* { scrollbar-width: thin; scrollbar-color: rgb(99 102 241 / 0.5) transparent; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(rgb(99 102 241 / 0.55), rgb(139 92 246 / 0.45));
+  border-radius: 999px; border: 2px solid transparent; background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover { background: rgb(99 102 241 / 0.8); background-clip: padding-box; }
+:focus-visible { outline: 2px solid rgb(99 102 241 / 0.7); outline-offset: 2px; }
+
+/* ----------------------------------------------------------------------------
+   25. Responsive — keep premium on small screens
+   ---------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  [class*="ServerCard"], [class*="server-card"], [class*="ServerRow"] { border-radius: var(--joma-radius-lg) !important; }
+  .jomatheme-welcome { padding: 1.35rem 1.25rem 1.25rem; border-radius: var(--joma-radius-lg); }
+  .jomatheme-welcome__stats { gap: 0.5rem; }
+  .jomatheme-welcome__stat { min-width: 0; flex: 1 1 8rem; }
+  .jomatheme-welcome__spark { display: none; }
+  #jomatheme-cmdk-hint { display: none; }
+  table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+
+/* ----------------------------------------------------------------------------
+   26. Reduced-motion safety
    ---------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -617,7 +847,6 @@ footer, .footer, [class*="Footer"] {
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
-  .jomatheme-welcome__aurora { animation: none; }
-  .jomatheme-ripple { animation: none !important; opacity: 0 !important; }
-  .jomatheme-cmdk__panel, .jomatheme-cmdk__backdrop { animation: none !important; }
+  .jomatheme-welcome__aurora, .jomatheme-welcome__title,
+  .jomatheme-welcome__dot, .joma-dot, .jomatheme-ripple { animation: none !important; }
 }

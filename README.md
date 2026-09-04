@@ -1,8 +1,8 @@
 # JomaTheme
 
-> A modern, dark, **SaaS-style** Blueprint extension theme for **Pterodactyl 1.15.1** running **Blueprint beta-2026-08**. Glassmorphism, animated aurora backgrounds, layout slide transitions, toast notifications, skeleton loaders and a slick live welcome banner — without touching a single Pterodactyl core file.
+> A premium, dark, **futuristic** Blueprint extension theme for **Pterodactyl 1.15.1** running **Blueprint beta-2026-08**. Deep-navy base with blue→indigo→violet gradients and subtle cyan accents, real glassmorphism (frosted blur + gradient hairline borders), an animated aurora background, live dashboard statistics, quick actions, premium glass server cards, a cloud-style console, command palette, toast notifications and page transitions — without touching a single Pterodactyl core file.
 
-![status](https://img.shields.io/badge/status-active-22c55e) ![version](https://img.shields.io/badge/version-2.0.0-7a98ff) ![target](https://img.shields.io/badge/blueprint-beta--2026--08-7a98ff) ![pterodactyl](https://img.shields.io/badge/pterodactyl-1.15.1-38bdf8)
+![status](https://img.shields.io/badge/status-active-22c55e) ![version](https://img.shields.io/badge/version-3.0.0-6366f1) ![target](https://img.shields.io/badge/blueprint-beta--2026--08-6366f1) ![pterodactyl](https://img.shields.io/badge/pterodactyl-1.15.1-38bdf8)
 
 ---
 
@@ -18,18 +18,20 @@
 
 ## Features
 
-- 🌌 **Animated aurora background** — a drifting violet/cyan/fuchsia gradient mesh on every page.
-- 🪟 **Glassmorphism surfaces** — frosted, blurred cards with subtle borders and soft shadows.
-- 🖱️ **Premium button system** — gradient-shift + glow on hover, 3D press on click, and a **click ripple** that fires on every button across the panel.
+- 🌌 **Animated aurora background** — a drifting indigo/violet/cyan gradient mesh on every page, with a subtle dot-grid + ambient blobs.
+- 🪟 **Real glassmorphism** — frosted, blurred cards/panels/modals/dropdowns with gradient hairline borders and soft shadows.
+- 🎮 **Premium server cards** — translucent glass cards with a gradient border that brightens on hover, status glow dots and smooth elevation.
+- 🖱️ **Premium button system** — indigo→violet gradient + glow on hover, 3D press on click, and a **click ripple** that fires on every button across the panel.
 - ⌘ **Command palette** — `Ctrl`/`⌘` + `K` opens a glassy, keyboard-navigable palette (server-aware: on `/server/<id>` it lists that server's tabs first; admin commands appear for admins).
 - ✨ **Layout slide transitions** — content slides + fades on every client-side route change (history-aware).
 - 🔔 **Toast notifications** — power actions (start/stop/restart/kill) surface as auto-dismissing toasts; full JS API (`window.JomaTheme.toast`).
 - ⏳ **Loading states** — a top gradient progress bar tracks in-flight `fetch`/XHR requests; skeleton shimmer utility for your own content.
-- 🖥️ **Console polish** — auto-scroll to the latest line and a one-click **Copy** button.
-- 🎯 **Live welcome banner** — a personalised React header injected above the server list (`Dashboard.Serverlist.BeforeContent`).
+- 🖥️ **Cloud console** — dark glass terminal with inner glow, auto-scroll to the latest line and a one-click **Copy** button.
+- 🎯 **Premium dashboard hero** — "JOMAMC · CONTROL PANEL" with an animated gradient heading, sparkle, **live server/online stats** (real Pterodactyl data) and quick-action buttons, injected above the server list (`Dashboard.Serverlist.BeforeContent`).
+- 📊 **Statistics cards** — glass stat tiles with gradient icons and subtle ambient glow.
 - 🎛️ **Animated admin page** at `/admin/extensions/jomatheme` with a live accent-color preview.
 - ♿ **Accessible & responsive** — `prefers-reduced-motion` guard disables heavy animation; works from 320px up.
-- 🛡️ **Non-destructive** — pure CSS + a runtime `<style>`/`<script>` wrapper. Cannot break Pterodactyl's React rendering; removing the extension leaves zero residue.
+- 🛡️ **Non-destructive** — pure CSS + a runtime `<style>`/`<script>` wrapper + one small React component. Cannot break Pterodactyl's React rendering; removing the extension leaves zero residue.
 
 ---
 
@@ -139,14 +141,16 @@ Because the theme is delivered through CSS + a wrapper `<style>`/`<script>` (and
 
 ## Configuration
 
-The JomaMC palette lives at the top of [`dashboard.css`](./dashboard.css) in the `:root` block:
+The JomaTheme palette lives at the top of [`dashboard.css`](./dashboard.css) in the `:root` block:
 
 ```css
 :root {
-  --blueprint-primary-500: 124 92 252;   /* JomaMC accent (#7C5CFC) */
-  --blueprint-neutral-50:    20 20 32;   /* page base               */
-  --blueprint-white:         28 28 42;   /* cards / raised surfaces */
-  /* ... full 50–950 scale inside the file */
+  --blueprint-primary-500: 99 102 241;   /* indigo accent (#6366F1)        */
+  --blueprint-neutral-50:    5 9 20;     /* midnight page base (#050914)   */
+  --blueprint-white:        18 24 44;    /* glass / raised surfaces        */
+  --joma-secondary:       139 92 246;    /* violet accent (#8B5CF6)       */
+  --joma-accent:           34 211 238;   /* cyan accent (#22D3EE)          */
+  /* ... full 50–950 scale + JomaTheme tokens inside the file             */
 }
 ```
 
@@ -188,7 +192,7 @@ Then `blueprint -build` to apply the extension onto the live panel.
 - **`dashboard.css`** is compiled *into the Pterodactyl React bundle* — keep it plain, valid CSS (no SCSS). A syntax error here can break client rendering, so the heavy keyframes and runtime JS live in the wrapper instead.
 - **`wrapper.blade.php`** is included on every page via `@yield('blueprint.wrappers')`. Its `<style>`/`<script>` are wrapped in `@verbatim` so Blade never touches the CSS/JS. This is the safe home for animations and enhancements.
 - **Navigation** is rendered by Pterodactyl's React `NavigationBar.tsx`. JomaTheme restyles it purely via CSS (targeting stable Tailwind classes and `#NavigationBar`), never by editing the component.
-- **`JomaWelcome.tsx`** is injected through `Components.yml` at the `Dashboard.Serverlist.BeforeContent` slot. It reads `window.PterodactylUser` with heavy guarding and degrades to a static greeting if unavailable.
+- **`JomaWelcome.tsx`** is injected through `Components.yml` at the `Dashboard.Serverlist.BeforeContent` slot. It reads `window.PterodactylUser` with heavy guarding for the greeting, and fetches `/api/client/servers` (+ per-server `/resources`, capped) to show **real** server and online counts. All fetches are abortable and best-effort — if the API is unavailable the stats row is simply hidden, never faked.
 - **Notifications** hook `window.fetch` and `XMLHttpRequest` to observe power-action requests (`/api/client/servers/{id}/power`) and emit success/error toasts — purely observational, never modifying the request or response.
 
 ---

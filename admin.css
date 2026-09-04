@@ -1,101 +1,266 @@
 /* ============================================================================
-   JomaTheme — admin panel theme
+   JomaTheme v3.0 — admin panel theme
    Applied via the Blueprint `admin.css` field (injected into the admin layout).
-   Mirrors the dashboard's dark JomaMC aesthetic so the admin area feels like
-   the same product.
+   Mirrors the dashboard's deep-navy + indigo/violet/cyan + glassmorphism
+   system so the admin area feels like the same product.
    ============================================================================ */
 
 :root {
-  --blueprint-primary-500: 124 92 252;
-  --blueprint-primary-600: 109 76 247;
-  --blueprint-primary-700: 91 63 211;
-  --blueprint-neutral-50:  20 20 32;
-  --blueprint-neutral-100: 26 26 40;
-  --blueprint-neutral-200: 40 40 58;
-  --blueprint-neutral-700: 190 190 206;
-  --blueprint-neutral-900: 235 235 245;
-  --blueprint-white: 28 28 42;
-  --blueprint-black: 5 5 9;
+  /* --- Primary: indigo --- */
+  --blueprint-primary-50:  237 240 255;
+  --blueprint-primary-100: 224 231 255;
+  --blueprint-primary-200: 199 210 254;
+  --blueprint-primary-300: 165 180 254;
+  --blueprint-primary-400: 129 140 254;
+  --blueprint-primary-500: 99 102 241;
+  --blueprint-primary-600: 79 70 229;
+  --blueprint-primary-700: 67 56 202;
+  --blueprint-primary-800: 55 48 163;
+  --blueprint-primary-900: 49 46 129;
+  --blueprint-primary-950: 30 27 75;
+
+  /* --- Neutral scale: deep navy --- */
+  --blueprint-neutral-50:  5 9 20;
+  --blueprint-neutral-100: 9 14 28;
+  --blueprint-neutral-200: 14 20 38;
+  --blueprint-neutral-300: 22 30 52;
+  --blueprint-neutral-400: 44 55 82;
+  --blueprint-neutral-500: 80 90 120;
+  --blueprint-neutral-600: 120 128 156;
+  --blueprint-neutral-700: 160 168 192;
+  --blueprint-neutral-800: 198 204 222;
+  --blueprint-neutral-900: 226 232 240;
+  --blueprint-neutral-950: 245 247 252;
+  --blueprint-white: 18 24 44;
+  --blueprint-black: 5 9 20;
+
+  /* --- JomaTheme tokens (mirror of dashboard) --- */
+  --joma-bg:        5 9 20;
+  --joma-bg-2:      7 11 24;
+  --joma-bg-3:     10 16 32;
+  --joma-surface:  18 24 44;
+  --joma-surface-2:22 30 54;
+  --joma-surface-hover: 28 36 64;
+  --joma-border:  255 255 255;
+  --joma-text:    226 232 240;
+  --joma-text-secondary: 164 176 199;
+  --joma-text-muted: 110 122 150;
+  --joma-primary:  99 102 241;
+  --joma-primary-light: 129 140 248;
+  --joma-secondary: 139 92 246;
+  --joma-accent:   34 211 238;
+  --joma-accent-2: 59 130 246;
+  --joma-danger:  239 68 68;
+  --joma-success: 34 197 94;
+  --joma-warning: 245 158 11;
+  --joma-info:    59 130 246;
+
+  --joma-radius-sm: 10px; --joma-radius-md: 14px; --joma-radius-lg: 18px;
+  --joma-radius-xl: 22px; --joma-radius-pill: 100px; --joma-radius-modal: 24px;
+  --joma-blur-sm: 10px; --joma-blur-md: 16px; --joma-blur-lg: 26px;
+  --joma-transition-fast: 120ms; --joma-transition-normal: 200ms;
+  --joma-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --joma-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --joma-grad-primary: linear-gradient(135deg, rgb(99 102 241), rgb(139 92 246));
+  --joma-grad-blue:    linear-gradient(135deg, rgb(59 130 246), rgb(99 102 241));
 }
 
 html { color-scheme: dark; }
 
 body {
-  background-color: rgb(9 9 16) !important;
+  background-color: rgb(5 9 20) !important;
   background-image:
-    radial-gradient(50rem 50rem at 8% -10%, rgb(124 92 252 / 0.16), transparent 60%),
-    radial-gradient(45rem 45rem at 110% 5%, rgb(56 189 248 / 0.12), transparent 55%);
+    radial-gradient(60rem 60rem at 8% -12%, rgb(99 102 241 / 0.15), transparent 60%),
+    radial-gradient(52rem 52rem at 112% 4%, rgb(139 92 246 / 0.13), transparent 55%),
+    radial-gradient(42rem 42rem at 50% 120%, rgb(34 211 238 / 0.07), transparent 60%);
   background-attachment: fixed;
-  color: rgb(236 236 245) !important;
+  color: rgb(226 232 240) !important;
+  font-family: "Inter var", "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.005em;
 }
 
-/* Surfaces --------------------------------------------------------------- */
-.bg-white,
-[class*="bg-white"] {
-  background-color: rgb(28 28 42 / 0.66) !important;
-  backdrop-filter: blur(14px) saturate(150%);
-  -webkit-backdrop-filter: blur(14px) saturate(150%);
+/* Surfaces — frosted glass ------------------------------------------------ */
+.bg-white, [class*="bg-white"] {
+  background: linear-gradient(135deg, rgb(22 30 54 / 0.70), rgb(12 18 36 / 0.78)) !important;
+  backdrop-filter: blur(var(--joma-blur-md)) saturate(150%);
+  -webkit-backdrop-filter: blur(var(--joma-blur-md)) saturate(150%);
   border: 1px solid rgb(255 255 255 / 0.07) !important;
-  box-shadow: 0 8px 28px rgb(0 0 0 / 0.4) !important;
+  box-shadow: 0 18px 48px rgb(0 0 0 / 0.45), inset 0 1px 0 rgb(255 255 255 / 0.05) !important;
+  border-radius: var(--joma-radius-lg) !important;
 }
-.bg-neutral-100,
-.bg-neutral-50 { background-color: rgb(22 22 34 / 0.6) !important; }
-.bg-neutral-800,
-.bg-neutral-900 { background-color: rgb(16 16 26 / 0.8) !important; }
+.bg-neutral-100, .bg-neutral-50 { background: linear-gradient(135deg, rgb(20 28 50 / 0.7), rgb(10 16 32 / 0.78)) !important; }
+.bg-neutral-800, .bg-neutral-900, .bg-neutral-950 { background: rgb(7 11 24 / 0.9) !important; }
+
+/* gray families → dark glass */
+.bg-gray-50, .bg-gray-100, .bg-gray-200, .bg-gray-300,
+.bg-slate-50, .bg-slate-100, .bg-slate-200, .bg-slate-300,
+.bg-zinc-50, .bg-zinc-100, .bg-zinc-200, .bg-zinc-300,
+.bg-stone-50, .bg-stone-100, .bg-stone-200, .bg-stone-300 {
+  background: linear-gradient(135deg, rgb(22 30 54 / 0.70), rgb(12 18 36 / 0.78)) !important;
+  border: 1px solid rgb(255 255 255 / 0.07) !important;
+}
+.bg-gray-700, .bg-gray-800, .bg-gray-900,
+.bg-slate-700, .bg-slate-800, .bg-slate-900,
+.bg-zinc-700, .bg-zinc-800, .bg-zinc-900,
+.bg-stone-700, .bg-stone-800, .bg-stone-900 {
+  background: rgb(7 11 24 / 0.9) !important;
+}
 
 /* Text normalization ---------------------------------------------------- */
-.text-white, .text-neutral-50, .text-neutral-100 { color: rgb(248 248 252) !important; }
-.text-neutral-300, .text-neutral-400 { color: rgb(210 210 224) !important; }
-.text-neutral-500, .text-neutral-600 { color: rgb(150 150 170) !important; }
-.text-neutral-700, .text-neutral-800, .text-neutral-900, .text-neutral-950 { color: rgb(236 236 245) !important; }
-h1, h2, h3, h4, h5, h6 { color: rgb(248 248 252) !important; }
+.text-white, .text-neutral-50, .text-neutral-100, .text-neutral-200 { color: rgb(245 247 252) !important; }
+.text-neutral-300, .text-neutral-400 { color: rgb(196 204 222) !important; }
+.text-neutral-500, .text-neutral-600 { color: rgb(140 150 176) !important; }
+.text-neutral-700, .text-neutral-800, .text-neutral-900, .text-neutral-950 { color: rgb(226 232 240) !important; }
+h1, h2, h3, h4, h5, h6 { color: rgb(245 247 252) !important; letter-spacing: -0.02em; font-weight: 700; }
+a { color: rgb(129 140 248); transition: color var(--joma-transition-normal) ease; }
+a:hover { color: rgb(165 180 254); }
+::selection { background: rgb(99 102 241 / 0.38); color: #fff; }
 
 /* Borders --------------------------------------------------------------- */
 .border, [class*="border-neutral"], [class*="border-white"] { border-color: rgb(255 255 255 / 0.08) !important; }
 
+/* Rounded --------------------------------------------------------------- */
+.rounded, .rounded-md, .rounded-lg { border-radius: var(--joma-radius-md) !important; }
+.rounded-xl, .rounded-2xl { border-radius: var(--joma-radius-lg) !important; }
+
 /* Sidebar / nav --------------------------------------------------------- */
-nav, aside, [class*="sidebar"], [class*="Sidebar"] {
-  background: rgb(13 13 22 / 0.7) !important;
-  backdrop-filter: blur(16px) saturate(150%);
-  -webkit-backdrop-filter: blur(16px) saturate(150%);
+nav, aside, [class*="sidebar"], [class*="Sidebar"], [class*="Sidebar"] {
+  background: rgb(10 16 32 / 0.7) !important;
+  backdrop-filter: blur(var(--joma-blur-md)) saturate(150%);
+  -webkit-backdrop-filter: blur(var(--joma-blur-md)) saturate(150%);
   border-color: rgb(255 255 255 / 0.07) !important;
 }
-nav a, aside a { color: rgb(200 200 214) !important; transition: color 0.16s ease, background-color 0.16s ease; }
-nav a:hover, aside a:hover { color: rgb(248 248 252) !important; background: rgb(124 92 252 / 0.12) !important; }
+nav a, aside a, [class*="sidebar"] a {
+  color: rgb(176 184 206) !important; border-radius: var(--joma-radius-sm) !important;
+  transition: color var(--joma-transition-normal) ease, background-color var(--joma-transition-normal) ease;
+}
+nav a:hover, aside a:hover, [class*="sidebar"] a:hover {
+  color: rgb(245 247 252) !important; background: rgb(99 102 241 / 0.14) !important;
+}
+nav a.active, nav a[class*="active"], [class*="sidebar"] a.active {
+  color: rgb(165 180 254) !important;
+  background: linear-gradient(135deg, rgb(99 102 241 / 0.22), rgb(139 92 246 / 0.12)) !important;
+  box-shadow: inset 0 0 0 1px rgb(99 102 241 / 0.32);
+}
+
+/* Navbar / top bar ------------------------------------------------------ */
+header, [class*="navbar"], [class*="Navbar"], [class*="topbar"] {
+  background: rgb(7 11 24 / 0.82) !important;
+  backdrop-filter: blur(var(--joma-blur-lg)) saturate(170%);
+  -webkit-backdrop-filter: blur(var(--joma-blur-lg)) saturate(170%);
+  border-bottom: 1px solid rgb(255 255 255 / 0.07) !important;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.4) !important;
+}
 
 /* Buttons --------------------------------------------------------------- */
-.btn-primary,
-button[class*="primary"] {
-  background-image: linear-gradient(135deg, rgb(124 92 252), rgb(91 63 211)) !important;
-  color: rgb(255 255 255) !important;
-  border: 1px solid rgb(165 139 252 / 0.5) !important;
-  box-shadow: 0 8px 22px rgb(124 92 252 / 0.32) !important;
+button, .btn, a[class*="btn"], [role="button"] {
+  border-radius: var(--joma-radius-pill) !important; font-weight: 600 !important;
+  transition: transform var(--joma-transition-normal) var(--joma-ease-spring),
+              box-shadow var(--joma-transition-normal) ease,
+              background-color var(--joma-transition-normal) ease, filter var(--joma-transition-normal) ease !important;
 }
+button:not(:disabled):hover, .btn:hover, a[class*="btn"]:hover { transform: translateY(-1px); }
+button:not(:disabled):active, .btn:active { transform: translateY(0) scale(0.97); }
+
+button:not([class*="primary"]):not([class*="secondary"]):not([class*="danger"]):not([class*="success"]):not([class*="warning"]),
+.btn:not(.btn-primary):not(.btn-secondary):not(.btn-danger):not(.btn-success):not(.btn-warning) {
+  background: linear-gradient(135deg, rgb(28 36 64 / 0.9), rgb(18 24 44 / 0.9)) !important;
+  color: rgb(226 232 240) !important; border: 1px solid rgb(255 255 255 / 0.08) !important;
+}
+button:not([class*="primary"]):not([class*="secondary"]):not([class*="danger"]):not([class*="success"]):not([class*="warning"]):not(:disabled):hover,
+.btn:not(.btn-primary):not(.btn-secondary):not(.btn-danger):not(.btn-success):not(.btn-warning):hover {
+  border-color: rgb(99 102 241 / 0.4) !important; color: rgb(245 247 252) !important;
+  box-shadow: 0 8px 24px rgb(99 102 241 / 0.2) !important;
+}
+
+.btn-primary, button[class*="primary"], a[class*="btn-primary"] {
+  background: var(--joma-grad-primary) !important; color: rgb(255 255 255) !important;
+  border: 1px solid rgb(129 140 248 / 0.55) !important;
+  box-shadow: 0 10px 28px rgb(99 102 241 / 0.4), inset 0 1px 0 rgb(255 255 255 / 0.3) !important;
+}
+.btn-primary:hover, button[class*="primary"]:not(:disabled):hover {
+  filter: brightness(1.08); box-shadow: 0 16px 38px rgb(99 102 241 / 0.55) !important;
+}
+.btn-secondary, button[class*="secondary"] {
+  background: linear-gradient(135deg, rgb(22 30 54 / 0.8), rgb(14 20 38 / 0.8)) !important;
+  color: rgb(226 232 240) !important; border: 1px solid rgb(255 255 255 / 0.08) !important;
+}
+.btn-secondary:hover, button[class*="secondary"]:not(:disabled):hover {
+  border-color: rgb(99 102 241 / 0.4) !important; color: rgb(245 247 252) !important;
+}
+.btn-danger, button[class*="danger"] {
+  background: linear-gradient(135deg, rgb(239 68 68), rgb(220 38 38)) !important;
+  color: rgb(255 255 255) !important; box-shadow: 0 10px 28px rgb(239 68 68 / 0.32) !important;
+}
+.btn-success, button[class*="success"] {
+  background: linear-gradient(135deg, rgb(34 197 94), rgb(22 163 74)) !important; color: rgb(255 255 255) !important;
+}
+button:disabled, .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
 /* Forms ----------------------------------------------------------------- */
-input, textarea, select {
-  background-color: rgb(16 16 26 / 0.7) !important;
+input, textarea, select, [class*="Input"], [class*="Textarea"] {
+  background: rgb(10 16 32 / 0.7) !important;
   border: 1px solid rgb(255 255 255 / 0.1) !important;
-  color: rgb(236 236 245) !important;
+  border-radius: var(--joma-radius-md) !important;
+  color: rgb(226 232 240) !important;
+  transition: border-color var(--joma-transition-normal) ease, box-shadow var(--joma-transition-normal) ease, background var(--joma-transition-normal) ease;
 }
 input:focus, textarea:focus, select:focus {
-  border-color: rgb(124 92 252 / 0.6) !important;
-  box-shadow: 0 0 0 3px rgb(124 92 252 / 0.22) !important;
-  outline: none !important;
+  border-color: rgb(99 102 241 / 0.65) !important;
+  box-shadow: 0 0 0 3px rgb(99 102 241 / 0.2), 0 0 22px rgb(99 102 241 / 0.18) !important;
+  outline: none !important; background: rgb(12 18 36 / 0.85) !important;
 }
+input::placeholder, textarea::placeholder { color: rgb(110 122 150) !important; }
+input[type="checkbox"], input[type="radio"] { accent-color: rgb(99 102 241); }
+label { color: rgb(196 204 222) !important; }
 
 /* Tables ---------------------------------------------------------------- */
-thead th { color: rgb(150 150 170) !important; border-bottom: 1px solid rgb(255 255 255 / 0.1) !important; }
-tbody tr:hover { background-color: rgb(255 255 255 / 0.04) !important; }
+table { border-collapse: separate !important; border-spacing: 0; }
+thead th {
+  color: rgb(140 150 176) !important; text-transform: uppercase; letter-spacing: 0.06em;
+  font-size: 0.7rem; font-weight: 600; border-bottom: 1px solid rgb(255 255 255 / 0.1) !important;
+  background: rgb(255 255 255 / 0.02) !important;
+}
+tbody tr { transition: background-color var(--joma-transition-normal) ease; }
+tbody tr:hover { background-color: rgb(99 102 241 / 0.06) !important; }
 tbody td { border-color: rgb(255 255 255 / 0.06) !important; }
 
-/* Rounded corners ------------------------------------------------------- */
-.rounded-md, .rounded-lg, .rounded-xl, .rounded-2xl { border-radius: 16px !important; }
+/* Badges ---------------------------------------------------------------- */
+[class*="Badge"], [class*="badge"] {
+  background: rgb(99 102 241 / 0.16) !important; color: rgb(165 180 254) !important;
+  border: 1px solid rgb(99 102 241 / 0.3) !important; border-radius: var(--joma-radius-pill) !important; font-weight: 600;
+}
+
+/* Modals ---------------------------------------------------------------- */
+[class*="Modal"], [class*="modal-content"], [role="dialog"] {
+  background: linear-gradient(135deg, rgb(20 28 50 / 0.94), rgb(12 18 36 / 0.96)) !important;
+  backdrop-filter: blur(var(--joma-blur-lg)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--joma-blur-lg)) saturate(160%);
+  border: 1px solid rgb(255 255 255 / 0.1) !important; border-radius: var(--joma-radius-modal) !important;
+  box-shadow: 0 30px 80px rgb(0 0 0 / 0.6), 0 0 0 1px rgb(99 102 241 / 0.12) !important;
+}
+[class*="modal-backdrop"], [class*="ModalOverlay"] { background: rgb(5 9 20 / 0.6) !important; }
+
+/* Code ------------------------------------------------------------------ */
+code, pre, kbd {
+  background: rgb(7 11 24 / 0.7) !important; border: 1px solid rgb(255 255 255 / 0.08) !important;
+  border-radius: var(--joma-radius-sm) !important; color: rgb(165 180 254) !important;
+}
 
 /* Scrollbar ------------------------------------------------------------- */
-* { scrollbar-width: thin; scrollbar-color: rgb(124 92 252 / 0.5) transparent; }
+* { scrollbar-width: thin; scrollbar-color: rgb(99 102 241 / 0.5) transparent; }
 ::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-thumb { background: rgb(124 92 252 / 0.5); border-radius: 999px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(rgb(99 102 241 / 0.55), rgb(139 92 246 / 0.45));
+  border-radius: 999px; border: 2px solid transparent; background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover { background: rgb(99 102 241 / 0.8); background-clip: padding-box; }
+:focus-visible { outline: 2px solid rgb(99 102 241 / 0.7); outline-offset: 2px; }
 
-::selection { background: rgb(124 92 252 / 0.35); color: #fff; }
-:focus-visible { outline: 2px solid rgb(124 92 252 / 0.7); outline-offset: 2px; }
+/* Responsive + reduced motion ------------------------------------------- */
+@media (max-width: 768px) { table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
