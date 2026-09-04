@@ -156,26 +156,25 @@ a:hover { color: rgb(165 180 254); }
 ::selection { background: rgb(99 102 241 / 0.38); color: rgb(255 255 255); }
 
 /* ----------------------------------------------------------------------------
-   4. Glass surface system — reusable JomaTheme component
+   4. Surface system — solid, readable content surfaces (no blur on cards)
+   Glass blur is reserved for floating layers (navbar, dropdowns, modals,
+   toasts, command palette, hero, sidebar) so content stays crisp and there's
+   no muddy double-blur on nested cards.
    ---------------------------------------------------------------------------- */
 .joma-glass,
 .joma-card {
-  background: linear-gradient(135deg, rgb(22 30 54 / 0.72), rgb(12 18 36 / 0.78));
-  backdrop-filter: blur(var(--joma-blur-md)) saturate(150%);
-  -webkit-backdrop-filter: blur(var(--joma-blur-md)) saturate(150%);
+  background: linear-gradient(135deg, rgb(22 28 50), rgb(14 20 38));
   border: 1px solid rgb(255 255 255 / 0.08);
   box-shadow: var(--joma-shadow-card);
   border-radius: var(--joma-radius-lg);
 }
 
-/* Pterodactyl card / surface utilities → frosted glass */
+/* Pterodactyl card / surface utilities → solid premium navy surface */
 .bg-white,
 .bg-neutral-50,
 [class*="bg-white"],
 .bg-neutral-100 {
-  background: linear-gradient(135deg, rgb(22 30 54 / 0.70), rgb(12 18 36 / 0.76)) !important;
-  backdrop-filter: blur(var(--joma-blur-md)) saturate(150%);
-  -webkit-backdrop-filter: blur(var(--joma-blur-md)) saturate(150%);
+  background: linear-gradient(135deg, rgb(22 28 50), rgb(14 20 38)) !important;
   border: 1px solid rgb(255 255 255 / 0.07) !important;
   border-radius: var(--joma-radius-lg) !important;
   box-shadow: var(--joma-shadow-card) !important;
@@ -378,10 +377,10 @@ input[type="text"], input[type="email"], input[type="password"],
 input[type="number"], input[type="search"], input[type="url"],
 input[type="tel"], textarea, select,
 [class*="Input"], [class*="Textarea"], [class*="Select"] {
-  background: rgb(10 16 32 / 0.7) !important;
-  border: 1px solid rgb(255 255 255 / 0.08) !important;
+  background: rgb(13 19 38) !important;
+  border: 1px solid rgb(255 255 255 / 0.1) !important;
   border-radius: var(--joma-radius-md) !important;
-  color: rgb(226 232 240) !important;
+  color: rgb(232 238 246) !important;
   transition: border-color var(--joma-transition-normal) ease,
               box-shadow var(--joma-transition-normal) ease,
               background-color var(--joma-transition-normal) ease !important;
@@ -390,8 +389,8 @@ input:focus, textarea:focus, select:focus,
 [class*="Input"]:focus, [class*="Textarea"]:focus, [class*="Select"]:focus {
   outline: none !important;
   border-color: rgb(99 102 241 / 0.65) !important;
-  box-shadow: 0 0 0 3px rgb(99 102 241 / 0.2), 0 0 22px rgb(99 102 241 / 0.18) !important;
-  background: rgb(12 18 36 / 0.85) !important;
+  box-shadow: 0 0 0 3px rgb(99 102 241 / 0.2) !important;
+  background: rgb(15 22 44) !important;
 }
 input::placeholder, textarea::placeholder { color: rgb(110 122 150) !important; }
 
@@ -670,7 +669,7 @@ tbody td { border-color: rgb(255 255 255 / 0.06) !important; }
 .jomatheme-welcome__stat {
   display: flex; align-items: center; gap: 0.55rem;
   padding: 0.5rem 0.85rem; border-radius: var(--joma-radius-md);
-  background: rgb(10 16 32 / 0.5); border: 1px solid rgb(255 255 255 / 0.07);
+  background: rgb(8 12 26 / 0.8); border: 1px solid rgb(255 255 255 / 0.08);
   min-width: 7.5rem;
 }
 .jomatheme-welcome__stat-icon { color: rgb(129 140 248); font-size: 1rem; }
@@ -683,9 +682,9 @@ tbody td { border-color: rgb(255 255 255 / 0.06) !important; }
   padding: 0.5rem 0.95rem; border-radius: var(--joma-radius-pill);
   font-size: 0.84rem; font-weight: 600; cursor: pointer; text-decoration: none;
   border: 1px solid rgb(255 255 255 / 0.1);
-  background: linear-gradient(135deg, rgb(28 36 64 / 0.9), rgb(18 24 44 / 0.9));
+  background: linear-gradient(135deg, rgb(28 36 64), rgb(18 24 44));
   color: rgb(226 232 240);
-  transition: transform var(--joma-transition-normal) var(--joma-ease-spring),
+  transition: transform var(--joma-transition-normal) var(--joma-ease),
               border-color var(--joma-transition-normal) ease,
               box-shadow var(--joma-transition-normal) ease, color var(--joma-transition-normal) ease;
 }
@@ -789,26 +788,26 @@ code, pre, kbd {
 .jomatheme-slide { animation: joma-slide-up 0.46s var(--joma-ease) both; }
 
 /* ----------------------------------------------------------------------------
-   23. Every other Tailwind gray family → dark glass (full coverage)
+   23. Every other Tailwind gray family → solid dark surfaces (full coverage)
    ---------------------------------------------------------------------------- */
 .bg-gray-50, .bg-gray-100, .bg-gray-200, .bg-gray-300,
 .bg-slate-50, .bg-slate-100, .bg-slate-200, .bg-slate-300,
 .bg-zinc-50, .bg-zinc-100, .bg-zinc-200, .bg-zinc-300,
 .bg-stone-50, .bg-stone-100, .bg-stone-200, .bg-stone-300 {
-  background: linear-gradient(135deg, rgb(22 30 54 / 0.72), rgb(12 18 36 / 0.78)) !important;
+  background: rgb(22 28 50) !important;
   border: 1px solid rgb(255 255 255 / 0.07) !important;
 }
 .bg-gray-400, .bg-gray-500, .bg-gray-600,
 .bg-slate-400, .bg-slate-500, .bg-slate-600,
 .bg-zinc-400, .bg-zinc-500, .bg-zinc-600,
 .bg-stone-400, .bg-stone-500, .bg-stone-600 {
-  background: rgb(40 50 78 / 0.72) !important;
+  background: rgb(40 50 78) !important;
 }
 .bg-gray-700, .bg-gray-800, .bg-gray-900, .bg-gray-950,
 .bg-slate-700, .bg-slate-800, .bg-slate-900, .bg-slate-950,
 .bg-zinc-700, .bg-zinc-800, .bg-zinc-900,
 .bg-stone-700, .bg-stone-800, .bg-stone-900 {
-  background: rgb(7 11 24 / 0.9) !important;
+  background: rgb(7 11 24) !important;
 }
 
 /* ----------------------------------------------------------------------------

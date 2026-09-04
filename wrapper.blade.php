@@ -11,23 +11,23 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css");
 
-/* ---- ambient background: subtle dot grid + drifting aurora blobs ---- */
+/* ---- ambient background: very subtle dot grid + soft drifting glow ---- */
 body::before {
   content: "";
   position: fixed; inset: 0; z-index: -2; pointer-events: none;
-  background-image: radial-gradient(rgb(129 140 248 / 0.05) 1px, transparent 1px);
-  background-size: 28px 28px;
-  opacity: 0.5;
+  background-image: radial-gradient(rgb(129 140 248 / 0.04) 1px, transparent 1px);
+  background-size: 30px 30px;
+  opacity: 0.4;
 }
 body::after {
   content: "";
-  position: fixed; inset: -20%; z-index: -1; pointer-events: none;
+  position: fixed; inset: -10%; z-index: -1; pointer-events: none;
   background:
-    radial-gradient(38% 42% at 14% 18%, rgb(99 102 241 / 0.16), transparent 70%),
-    radial-gradient(36% 40% at 86% 14%, rgb(139 92 246 / 0.14), transparent 70%),
-    radial-gradient(34% 40% at 60% 96%, rgb(34 211 238 / 0.07), transparent 70%);
-  filter: blur(8px);
-  animation: joma-ambient 26s ease-in-out infinite alternate;
+    radial-gradient(40% 45% at 12% 12%, rgb(99 102 241 / 0.10), transparent 70%),
+    radial-gradient(40% 45% at 88% 10%, rgb(139 92 246 / 0.09), transparent 70%);
+  filter: blur(6px);
+  opacity: 0.7;
+  animation: joma-ambient 30s ease-in-out infinite alternate;
 }
 
 /* ============================================================================
