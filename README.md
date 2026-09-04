@@ -1,8 +1,8 @@
 # JomaTheme
 
-> A premium, dark, **futuristic** Blueprint extension theme for **Pterodactyl 1.15.1** running **Blueprint beta-2026-08**. Deep-navy base with blue→indigo→violet gradients and subtle cyan accents, real glassmorphism (frosted blur + gradient hairline borders), an animated aurora background, live dashboard statistics, quick actions, premium glass server cards, a cloud-style console, command palette, toast notifications and page transitions — without touching a single Pterodactyl core file.
+> A premium, dark, **liquid glass** Blueprint extension theme for **Pterodactyl 1.15.1** running **Blueprint beta-2026-08**. **Midnight Marine**: an abyssal midnight-blue base with cyan→teal→sky gradients, true liquid glass (frosted blur, specular top-light, refraction hairline edges), animated deep-sea caustics, live dashboard statistics, quick actions, premium glass server cards, a cloud-style console, command palette, toast notifications and page transitions — without touching a single Pterodactyl core file.
 
-![status](https://img.shields.io/badge/status-active-22c55e) ![version](https://img.shields.io/badge/version-3.0.0-6366f1) ![target](https://img.shields.io/badge/blueprint-beta--2026--08-6366f1) ![pterodactyl](https://img.shields.io/badge/pterodactyl-1.15.1-38bdf8)
+![status](https://img.shields.io/badge/status-active-22c55e) ![version](https://img.shields.io/badge/version-4.0.0-06b6d4) ![target](https://img.shields.io/badge/blueprint-beta--2026--08-06b6d4) ![pterodactyl](https://img.shields.io/badge/pterodactyl-1.15.1-38bdf8)
 
 ---
 
@@ -18,10 +18,10 @@
 
 ## Features
 
-- 🌌 **Animated aurora background** — a drifting indigo/violet/cyan gradient mesh on every page, with a subtle dot-grid + ambient blobs.
-- 🪟 **Real glassmorphism** — frosted, blurred cards/panels/modals/dropdowns with gradient hairline borders and soft shadows.
+- 🌊 **Animated deep-sea caustics** — a drifting cyan/teal/sky gradient mesh on every page, with a subtle sea-bubble dot-grid + ambient marine blobs.
+- 🪟 **True liquid glass** — frosted, blurred floating layers (navbar, modals, dropdowns, toasts) plus crisp content cards with a static specular top-light layer and bright inset edges.
 - 🎮 **Premium server cards** — translucent glass cards with a gradient border that brightens on hover, status glow dots and smooth elevation.
-- 🖱️ **Premium button system** — indigo→violet gradient + glow on hover, 3D press on click, and a **click ripple** that fires on every button across the panel.
+- 🖱️ **Premium button system** — cyan→teal marine gradient + sea-glow on hover, 3D press on click, and a **click ripple** that fires on every button across the panel.
 - ⌘ **Command palette** — `Ctrl`/`⌘` + `K` opens a glassy, keyboard-navigable palette (server-aware: on `/server/<id>` it lists that server's tabs first; admin commands appear for admins).
 - ✨ **Layout slide transitions** — content slides + fades on every client-side route change (history-aware).
 - 🔔 **Toast notifications** — power actions (start/stop/restart/kill) surface as auto-dismissing toasts; full JS API (`window.JomaTheme.toast`).
@@ -145,11 +145,11 @@ The JomaTheme palette lives at the top of [`dashboard.css`](./dashboard.css) in 
 
 ```css
 :root {
-  --blueprint-primary-500: 99 102 241;   /* indigo accent (#6366F1)        */
-  --blueprint-neutral-50:    5 9 20;     /* midnight page base (#050914)   */
-  --blueprint-white:        18 24 44;    /* glass / raised surfaces        */
-  --joma-secondary:       139 92 246;    /* violet accent (#8B5CF6)       */
-  --joma-accent:           34 211 238;   /* cyan accent (#22D3EE)          */
+  --blueprint-primary-500:  6 182 212;   /* marine cyan accent (#06B6D4)   */
+  --blueprint-neutral-50:    3 9 18;     /* midnight abyss base (#030912)  */
+  --blueprint-white:        12 32 52;    /* marine glass / raised surfaces */
+  --joma-secondary:        45 212 191;   /* teal accent (#2DD4BF)          */
+  --joma-accent:           56 189 248;   /* sky accent (#38BDF8)           */
   /* ... full 50–950 scale + JomaTheme tokens inside the file             */
 }
 ```

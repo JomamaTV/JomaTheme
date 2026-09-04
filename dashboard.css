@@ -1,5 +1,5 @@
 /* ============================================================================
-   JomaTheme v3.0 — global dashboard theme
+   JomaTheme v4.0 — global dashboard theme — MIDNIGHT MARINE · LIQUID GLASS
    ----------------------------------------------------------------------------
    Compiled into the Pterodactyl React bundle by Blueprint. MUST stay plain,
    valid CSS (no SCSS, no invalid syntax). Heavy keyframes + runtime JS live in
@@ -7,45 +7,45 @@
    ----------------------------------------------------------------------------
    Theming model (https://blueprint.zip/docs/themes/colors):
      - Colors are CSS variables named  --blueprint-<color>-<brightness>
-     - Values MUST be plain space-separated RGB channels, e.g.  99 102 241
+     - Values MUST be plain space-separated RGB channels, e.g.  6 182 212
      - Pterodactyl's Tailwind config maps bg-*/text-*/border-* onto these
        variables, so overriding them re-themes the whole panel.
-   Design direction: deep navy / midnight base, blue→indigo→violet gradients,
-   subtle cyan accents, real glassmorphism (frosted blur + gradient borders),
-   soft ambient glow. One coherent JomaTheme product, not a Pterodactyl skin.
+   Design direction: abyssal midnight base, cyan→teal→sky marine gradients,
+   true liquid glass (frosted blur, specular top-light, refraction hairlines,
+   soft sea-glow). One coherent JomaTheme product, not a Pterodactyl skin.
    ============================================================================ */
 
 /* ----------------------------------------------------------------------------
    1. Design tokens — JomaTheme color system
    ---------------------------------------------------------------------------- */
 :root {
-  /* --- Primary: indigo (blue→indigo accent) --- */
-  --blueprint-primary-50:  237 240 255;
-  --blueprint-primary-100: 224 231 255;
-  --blueprint-primary-200: 199 210 254;
-  --blueprint-primary-300: 165 180 254;
-  --blueprint-primary-400: 129 140 254;
-  --blueprint-primary-500: 99 102 241;    /* indigo base */
-  --blueprint-primary-600: 79 70 229;
-  --blueprint-primary-700: 67 56 202;
-  --blueprint-primary-800: 55 48 163;
-  --blueprint-primary-900: 49 46 129;
-  --blueprint-primary-950: 30 27 75;
+  /* --- Primary: marine cyan (sea-glow accent) --- */
+  --blueprint-primary-50:  236 254 255;
+  --blueprint-primary-100: 207 250 254;
+  --blueprint-primary-200: 165 243 252;
+  --blueprint-primary-300: 103 232 249;
+  --blueprint-primary-400: 34 211 238;
+  --blueprint-primary-500: 6 182 212;     /* cyan base */
+  --blueprint-primary-600: 8 145 178;
+  --blueprint-primary-700: 14 116 144;
+  --blueprint-primary-800: 21 94 117;
+  --blueprint-primary-900: 22 78 99;
+  --blueprint-primary-950: 8 51 68;
 
-  /* --- Neutral scale: deep navy body → raised surfaces → light text --- */
-  --blueprint-white: 18 24 44;           /* cards / raised surfaces (navy) */
-  --blueprint-black: 5 9 20;             /* page base (midnight navy) */
-  --blueprint-neutral-50:  5 9 20;       /* page body base */
-  --blueprint-neutral-100: 9 14 28;      /* subtle raised */
-  --blueprint-neutral-200: 14 20 38;     /* surface */
-  --blueprint-neutral-300: 22 30 52;     /* dividers / borders */
-  --blueprint-neutral-400: 44 55 82;      /* disabled / muted icons */
-  --blueprint-neutral-500: 80 90 120;
-  --blueprint-neutral-600: 120 128 156;
-  --blueprint-neutral-700: 160 168 192;
-  --blueprint-neutral-800: 198 204 222;
-  --blueprint-neutral-900: 226 232 240;   /* primary text */
-  --blueprint-neutral-950: 245 247 252;
+  /* --- Neutral scale: abyssal midnight body → marine glass → ice text --- */
+  --blueprint-white: 12 32 52;           /* cards / raised surfaces (marine glass) */
+  --blueprint-black: 3 9 18;             /* page base (midnight abyss) */
+  --blueprint-neutral-50:  3 9 18;       /* page body base */
+  --blueprint-neutral-100: 7 18 32;      /* subtle raised */
+  --blueprint-neutral-200: 10 28 46;     /* surface */
+  --blueprint-neutral-300: 16 40 62;     /* dividers / borders */
+  --blueprint-neutral-400: 34 68 96;     /* disabled / muted icons */
+  --blueprint-neutral-500: 70 100 128;
+  --blueprint-neutral-600: 108 138 164;
+  --blueprint-neutral-700: 152 178 200;
+  --blueprint-neutral-800: 188 208 226;
+  --blueprint-neutral-900: 220 236 246;  /* primary text */
+  --blueprint-neutral-950: 240 250 253;
 
   /* --- Semantic colors --- */
   --blueprint-success-500: 34 197 94;
@@ -54,32 +54,32 @@
   --blueprint-warning-600: 217 119 6;
   --blueprint-danger-500:  239 68 68;
   --blueprint-danger-600:  220 38 38;
-  --blueprint-info-500:    59 130 246;
-  --blueprint-info-600:    37 99 235;
+  --blueprint-info-500:    14 165 233;
+  --blueprint-info-600:    2 132 199;
 
   /* --- JomaTheme local tokens --- */
-  --joma-bg:             5 9 20;         /* #050914 midnight */
-  --joma-bg-2:           7 11 24;        /* #070B18 */
-  --joma-bg-3:          10 16 32;        /* #0A1020 */
-  --joma-surface:       18 24 44;        /* glass base */
-  --joma-surface-2:     22 30 54;
-  --joma-surface-hover: 28 36 64;
-  --joma-surface-active:34 44 76;
+  --joma-bg:             3 9 18;         /* #030912 midnight abyss */
+  --joma-bg-2:           5 14 26;        /* #050E1A */
+  --joma-bg-3:           8 22 38;        /* #081626 */
+  --joma-surface:       12 32 52;        /* marine glass base */
+  --joma-surface-2:     16 40 62;
+  --joma-surface-hover: 20 48 74;
+  --joma-surface-active:26 58 86;
   --joma-border:       255 255 255;
-  --joma-text:         226 232 240;
-  --joma-text-secondary:164 176 199;
-  --joma-text-muted:   110 122 150;
-  --joma-primary:       99 102 241;       /* indigo */
-  --joma-primary-light:129 140 248;
-  --joma-primary-2:    79 70 229;
-  --joma-secondary:    139 92 246;       /* violet */
-  --joma-secondary-light:165 130 252;
-  --joma-accent:        34 211 238;      /* cyan */
-  --joma-accent-2:     59 130 246;       /* electric blue */
+  --joma-text:         220 236 246;
+  --joma-text-secondary:150 180 202;
+  --joma-text-muted:   100 132 158;
+  --joma-primary:        6 182 212;      /* cyan */
+  --joma-primary-light: 34 211 238;
+  --joma-primary-2:      8 145 178;
+  --joma-secondary:     45 212 191;      /* teal */
+  --joma-secondary-light:94 234 212;
+  --joma-accent:        56 189 248;      /* sky */
+  --joma-accent-2:      14 165 233;      /* deep marine */
   --joma-danger:       239 68 68;
   --joma-success:      34 197 94;
   --joma-warning:     245 158 11;
-  --joma-info:         59 130 246;
+  --joma-info:         14 165 233;
 
   /* radii + blur + motion */
   --joma-radius-xs:   8px;
@@ -99,12 +99,13 @@
   --joma-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   /* gradients (reused) */
-  --joma-grad-primary: linear-gradient(135deg, rgb(99 102 241), rgb(139 92 246));
-  --joma-grad-blue:    linear-gradient(135deg, rgb(59 130 246), rgb(99 102 241));
-  --joma-grad-cyan:    linear-gradient(135deg, rgb(34 211 238), rgb(59 130 246));
-  --joma-grad-violet:  linear-gradient(135deg, rgb(139 92 246), rgb(217 70 239));
-  --joma-shadow-card: 0 18px 48px rgb(0 0 0 / 0.45), inset 0 1px 0 rgb(255 255 255 / 0.05);
-  --joma-glow-primary: 0 0 0 1px rgb(99 102 241 / 0.4), 0 12px 40px rgb(99 102 241 / 0.22);
+  --joma-grad-primary: linear-gradient(135deg, rgb(6 182 212), rgb(45 212 191));
+  --joma-grad-blue:    linear-gradient(135deg, rgb(14 165 233), rgb(6 182 212));
+  --joma-grad-cyan:    linear-gradient(135deg, rgb(34 211 238), rgb(14 165 233));
+  --joma-grad-teal:    linear-gradient(135deg, rgb(45 212 191), rgb(20 184 166));
+  /* liquid-glass card depth: strong drop + bright specular top edge */
+  --joma-shadow-card: 0 18px 48px rgb(0 0 0 / 0.45), inset 0 1px 0 rgb(255 255 255 / 0.08);
+  --joma-glow-primary: 0 0 0 1px rgb(6 182 212 / 0.4), 0 12px 40px rgb(6 182 212 / 0.22);
 }
 
 /* ----------------------------------------------------------------------------
@@ -121,9 +122,9 @@ html, body { min-height: 100%; }
 body {
   background-color: rgb(var(--joma-bg)) !important;
   background-image:
-    radial-gradient(60rem 60rem at 12% -12%, rgb(99 102 241 / 0.14), transparent 60%),
-    radial-gradient(52rem 52rem at 112% 6%, rgb(139 92 246 / 0.12), transparent 55%),
-    radial-gradient(42rem 42rem at 50% 118%, rgb(34 211 238 / 0.07), transparent 60%);
+    radial-gradient(60rem 60rem at 12% -12%, rgb(14 165 233 / 0.13), transparent 60%),
+    radial-gradient(52rem 52rem at 112% 6%, rgb(6 182 212 / 0.11), transparent 55%),
+    radial-gradient(46rem 46rem at 50% 118%, rgb(45 212 191 / 0.08), transparent 60%);
   background-attachment: fixed;
   color: rgb(var(--joma-text)) !important;
   font-family: "Inter var", "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -135,74 +136,79 @@ body {
 /* ----------------------------------------------------------------------------
    3. Text normalization (Pterodactyl assumes light theme → force light)
    ---------------------------------------------------------------------------- */
-.text-white, .text-neutral-50, .text-neutral-100, .text-neutral-200 { color: rgb(245 247 252) !important; }
-.text-neutral-300, .text-neutral-400 { color: rgb(196 204 222) !important; }
-.text-neutral-500, .text-neutral-600 { color: rgb(140 150 176) !important; }
-.text-neutral-700 { color: rgb(176 184 206) !important; }
-.text-neutral-800, .text-neutral-900, .text-neutral-950 { color: rgb(226 232 240) !important; }
+.text-white, .text-neutral-50, .text-neutral-100, .text-neutral-200 { color: rgb(240 250 253) !important; }
+.text-neutral-300, .text-neutral-400 { color: rgb(186 208 224) !important; }
+.text-neutral-500, .text-neutral-600 { color: rgb(122 152 178) !important; }
+.text-neutral-700 { color: rgb(168 194 214) !important; }
+.text-neutral-800, .text-neutral-900, .text-neutral-950 { color: rgb(220 236 246) !important; }
 
 /* Pterodactyl also uses Tailwind gray/slate/zinc/stone text utilities which
    are NOT remapped by the Blueprint neutral variables — force them light so
-   body text stays readable on the dark navy surfaces. */
+   body text stays readable on the dark abyss surfaces. */
 .text-gray-50, .text-gray-100, .text-gray-200,
 .text-slate-50, .text-slate-100, .text-slate-200,
 .text-zinc-50, .text-zinc-100, .text-zinc-200,
-.text-stone-50, .text-stone-100, .text-stone-200 { color: rgb(245 247 252) !important; }
+.text-stone-50, .text-stone-100, .text-stone-200 { color: rgb(240 250 253) !important; }
 .text-gray-300, .text-gray-400,
 .text-slate-300, .text-slate-400,
 .text-zinc-300, .text-zinc-400,
-.text-stone-300, .text-stone-400 { color: rgb(196 204 222) !important; }
+.text-stone-300, .text-stone-400 { color: rgb(186 208 224) !important; }
 .text-gray-500, .text-gray-600,
 .text-slate-500, .text-slate-600,
 .text-zinc-500, .text-zinc-600,
-.text-stone-500, .text-stone-600 { color: rgb(140 150 176) !important; }
+.text-stone-500, .text-stone-600 { color: rgb(122 152 178) !important; }
 .text-gray-700, .text-gray-800, .text-gray-900, .text-gray-950,
 .text-slate-700, .text-slate-800, .text-slate-900, .text-slate-950,
 .text-zinc-700, .text-zinc-800, .text-zinc-900, .text-zinc-950,
-.text-stone-700, .text-stone-800, .text-stone-900, .text-stone-950 { color: rgb(226 232 240) !important; }
+.text-stone-700, .text-stone-800, .text-stone-900, .text-stone-950 { color: rgb(220 236 246) !important; }
 
 h1, h2, h3, h4, h5, h6 {
-  color: rgb(245 247 252) !important;
+  color: rgb(240 250 253) !important;
   letter-spacing: -0.02em;
   font-weight: 700;
 }
 
 a {
-  color: rgb(129 140 248);
+  color: rgb(34 211 238);
   transition: color var(--joma-transition-normal) ease;
 }
-a:hover { color: rgb(165 180 254); }
+a:hover { color: rgb(103 232 249); }
 
-::selection { background: rgb(99 102 241 / 0.38); color: rgb(255 255 255); }
+::selection { background: rgb(6 182 212 / 0.38); color: rgb(255 255 255); }
 
 /* ----------------------------------------------------------------------------
-   4. Surface system — solid, readable content surfaces (no blur on cards)
-   Glass blur is reserved for floating layers (navbar, dropdowns, modals,
-   toasts, command palette, hero, sidebar) so content stays crisp and there's
-   no muddy double-blur on nested cards.
+   4. Surface system — liquid glass content surfaces (no blur on cards)
+   Cards stay crisp (no backdrop-blur on content), but every surface carries
+   the liquid-glass signature: a static specular top-light layer + a bright
+   inset edge. Live blur is reserved for floating layers (navbar, dropdowns,
+   modals, toasts, command palette, hero, sidebar) — no muddy double-blur.
    ---------------------------------------------------------------------------- */
 .joma-glass,
 .joma-card {
-  background: linear-gradient(135deg, rgb(22 28 50), rgb(14 20 38));
+  background:
+    linear-gradient(165deg, rgb(255 255 255 / 0.035), rgb(255 255 255 / 0) 34%),
+    linear-gradient(135deg, rgb(14 36 58), rgb(10 28 46));
   border: 1px solid rgb(255 255 255 / 0.08);
   box-shadow: var(--joma-shadow-card);
   border-radius: var(--joma-radius-lg);
 }
 
-/* Pterodactyl card / surface utilities → solid premium navy surface */
+/* Pterodactyl card / surface utilities → liquid marine glass surface */
 .bg-white,
 .bg-neutral-50,
 [class*="bg-white"],
 .bg-neutral-100 {
-  background: linear-gradient(135deg, rgb(22 28 50), rgb(14 20 38)) !important;
+  background:
+    linear-gradient(165deg, rgb(255 255 255 / 0.035), rgb(255 255 255 / 0) 34%),
+    linear-gradient(135deg, rgb(14 36 58), rgb(10 28 46)) !important;
   border: 1px solid rgb(255 255 255 / 0.07) !important;
   border-radius: var(--joma-radius-lg) !important;
   box-shadow: var(--joma-shadow-card) !important;
 }
 
-/* Dark navbar/menus (bg-neutral-800/900 are light in our scale) → deep navy */
+/* Dark navbar/menus (bg-neutral-800/900 are light in our scale) → deep abyss */
 .bg-neutral-800, .bg-neutral-900, .bg-neutral-950 {
-  background: rgb(7 11 24 / 0.96) !important;
+  background: rgb(5 14 26 / 0.96) !important;
   border: 1px solid rgb(255 255 255 / 0.06) !important;
 }
 
@@ -229,7 +235,7 @@ a:hover { color: rgb(165 180 254); }
 /* Footer — seamless, no default band */
 footer, .footer, [class*="Footer"] {
   border-top: 1px solid rgb(255 255 255 / 0.06) !important;
-  color: rgb(140 150 176) !important;
+  color: rgb(122 152 178) !important;
   background: transparent !important;
 }
 
@@ -239,11 +245,11 @@ footer, .footer, [class*="Footer"] {
 #NavigationBar,
 nav[class*="NavigationBar"],
 header[class*="NavigationBar"] {
-  background: rgb(7 11 24 / 0.82) !important;
+  background: rgb(5 14 26 / 0.82) !important;
   backdrop-filter: blur(var(--joma-blur-lg)) saturate(170%);
   -webkit-backdrop-filter: blur(var(--joma-blur-lg)) saturate(170%);
   border-bottom: 1px solid rgb(255 255 255 / 0.07) !important;
-  box-shadow: 0 12px 36px rgb(0 0 0 / 0.42) !important;
+  box-shadow: 0 12px 36px rgb(0 0 0 / 0.42), inset 0 1px 0 rgb(255 255 255 / 0.06) !important;
   position: relative;
 }
 #NavigationBar::after,
@@ -251,13 +257,13 @@ nav[class*="NavigationBar"]::after,
 header[class*="NavigationBar"]::after {
   content: "";
   position: absolute; left: 0; right: 0; bottom: -1px; height: 2px;
-  background: linear-gradient(90deg, transparent, rgb(99 102 241) 30%, rgb(34 211 238) 50%, rgb(139 92 246) 70%, transparent);
+  background: linear-gradient(90deg, transparent, rgb(6 182 212) 30%, rgb(34 211 238) 50%, rgb(45 212 191) 70%, transparent);
   opacity: 0.65; filter: blur(0.4px);
 }
 
 #NavigationBar a, #NavigationBar button,
 nav[class*="NavigationBar"] a, nav[class*="NavigationBar"] button {
-  color: rgb(198 204 222) !important;
+  color: rgb(188 208 226) !important;
   border-radius: var(--joma-radius-sm) !important;
   transition: color var(--joma-transition-normal) ease,
               background-color var(--joma-transition-normal) ease,
@@ -268,17 +274,17 @@ nav[class*="NavigationBar"] a, nav[class*="NavigationBar"] button {
 nav[class*="NavigationBar"] a:hover,
 #NavigationBar button:hover,
 nav[class*="NavigationBar"] button:hover {
-  color: rgb(245 247 252) !important;
-  background: rgb(99 102 241 / 0.12) !important;
+  color: rgb(240 250 253) !important;
+  background: rgb(6 182 212 / 0.12) !important;
   transform: translateY(-1px);
 }
 /* active nav link — gradient glow */
 #NavigationBar a[aria-current="page"],
 nav[class*="NavigationBar"] a[class*="active"],
 nav[class*="NavigationBar"] a[style*="primary"] {
-  color: rgb(165 180 254) !important;
-  background: linear-gradient(135deg, rgb(99 102 241 / 0.22), rgb(139 92 246 / 0.12)) !important;
-  box-shadow: inset 0 0 0 1px rgb(99 102 241 / 0.35), 0 6px 20px rgb(99 102 241 / 0.22) !important;
+  color: rgb(103 232 249) !important;
+  background: linear-gradient(135deg, rgb(6 182 212 / 0.22), rgb(45 212 191 / 0.12)) !important;
+  box-shadow: inset 0 0 0 1px rgb(6 182 212 / 0.35), 0 6px 20px rgb(6 182 212 / 0.22) !important;
 }
 
 /* brand/logo mark */
@@ -289,20 +295,20 @@ nav[class*="NavigationBar"] a[style*="primary"] {
    ---------------------------------------------------------------------------- */
 nav[class*="sub"], aside, [class*="Sidebar"], [class*="serverNav"],
 nav[class*="ServerNav"] {
-  background: rgb(10 16 32 / 0.6) !important;
+  background: rgb(8 22 38 / 0.6) !important;
   backdrop-filter: blur(var(--joma-blur-sm)) saturate(150%);
   -webkit-backdrop-filter: blur(var(--joma-blur-sm)) saturate(150%);
   border: 1px solid rgb(255 255 255 / 0.06) !important;
   border-radius: var(--joma-radius-lg) !important;
 }
 nav[class*="sub"] a, aside a, [class*="Sidebar"] a {
-  color: rgb(170 180 204) !important;
+  color: rgb(158 186 208) !important;
   border-radius: var(--joma-radius-sm) !important;
   transition: color var(--joma-transition-normal) ease, background-color var(--joma-transition-normal) ease;
 }
 nav[class*="sub"] a:hover, aside a:hover, [class*="Sidebar"] a:hover {
-  color: rgb(245 247 252) !important;
-  background: rgb(99 102 241 / 0.12) !important;
+  color: rgb(240 250 253) !important;
+  background: rgb(6 182 212 / 0.12) !important;
 }
 
 /* ----------------------------------------------------------------------------
@@ -332,43 +338,43 @@ button:not(:disabled):active, .btn:active, [class*="Button"]:not(:disabled):acti
 /* Default button — clearly lighter than cards so it stands out without a border line */
 button:not([class*="primary"]):not([class*="secondary"]):not([class*="danger"]):not([class*="ghost"]):not([class*="success"]):not([class*="warning"]),
 .btn:not(.btn-primary):not(.btn-secondary):not(.btn-danger):not(.btn-success):not(.btn-warning) {
-  background: linear-gradient(135deg, rgb(50 60 96), rgb(36 44 76)) !important;
-  color: rgb(232 238 246) !important;
+  background: linear-gradient(135deg, rgb(34 72 104), rgb(24 52 78)) !important;
+  color: rgb(226 242 250) !important;
   border-color: transparent !important;
   box-shadow: 0 2px 10px rgb(0 0 0 / 0.28), inset 0 1px 0 rgb(255 255 255 / 0.07) !important;
 }
 button:not([class*="primary"]):not([class*="secondary"]):not([class*="danger"]):not([class*="ghost"]):not([class*="success"]):not([class*="warning"]):not(:disabled):hover,
 .btn:not(.btn-primary):not(.btn-secondary):not(.btn-danger):not(.btn-success):not(.btn-warning):hover {
-  background: linear-gradient(135deg, rgb(62 74 116), rgb(46 56 92)) !important;
+  background: linear-gradient(135deg, rgb(44 88 124), rgb(32 66 96)) !important;
   color: rgb(255 255 255) !important;
-  box-shadow: 0 8px 22px rgb(99 102 241 / 0.28), inset 0 1px 0 rgb(255 255 255 / 0.1) !important;
+  box-shadow: 0 8px 22px rgb(6 182 212 / 0.28), inset 0 1px 0 rgb(255 255 255 / 0.1) !important;
 }
 
-/* Primary — indigo→violet gradient + glow, no edge line */
+/* Primary — cyan→teal marine gradient + sea-glow, no edge line */
 button[class*="primary"], .btn-primary, [class*="PrimaryButton"], a[class*="btn-primary"] {
   background: var(--joma-grad-primary) !important;
   background-size: 200% 200% !important;
   color: rgb(255 255 255) !important;
   border-color: transparent !important;
-  box-shadow: 0 10px 28px rgb(99 102 241 / 0.4), inset 0 1px 0 rgb(255 255 255 / 0.18) !important;
+  box-shadow: 0 10px 28px rgb(6 182 212 / 0.4), inset 0 1px 0 rgb(255 255 255 / 0.18) !important;
 }
 button[class*="primary"]:not(:disabled):hover, .btn-primary:hover, [class*="PrimaryButton"]:not(:disabled):hover {
   background-position: 100% 0% !important;
   filter: brightness(1.08);
-  box-shadow: 0 16px 38px rgb(99 102 241 / 0.55), inset 0 1px 0 rgb(255 255 255 / 0.22) !important;
+  box-shadow: 0 16px 38px rgb(6 182 212 / 0.55), inset 0 1px 0 rgb(255 255 255 / 0.22) !important;
 }
 
 /* Secondary / ghost — lighter surface so it separates from cards */
 button[class*="secondary"], .btn-secondary, [class*="SecondaryButton"], button[class*="ghost"] {
-  background: linear-gradient(135deg, rgb(44 54 88), rgb(32 40 70)) !important;
-  color: rgb(232 238 246) !important;
+  background: linear-gradient(135deg, rgb(30 64 92), rgb(22 48 72)) !important;
+  color: rgb(226 242 250) !important;
   border-color: transparent !important;
   box-shadow: 0 2px 10px rgb(0 0 0 / 0.26), inset 0 1px 0 rgb(255 255 255 / 0.06) !important;
 }
 button[class*="secondary"]:not(:disabled):hover, .btn-secondary:hover, [class*="SecondaryButton"]:not(:disabled):hover, button[class*="ghost"]:not(:disabled):hover {
-  background: linear-gradient(135deg, rgb(56 68 104), rgb(42 52 84)) !important;
+  background: linear-gradient(135deg, rgb(38 78 110), rgb(28 60 88)) !important;
   color: rgb(255 255 255) !important;
-  box-shadow: 0 8px 22px rgb(99 102 241 / 0.24), inset 0 1px 0 rgb(255 255 255 / 0.09) !important;
+  box-shadow: 0 8px 22px rgb(6 182 212 / 0.24), inset 0 1px 0 rgb(255 255 255 / 0.09) !important;
 }
 
 /* Danger — red gradient, no edge line */
@@ -408,10 +414,10 @@ input[type="text"], input[type="email"], input[type="password"],
 input[type="number"], input[type="search"], input[type="url"],
 input[type="tel"], textarea, select,
 [class*="Input"], [class*="Textarea"], [class*="Select"] {
-  background: rgb(13 19 38) !important;
+  background: rgb(9 24 40) !important;
   border: 1px solid rgb(255 255 255 / 0.1) !important;
   border-radius: var(--joma-radius-md) !important;
-  color: rgb(232 238 246) !important;
+  color: rgb(226 242 250) !important;
   transition: border-color var(--joma-transition-normal) ease,
               box-shadow var(--joma-transition-normal) ease,
               background-color var(--joma-transition-normal) ease !important;
@@ -419,15 +425,15 @@ input[type="tel"], textarea, select,
 input:focus, textarea:focus, select:focus,
 [class*="Input"]:focus, [class*="Textarea"]:focus, [class*="Select"]:focus {
   outline: none !important;
-  border-color: rgb(99 102 241 / 0.65) !important;
-  box-shadow: 0 0 0 3px rgb(99 102 241 / 0.2) !important;
-  background: rgb(15 22 44) !important;
+  border-color: rgb(6 182 212 / 0.65) !important;
+  box-shadow: 0 0 0 3px rgb(6 182 212 / 0.2) !important;
+  background: rgb(11 28 46) !important;
 }
-input::placeholder, textarea::placeholder { color: rgb(110 122 150) !important; }
+input::placeholder, textarea::placeholder { color: rgb(100 132 158) !important; }
 
 select {
-  background-image: linear-gradient(45deg, transparent 50%, rgb(140 150 176) 50%),
-                    linear-gradient(135deg, rgb(140 150 176) 50%, transparent 50%) !important;
+  background-image: linear-gradient(45deg, transparent 50%, rgb(122 152 178) 50%),
+                    linear-gradient(135deg, rgb(122 152 178) 50%, transparent 50%) !important;
   background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50% !important;
   background-size: 5px 5px, 5px 5px !important;
   background-repeat: no-repeat !important;
@@ -435,19 +441,19 @@ select {
 }
 
 input[type="checkbox"], input[type="radio"] {
-  accent-color: rgb(99 102 241);
+  accent-color: rgb(6 182 212);
   width: 1.1em; height: 1.1em;
 }
 
 /* Labels */
-label { color: rgb(196 204 222) !important; }
+label { color: rgb(186 208 224) !important; }
 
 /* ----------------------------------------------------------------------------
    9. Tables — modern SaaS style
    ---------------------------------------------------------------------------- */
 table { border-collapse: separate !important; border-spacing: 0; }
 thead th {
-  color: rgb(140 150 176) !important;
+  color: rgb(122 152 178) !important;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-size: 0.7rem;
@@ -456,7 +462,7 @@ thead th {
   background: rgb(255 255 255 / 0.02) !important;
 }
 tbody tr { transition: background-color var(--joma-transition-normal) ease; }
-tbody tr:hover { background-color: rgb(99 102 241 / 0.06) !important; }
+tbody tr:hover { background-color: rgb(6 182 212 / 0.06) !important; }
 tbody td { border-color: rgb(255 255 255 / 0.06) !important; }
 .table > :not(caption) > * > * { background-color: transparent !important; }
 
@@ -467,26 +473,26 @@ tbody td { border-color: rgb(255 255 255 / 0.06) !important; }
   color: rgb(34 197 94) !important;
 }
 [class*="status-offline"], [class*="StatusOffline"], [class*="offline"] {
-  color: rgb(148 156 178) !important;
+  color: rgb(130 158 184) !important;
 }
-[class*="status-starting"], [class*="StatusStarting"] { color: rgb(59 130 246) !important; }
+[class*="status-starting"], [class*="StatusStarting"] { color: rgb(14 165 233) !important; }
 [class*="status-stopping"], [class*="StatusStopping"] { color: rgb(245 158 11) !important; }
 
 /* status dot — reusable */
 .joma-dot { width: 9px; height: 9px; border-radius: 999px; display: inline-block; flex: 0 0 auto; }
 .joma-dot--online   { background: rgb(34 197 94); box-shadow: 0 0 0 4px rgb(34 197 94 / 0.18), 0 0 12px rgb(34 197 94 / 0.6); animation: joma-status-pulse 2s ease-in-out infinite; }
-.joma-dot--offline  { background: rgb(120 128 150); box-shadow: 0 0 0 4px rgb(120 128 150 / 0.16); }
-.joma-dot--starting{ background: rgb(59 130 246); box-shadow: 0 0 0 4px rgb(59 130 246 / 0.18), 0 0 12px rgb(59 130 246 / 0.6); animation: joma-status-pulse 1.4s ease-in-out infinite; }
+.joma-dot--offline  { background: rgb(100 130 156); box-shadow: 0 0 0 4px rgb(100 130 156 / 0.16); }
+.joma-dot--starting{ background: rgb(14 165 233); box-shadow: 0 0 0 4px rgb(14 165 233 / 0.18), 0 0 12px rgb(14 165 233 / 0.6); animation: joma-status-pulse 1.4s ease-in-out infinite; }
 .joma-dot--stopping{ background: rgb(245 158 11); box-shadow: 0 0 0 4px rgb(245 158 11 / 0.18), 0 0 12px rgb(245 158 11 / 0.6); animation: joma-status-pulse 1.4s ease-in-out infinite; }
-.joma-dot--install { background: rgb(139 92 246); box-shadow: 0 0 0 4px rgb(139 92 246 / 0.18), 0 0 12px rgb(139 92 246 / 0.6); animation: joma-status-pulse 1.6s ease-in-out infinite; }
+.joma-dot--install { background: rgb(45 212 191); box-shadow: 0 0 0 4px rgb(45 212 191 / 0.18), 0 0 12px rgb(45 212 191 / 0.6); animation: joma-status-pulse 1.6s ease-in-out infinite; }
 
 /* ----------------------------------------------------------------------------
    11. Badges / pills
    ---------------------------------------------------------------------------- */
 [class*="Badge"], [class*="badge"]:not([class*="badgemen"]):not(button) {
-  background: rgb(99 102 241 / 0.16) !important;
-  color: rgb(165 180 254) !important;
-  border: 1px solid rgb(99 102 241 / 0.3) !important;
+  background: rgb(6 182 212 / 0.16) !important;
+  color: rgb(103 232 249) !important;
+  border: 1px solid rgb(6 182 212 / 0.3) !important;
   border-radius: var(--joma-radius-pill) !important;
   font-weight: 600;
 }
@@ -495,16 +501,16 @@ tbody td { border-color: rgb(255 255 255 / 0.06) !important; }
    12. Modals / dialogs — glass, fade + scale
    ---------------------------------------------------------------------------- */
 [class*="Modal"], [class*="Dialog"], [role="dialog"], [class*="modal-content"] {
-  background: linear-gradient(135deg, rgb(20 28 50 / 0.92), rgb(12 18 36 / 0.95)) !important;
-  backdrop-filter: blur(var(--joma-blur-lg)) saturate(160%);
-  -webkit-backdrop-filter: blur(var(--joma-blur-lg)) saturate(160%);
+  background: linear-gradient(135deg, rgb(13 34 54 / 0.92), rgb(9 26 42 / 0.95)) !important;
+  backdrop-filter: blur(var(--joma-blur-lg)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--joma-blur-lg)) saturate(180%);
   border: 1px solid rgb(255 255 255 / 0.1) !important;
   border-radius: var(--joma-radius-modal) !important;
-  box-shadow: 0 30px 80px rgb(0 0 0 / 0.6), 0 0 0 1px rgb(99 102 241 / 0.12), inset 0 1px 0 rgb(255 255 255 / 0.06) !important;
+  box-shadow: 0 30px 80px rgb(0 0 0 / 0.6), 0 0 60px rgb(6 182 212 / 0.07), 0 0 0 1px rgb(6 182 212 / 0.14), inset 0 1px 0 rgb(255 255 255 / 0.1) !important;
   animation: joma-modal-in 0.28s var(--joma-ease-spring) both !important;
 }
 [class*="ModalOverlay"], [class*="DialogOverlay"], [class*="modal-backdrop"] {
-  background: rgb(5 9 20 / 0.6) !important;
+  background: rgb(3 9 18 / 0.6) !important;
   backdrop-filter: blur(8px) saturate(120%);
   -webkit-backdrop-filter: blur(8px) saturate(120%);
 }
@@ -522,7 +528,7 @@ tbody td { border-color: rgb(255 255 255 / 0.06) !important; }
    ---------------------------------------------------------------------------- */
 [class*="Dropdown"], [class*="Menu"], [class*="popover"], [class*="Popover"],
 [class*="menu-content"], [role="menu"], [role="listbox"] {
-  background: rgb(14 20 38 / 0.92) !important;
+  background: rgb(10 28 46 / 0.92) !important;
   backdrop-filter: blur(var(--joma-blur-md)) saturate(160%);
   -webkit-backdrop-filter: blur(var(--joma-blur-md)) saturate(160%);
   border: 1px solid rgb(255 255 255 / 0.1) !important;
@@ -532,8 +538,8 @@ tbody td { border-color: rgb(255 255 255 / 0.06) !important; }
 [class*="Dropdown"] [role="menuitem"]:hover,
 [class*="Menu"] [role="menuitem"]:hover,
 [class*="menu-item"]:hover, [class*="menuItem"]:hover {
-  background: rgb(99 102 241 / 0.16) !important;
-  color: rgb(245 247 252) !important;
+  background: rgb(6 182 212 / 0.16) !important;
+  color: rgb(240 250 253) !important;
 }
 
 /* ----------------------------------------------------------------------------
@@ -544,18 +550,18 @@ tbody td { border-color: rgb(255 255 255 / 0.06) !important; }
   gap: 0.25rem;
 }
 [role="tab"], [class*="Tab"]:not([class*="Table"]):not([class*="TableBody"]):not([class*="TableCell"]) {
-  color: rgb(140 150 176) !important;
+  color: rgb(122 152 178) !important;
   border-radius: var(--joma-radius-sm) !important;
   border: 1px solid transparent !important;
   transition: color var(--joma-transition-normal) ease, background-color var(--joma-transition-normal) ease, border-color var(--joma-transition-normal) ease;
 }
-[role="tab"]:hover, [class*="Tab"]:hover { color: rgb(226 232 240) !important; background: rgb(99 102 241 / 0.1) !important; }
+[role="tab"]:hover, [class*="Tab"]:hover { color: rgb(220 236 246) !important; background: rgb(6 182 212 / 0.1) !important; }
 [role="tab"][aria-selected="true"], [class*="Tab"][aria-selected="true"],
 [role="tab"][class*="active"], [class*="Tab"][class*="active"] {
-  color: rgb(245 247 252) !important;
-  background: linear-gradient(135deg, rgb(99 102 241 / 0.22), rgb(139 92 246 / 0.12)) !important;
-  border-color: rgb(99 102 241 / 0.35) !important;
-  box-shadow: inset 0 0 0 1px rgb(99 102 241 / 0.3);
+  color: rgb(240 250 253) !important;
+  background: linear-gradient(135deg, rgb(6 182 212 / 0.22), rgb(45 212 191 / 0.12)) !important;
+  border-color: rgb(6 182 212 / 0.35) !important;
+  box-shadow: inset 0 0 0 1px rgb(6 182 212 / 0.3);
 }
 
 /* ----------------------------------------------------------------------------
@@ -563,9 +569,12 @@ tbody td { border-color: rgb(255 255 255 / 0.06) !important; }
    ---------------------------------------------------------------------------- */
 [class*="ServerCard"], [class*="server-card"], [class*="ServerRow"], [class*="ServerContainer"] {
   position: relative;
-  background: linear-gradient(135deg, rgb(20 28 50 / 0.82), rgb(10 16 32 / 0.9)) !important;
+  background:
+    linear-gradient(160deg, rgb(255 255 255 / 0.04), rgb(255 255 255 / 0) 30%),
+    linear-gradient(135deg, rgb(13 34 54 / 0.82), rgb(8 22 38 / 0.9)) !important;
   /* server cards skip live backdrop-blur (can be 50+ on screen) — translucent
-     gradient over the page aurora already reads as glass, cheaply. */
+     gradient + static specular layer over the page glow reads as liquid glass,
+     cheaply. */
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
   border: 1px solid rgb(255 255 255 / 0.09) !important;
@@ -581,16 +590,16 @@ tbody td { border-color: rgb(255 255 255 / 0.06) !important; }
 }
 [class*="ServerCard"]:hover, [class*="server-card"]:hover, [class*="ServerRow"]:hover {
   transform: translateY(-3px) !important;
-  border-color: rgb(99 102 241 / 0.45) !important;
+  border-color: rgb(6 182 212 / 0.45) !important;
   box-shadow: 0 22px 48px rgb(0 0 0 / 0.5),
-              0 0 0 1px rgb(99 102 241 / 0.2),
-              0 0 28px rgb(99 102 241 / 0.12),
+              0 0 0 1px rgb(6 182 212 / 0.2),
+              0 0 28px rgb(6 182 212 / 0.12),
               inset 0 1px 0 rgb(255 255 255 / 0.06) !important;
 }
 /* focus-within keeps the glow when hovering nested buttons/links inside the card */
 [class*="ServerCard"]:focus-within, [class*="server-card"]:focus-within, [class*="ServerRow"]:focus-within {
-  border-color: rgb(99 102 241 / 0.45) !important;
-  box-shadow: 0 22px 48px rgb(0 0 0 / 0.5), 0 0 0 1px rgb(99 102 241 / 0.2), inset 0 1px 0 rgb(255 255 255 / 0.06) !important;
+  border-color: rgb(6 182 212 / 0.45) !important;
+  box-shadow: 0 22px 48px rgb(0 0 0 / 0.5), 0 0 0 1px rgb(6 182 212 / 0.2), inset 0 1px 0 rgb(255 255 255 / 0.06) !important;
 }
 
 /* ----------------------------------------------------------------------------
@@ -614,7 +623,7 @@ tbody td { border-color: rgb(255 255 255 / 0.06) !important; }
    ---------------------------------------------------------------------------- */
 .joma-stat {
   position: relative;
-  background: linear-gradient(135deg, rgb(22 30 54 / 0.72), rgb(12 18 36 / 0.8));
+  background: linear-gradient(135deg, rgb(16 40 62 / 0.72), rgb(9 26 42 / 0.8));
   backdrop-filter: blur(var(--joma-blur-sm)) saturate(150%);
   -webkit-backdrop-filter: blur(var(--joma-blur-sm)) saturate(150%);
   border: 1px solid rgb(255 255 255 / 0.07);
@@ -628,16 +637,16 @@ tbody td { border-color: rgb(255 255 255 / 0.06) !important; }
 .joma-stat::after {
   content: ""; position: absolute; right: -20px; top: -20px; width: 90px; height: 90px;
   border-radius: 999px; filter: blur(28px); opacity: 0.5; pointer-events: none;
-  background: radial-gradient(circle, rgb(99 102 241 / 0.5), transparent 70%);
+  background: radial-gradient(circle, rgb(6 182 212 / 0.5), transparent 70%);
 }
 .joma-stat:hover {
   transform: translateY(-3px);
-  border-color: rgb(99 102 241 / 0.32);
-  box-shadow: 0 18px 42px rgb(99 102 241 / 0.18);
+  border-color: rgb(6 182 212 / 0.32);
+  box-shadow: 0 18px 42px rgb(6 182 212 / 0.18);
 }
-.joma-stat__label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; color: rgb(140 150 176); margin: 0 0 0.35rem; font-weight: 600; }
-.joma-stat__value { font-size: 1.6rem; font-weight: 800; color: rgb(245 247 252); margin: 0; line-height: 1.1; }
-.joma-stat__hint { font-size: 0.78rem; color: rgb(110 122 150); margin: 0.25rem 0 0; }
+.joma-stat__label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; color: rgb(122 152 178); margin: 0 0 0.35rem; font-weight: 600; }
+.joma-stat__value { font-size: 1.6rem; font-weight: 800; color: rgb(240 250 253); margin: 0; line-height: 1.1; }
+.joma-stat__hint { font-size: 0.78rem; color: rgb(100 132 158); margin: 0.25rem 0 0; }
 
 /* ----------------------------------------------------------------------------
    18. JomaWelcome hero (injected React component)
@@ -646,20 +655,30 @@ tbody td { border-color: rgb(255 255 255 / 0.06) !important; }
   position: relative; overflow: hidden; isolation: isolate;
   border-radius: var(--joma-radius-xl);
   border: 1px solid rgb(255 255 255 / 0.09);
-  background: linear-gradient(135deg, rgb(24 32 58 / 0.82), rgb(12 18 36 / 0.9));
-  backdrop-filter: blur(var(--joma-blur-md)) saturate(160%);
-  -webkit-backdrop-filter: blur(var(--joma-blur-md)) saturate(160%);
-  box-shadow: 0 24px 60px rgb(0 0 0 / 0.5), inset 0 1px 0 rgb(255 255 255 / 0.06);
+  background: linear-gradient(135deg, rgb(15 40 64 / 0.82), rgb(9 26 42 / 0.9));
+  backdrop-filter: blur(var(--joma-blur-md)) saturate(170%);
+  -webkit-backdrop-filter: blur(var(--joma-blur-md)) saturate(170%);
+  box-shadow: 0 24px 60px rgb(0 0 0 / 0.5), 0 0 70px rgb(6 182 212 / 0.06), inset 0 1px 0 rgb(255 255 255 / 0.1);
   padding: 2rem 2rem 1.75rem;
   margin: 0 0 1.5rem;
+}
+/* liquid refraction ring — a drifting marine gradient drawn as a 1px edge */
+.jomatheme-welcome::before {
+  content: ""; position: absolute; inset: 0; z-index: 2; border-radius: inherit;
+  padding: 1px; pointer-events: none;
+  background: linear-gradient(120deg, rgb(103 232 249 / 0.55), rgb(255 255 255 / 0.05) 32%, rgb(45 212 191 / 0.4) 62%, rgb(14 165 233 / 0.5));
+  background-size: 240% 240%;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); mask-composite: exclude;
+  animation: joma-liquid-edge 9s ease-in-out infinite;
 }
 .jomatheme-welcome__aurora {
   position: absolute; inset: -45% -10% auto -10%; height: 230%; z-index: -2;
   background:
-    radial-gradient(40% 60% at 18% 28%, rgb(99 102 241 / 0.55), transparent 70%),
-    radial-gradient(40% 60% at 82% 18%, rgb(139 92 246 / 0.5), transparent 70%),
-    radial-gradient(50% 60% at 60% 92%, rgb(34 211 238 / 0.28), transparent 70%);
-  filter: blur(50px); opacity: 0.6;
+    radial-gradient(40% 60% at 18% 28%, rgb(6 182 212 / 0.5), transparent 70%),
+    radial-gradient(40% 60% at 82% 18%, rgb(14 165 233 / 0.45), transparent 70%),
+    radial-gradient(50% 60% at 60% 92%, rgb(45 212 191 / 0.3), transparent 70%);
+  filter: blur(50px); opacity: 0.62;
   animation: joma-aurora-drift 16s ease-in-out infinite alternate;
 }
 .jomatheme-welcome__grid {
@@ -676,7 +695,7 @@ tbody td { border-color: rgb(255 255 255 / 0.06) !important; }
   display: inline-flex; align-items: center; gap: 0.5rem;
   margin: 0 0 0.6rem; font-size: 0.72rem; font-weight: 700;
   letter-spacing: 0.16em; text-transform: uppercase;
-  color: rgb(129 140 248);
+  color: rgb(34 211 238);
 }
 .jomatheme-welcome__dot {
   width: 8px; height: 8px; border-radius: 999px; background: rgb(34 197 94);
@@ -686,26 +705,26 @@ tbody td { border-color: rgb(255 255 255 / 0.06) !important; }
 .jomatheme-welcome__title {
   font-size: clamp(1.7rem, 3.2vw, 2.4rem); font-weight: 800;
   margin: 0 0 0.5rem; line-height: 1.12; letter-spacing: -0.025em;
-  background: linear-gradient(110deg, #fff 8%, rgb(165 180 254) 38%, rgb(129 140 248) 58%, rgb(139 92 246) 80%, #fff 100%);
+  background: linear-gradient(110deg, #fff 8%, rgb(103 232 249) 38%, rgb(34 211 238) 58%, rgb(45 212 191) 80%, #fff 100%);
   background-size: 220% auto;
   -webkit-background-clip: text; background-clip: text; color: transparent;
   animation: joma-hero-gradient 7s ease-in-out infinite;
 }
-.jomatheme-welcome__name { color: rgb(129 140 248); -webkit-text-fill-color: rgb(129 140 248); }
+.jomatheme-welcome__name { color: rgb(34 211 238); -webkit-text-fill-color: rgb(34 211 238); }
 .jomatheme-welcome__sparkle { display: inline-block; color: rgb(34 211 238); -webkit-text-fill-color: rgb(34 211 238); animation: joma-twinkle 3s ease-in-out infinite; transform-origin: 50% 50%; }
 .jomatheme-welcome__wave { display: inline-block; animation: joma-wave 2.8s ease-in-out infinite; transform-origin: 70% 70%; }
-.jomatheme-welcome__sub { margin: 0 0 1.1rem; max-width: 48rem; color: rgb(170 180 204); font-size: 0.98rem; }
+.jomatheme-welcome__sub { margin: 0 0 1.1rem; max-width: 48rem; color: rgb(158 186 208); font-size: 0.98rem; }
 
 .jomatheme-welcome__stats { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 0 0 1.1rem; }
 .jomatheme-welcome__stat {
   display: flex; align-items: center; gap: 0.55rem;
   padding: 0.5rem 0.85rem; border-radius: var(--joma-radius-md);
-  background: rgb(8 12 26 / 0.8); border: 1px solid rgb(255 255 255 / 0.08);
+  background: rgb(6 16 28 / 0.8); border: 1px solid rgb(255 255 255 / 0.08);
   min-width: 7.5rem;
 }
-.jomatheme-welcome__stat-icon { color: rgb(129 140 248); font-size: 1rem; }
-.jomatheme-welcome__stat-num { font-weight: 800; font-size: 1.15rem; color: rgb(245 247 252); line-height: 1; }
-.jomatheme-welcome__stat-label { font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgb(140 150 176); }
+.jomatheme-welcome__stat-icon { color: rgb(34 211 238); font-size: 1rem; }
+.jomatheme-welcome__stat-num { font-weight: 800; font-size: 1.15rem; color: rgb(240 250 253); line-height: 1; }
+.jomatheme-welcome__stat-label { font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgb(122 152 178); }
 
 .jomatheme-welcome__actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .jomatheme-welcome__btn {
@@ -713,20 +732,20 @@ tbody td { border-color: rgb(255 255 255 / 0.06) !important; }
   padding: 0.5rem 0.95rem; border-radius: var(--joma-radius-pill);
   font-size: 0.84rem; font-weight: 600; cursor: pointer; text-decoration: none;
   border: 1px solid transparent;
-  background: linear-gradient(135deg, rgb(28 36 64), rgb(18 24 44));
-  color: rgb(226 232 240);
+  background: linear-gradient(135deg, rgb(20 48 74), rgb(12 32 52));
+  color: rgb(220 236 246);
   transition: transform var(--joma-transition-normal) var(--joma-ease),
               border-color var(--joma-transition-normal) ease,
               box-shadow var(--joma-transition-normal) ease, color var(--joma-transition-normal) ease;
 }
-.jomatheme-welcome__btn:hover { transform: translateY(-2px); color: rgb(245 247 252); border-color: rgb(99 102 241 / 0.45); box-shadow: 0 10px 28px rgb(99 102 241 / 0.22); }
-.jomatheme-welcome__btn--primary { background: var(--joma-grad-primary); color: rgb(255 255 255); border-color: rgb(129 140 248 / 0.55); box-shadow: 0 10px 28px rgb(99 102 241 / 0.35); }
-.jomatheme-welcome__btn--primary:hover { filter: brightness(1.08); box-shadow: 0 16px 38px rgb(99 102 241 / 0.5); }
+.jomatheme-welcome__btn:hover { transform: translateY(-2px); color: rgb(240 250 253); border-color: rgb(6 182 212 / 0.45); box-shadow: 0 10px 28px rgb(6 182 212 / 0.22); }
+.jomatheme-welcome__btn--primary { background: var(--joma-grad-primary); color: rgb(255 255 255); border-color: rgb(34 211 238 / 0.55); box-shadow: 0 10px 28px rgb(6 182 212 / 0.35); }
+.jomatheme-welcome__btn--primary:hover { filter: brightness(1.08); box-shadow: 0 16px 38px rgb(6 182 212 / 0.5); }
 
 .jomatheme-welcome__pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .jomatheme-welcome__pill {
   font-size: 0.7rem; font-weight: 600; padding: 0.28rem 0.7rem; border-radius: 999px;
-  color: rgb(165 180 254); background: rgb(99 102 241 / 0.12); border: 1px solid rgb(99 102 241 / 0.26);
+  color: rgb(103 232 249); background: rgb(6 182 212 / 0.12); border: 1px solid rgb(6 182 212 / 0.26);
 }
 
 /* hero mini sparkline (decorative) */
@@ -737,19 +756,19 @@ tbody td { border-color: rgb(255 255 255 / 0.06) !important; }
    ---------------------------------------------------------------------------- */
 [class*="terminal"], [class*="Terminal"], [class*="console"]:not([class*="console-"]), #terminal {
   border-radius: var(--joma-radius-md) !important;
-  background: linear-gradient(135deg, rgb(6 9 18 / 0.92), rgb(4 7 14 / 0.95)) !important;
+  background: linear-gradient(135deg, rgb(4 12 22 / 0.92), rgb(3 9 16 / 0.95)) !important;
   border: 1px solid rgb(255 255 255 / 0.08) !important;
   box-shadow: inset 0 0 50px rgb(0 0 0 / 0.6), 0 12px 30px rgb(0 0 0 / 0.3) !important;
-  color: rgb(202 214 234) !important;
+  color: rgb(190 220 236) !important;
 }
-[class*="terminal"]::-webkit-scrollbar-thumb, [class*="Terminal"]::-webkit-scrollbar-thumb { background: rgb(99 102 241 / 0.5); border-radius: 999px; }
+[class*="terminal"]::-webkit-scrollbar-thumb, [class*="Terminal"]::-webkit-scrollbar-thumb { background: rgb(6 182 212 / 0.5); border-radius: 999px; }
 
 /* code blocks */
 code, pre, kbd {
-  background: rgb(7 11 24 / 0.7) !important;
+  background: rgb(5 14 26 / 0.7) !important;
   border: 1px solid rgb(255 255 255 / 0.08) !important;
   border-radius: var(--joma-radius-sm) !important;
-  color: rgb(165 180 254) !important;
+  color: rgb(103 232 249) !important;
   font-family: ui-monospace, "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, monospace;
 }
 
@@ -764,32 +783,32 @@ code, pre, kbd {
 .jomatheme-toast {
   pointer-events: auto; display: flex; align-items: flex-start; gap: 0.65rem;
   padding: 0.85rem 0.95rem 0.85rem 0.95rem; border-radius: var(--joma-radius-md);
-  background: linear-gradient(135deg, rgb(20 28 50 / 0.9), rgb(12 18 36 / 0.92));
+  background: linear-gradient(135deg, rgb(13 34 54 / 0.9), rgb(9 26 42 / 0.92));
   backdrop-filter: blur(var(--joma-blur-md)) saturate(160%);
   -webkit-backdrop-filter: blur(var(--joma-blur-md)) saturate(160%);
   border: 1px solid rgb(255 255 255 / 0.1);
   box-shadow: 0 18px 44px rgb(0 0 0 / 0.55), inset 0 1px 0 rgb(255 255 255 / 0.06);
-  color: rgb(232 238 246); overflow: hidden; position: relative;
+  color: rgb(226 242 250); overflow: hidden; position: relative;
   animation: joma-toast-in 0.42s var(--joma-ease-spring) both;
 }
 .jomatheme-toast.is-leaving { animation: joma-toast-out 0.34s ease forwards; }
-.jomatheme-toast::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: rgb(99 102 241); }
+.jomatheme-toast::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: rgb(6 182 212); }
 .jomatheme-toast[data-type="success"]::before { background: rgb(34 197 94); }
 .jomatheme-toast[data-type="warning"]::before { background: rgb(245 158 11); }
 .jomatheme-toast[data-type="error"]::before   { background: rgb(239 68 68); }
-.jomatheme-toast[data-type="info"]::before    { background: rgb(59 130 246); }
+.jomatheme-toast[data-type="info"]::before    { background: rgb(14 165 233); }
 .jomatheme-toast__icon { font-size: 1rem; line-height: 1.4; }
 .jomatheme-toast__icon--success { color: rgb(74 222 128); }
 .jomatheme-toast__icon--warning { color: rgb(251 191 36); }
 .jomatheme-toast__icon--error   { color: rgb(248 113 113); }
-.jomatheme-toast__icon--info    { color: rgb(96 165 250); }
+.jomatheme-toast__icon--info    { color: rgb(56 189 248); }
 .jomatheme-toast__body { flex: 1; min-width: 0; font-size: 0.9rem; line-height: 1.4; }
 .jomatheme-toast__title { font-weight: 700; margin-bottom: 0.1rem; }
 .jomatheme-toast__close {
-  background: none; border: 0; cursor: pointer; color: rgb(140 150 176);
+  background: none; border: 0; cursor: pointer; color: rgb(122 152 178);
   font-size: 1rem; line-height: 1; padding: 0 0 0 0.25rem; border-radius: var(--joma-radius-xs) !important;
 }
-.jomatheme-toast__close:hover { color: rgb(245 247 252); background: rgb(255 255 255 / 0.06) !important; }
+.jomatheme-toast__close:hover { color: rgb(240 250 253); background: rgb(255 255 255 / 0.06) !important; }
 .jomatheme-toast__bar { position: absolute; left: 0; bottom: 0; height: 2px; background: rgb(255 255 255 / 0.45); animation: joma-toast-bar linear forwards; }
 
 /* ----------------------------------------------------------------------------
@@ -808,7 +827,7 @@ code, pre, kbd {
 .jomatheme-skeleton * { visibility: hidden; }
 .jomatheme-spinner {
   width: 1.1em; height: 1.1em; border-radius: 999px;
-  border: 2px solid rgb(255 255 255 / 0.18); border-top-color: rgb(99 102 241);
+  border: 2px solid rgb(255 255 255 / 0.18); border-top-color: rgb(6 182 212);
   animation: joma-spin 0.8s linear infinite;
   display: inline-block; vertical-align: -0.15em;
 }
@@ -825,34 +844,34 @@ code, pre, kbd {
 .bg-slate-50, .bg-slate-100, .bg-slate-200, .bg-slate-300,
 .bg-zinc-50, .bg-zinc-100, .bg-zinc-200, .bg-zinc-300,
 .bg-stone-50, .bg-stone-100, .bg-stone-200, .bg-stone-300 {
-  background: rgb(22 28 50) !important;
+  background: rgb(14 36 58) !important;
   border: 1px solid rgb(255 255 255 / 0.07) !important;
 }
 .bg-gray-400, .bg-gray-500, .bg-gray-600,
 .bg-slate-400, .bg-slate-500, .bg-slate-600,
 .bg-zinc-400, .bg-zinc-500, .bg-zinc-600,
 .bg-stone-400, .bg-stone-500, .bg-stone-600 {
-  background: rgb(40 50 78) !important;
+  background: rgb(30 62 88) !important;
 }
 .bg-gray-700, .bg-gray-800, .bg-gray-900, .bg-gray-950,
 .bg-slate-700, .bg-slate-800, .bg-slate-900, .bg-slate-950,
 .bg-zinc-700, .bg-zinc-800, .bg-zinc-900,
 .bg-stone-700, .bg-stone-800, .bg-stone-900 {
-  background: rgb(7 11 24) !important;
+  background: rgb(5 14 26) !important;
 }
 
 /* ----------------------------------------------------------------------------
    24. Scrollbar, focus, misc
    ---------------------------------------------------------------------------- */
-* { scrollbar-width: thin; scrollbar-color: rgb(99 102 241 / 0.5) transparent; }
+* { scrollbar-width: thin; scrollbar-color: rgb(6 182 212 / 0.5) transparent; }
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(rgb(99 102 241 / 0.55), rgb(139 92 246 / 0.45));
+  background: linear-gradient(rgb(6 182 212 / 0.55), rgb(45 212 191 / 0.45));
   border-radius: 999px; border: 2px solid transparent; background-clip: padding-box;
 }
-::-webkit-scrollbar-thumb:hover { background: rgb(99 102 241 / 0.8); background-clip: padding-box; }
-:focus-visible { outline: 2px solid rgb(99 102 241 / 0.7); outline-offset: 2px; }
+::-webkit-scrollbar-thumb:hover { background: rgb(6 182 212 / 0.8); background-clip: padding-box; }
+:focus-visible { outline: 2px solid rgb(6 182 212 / 0.7); outline-offset: 2px; }
 
 /* ----------------------------------------------------------------------------
    25. Responsive — keep premium on small screens
@@ -877,6 +896,6 @@ code, pre, kbd {
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
-  .jomatheme-welcome__aurora, .jomatheme-welcome__title,
+  .jomatheme-welcome__aurora, .jomatheme-welcome__title, .jomatheme-welcome::before,
   .jomatheme-welcome__dot, .joma-dot, .jomatheme-ripple { animation: none !important; }
 }

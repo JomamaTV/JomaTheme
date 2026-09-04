@@ -4,18 +4,18 @@
    JomaTheme — runtime animations & enhancements
    Served as a <style> tag via the Blueprint dashboard wrapper (every page).
    Heavy keyframes live here so they can never break the React CSS bundle.
-   v3.0 — deep navy / indigo-violet-cyan / glassmorphism
+   v4.0 — midnight marine / cyan-teal-sky / liquid glass
    ============================================================================ */
 
 /* ---- web fonts: Inter (UI) + Bootstrap Icons ---- */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css");
 
-/* ---- ambient background: very subtle dot grid + soft drifting glow ---- */
+/* ---- ambient background: subtle sea-bubble grid + deep-sea caustics ---- */
 body::before {
   content: "";
   position: fixed; inset: 0; z-index: -2; pointer-events: none;
-  background-image: radial-gradient(rgb(129 140 248 / 0.04) 1px, transparent 1px);
+  background-image: radial-gradient(rgb(103 232 249 / 0.05) 1px, transparent 1px);
   background-size: 30px 30px;
   opacity: 0.4;
 }
@@ -23,11 +23,12 @@ body::after {
   content: "";
   position: fixed; inset: -10%; z-index: -1; pointer-events: none;
   background:
-    radial-gradient(40% 45% at 12% 12%, rgb(99 102 241 / 0.10), transparent 70%),
-    radial-gradient(40% 45% at 88% 10%, rgb(139 92 246 / 0.09), transparent 70%);
+    radial-gradient(42% 46% at 12% 12%, rgb(6 182 212 / 0.11), transparent 70%),
+    radial-gradient(40% 45% at 88% 10%, rgb(14 165 233 / 0.10), transparent 70%),
+    radial-gradient(46% 48% at 55% 112%, rgb(45 212 191 / 0.08), transparent 70%);
   filter: blur(6px);
-  opacity: 0.7;
-  animation: joma-ambient 30s ease-in-out infinite alternate;
+  opacity: 0.75;
+  animation: joma-ambient 36s ease-in-out infinite alternate;
 }
 
 /* ============================================================================
@@ -82,6 +83,7 @@ body::after {
 @keyframes joma-toast-out { 0% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); } 100% { opacity: 0; transform: translate3d(120%, 0, 0) scale(0.96); } }
 @keyframes joma-toast-bar { from { transform: scaleX(1); } to { transform: scaleX(0); } }
 @keyframes joma-gradient-shift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+@keyframes joma-liquid-edge { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
 @keyframes joma-rise { 0% { opacity: 0; transform: translate3d(0, 16px, 0); } 100% { opacity: 1; transform: translate3d(0, 0, 0); } }
 @keyframes joma-fade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes joma-cmdk-in { from { opacity: 0; transform: translateY(-12px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
@@ -98,7 +100,7 @@ body::after {
 }
 .bg-white:not([class*="ServerCard"]):not([class*="server-card"]):not([class*="ServerRow"]):hover,
 [class*="bg-white"]:not([class*="ServerCard"]):not([class*="server-card"]):not([class*="ServerRow"]):hover {
-  border-color: rgb(99 102 241 / 0.32) !important;
+  border-color: rgb(6 182 212 / 0.32) !important;
   filter: brightness(1.04);
 }
 
@@ -123,8 +125,8 @@ button[class*="primary"]:not(:disabled):hover::after, .btn-primary:hover::after,
 #jomatheme-progress.is-loading { opacity: 1; }
 #jomatheme-progress__bar {
   height: 100%; width: 100%; transform-origin: left center; transform: translateX(-100%);
-  background: linear-gradient(90deg, rgb(99 102 241), rgb(139 92 246), rgb(34 211 238));
-  box-shadow: 0 0 12px rgb(99 102 241 / 0.8);
+  background: linear-gradient(90deg, rgb(14 165 233), rgb(6 182 212), rgb(45 212 191));
+  box-shadow: 0 0 12px rgb(6 182 212 / 0.8);
   transition: transform 0.25s ease;
 }
 #jomatheme-progress.is-loading #jomatheme-progress__bar { transform: translateX(-30%); }
@@ -175,7 +177,7 @@ button:not(:disabled):hover svg, .btn:hover svg, [class*="Button"]:not(:disabled
 .jomatheme-grad-border::before {
   content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
   padding: 1px; margin: -1px; pointer-events: none;
-  background: linear-gradient(135deg, rgb(99 102 241), rgb(139 92 246), rgb(34 211 238));
+  background: linear-gradient(135deg, rgb(6 182 212), rgb(45 212 191), rgb(14 165 233));
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor; mask-composite: exclude;
 }
@@ -185,7 +187,7 @@ button:not(:disabled):hover svg, .btn:hover svg, [class*="Button"]:not(:disabled
 .jomatheme-tip::after {
   content: attr(data-joma-tip); position: absolute; left: 50%; bottom: calc(100% + 8px);
   transform: translateX(-50%) translateY(4px); z-index: 50;
-  background: rgb(10 16 32 / 0.94); color: rgb(232 238 246);
+  background: rgb(8 22 38 / 0.94); color: rgb(226 242 250);
   border: 1px solid rgb(255 255 255 / 0.1); border-radius: 8px;
   padding: .25rem .5rem; font-size: .72rem; white-space: nowrap;
   opacity: 0; pointer-events: none;
@@ -197,57 +199,57 @@ button:not(:disabled):hover svg, .btn:hover svg, [class*="Button"]:not(:disabled
 #jomatheme-cmdk { position: fixed; inset: 0; z-index: 99997; display: none; }
 #jomatheme-cmdk.is-open { display: block; }
 .jomatheme-cmdk__backdrop {
-  position: absolute; inset: 0; background: rgb(5 9 20 / 0.6);
+  position: absolute; inset: 0; background: rgb(3 9 18 / 0.6);
   backdrop-filter: blur(8px) saturate(120%); -webkit-backdrop-filter: blur(8px) saturate(120%);
   animation: joma-fade 0.2s ease both;
 }
 .jomatheme-cmdk__panel {
   position: relative; width: calc(100% - 2rem); max-width: 38rem; margin: 12vh auto 0;
-  background: linear-gradient(135deg, rgb(20 28 50 / 0.92), rgb(12 18 36 / 0.95));
-  backdrop-filter: blur(var(--joma-blur-lg)) saturate(160%); -webkit-backdrop-filter: blur(var(--joma-blur-lg)) saturate(160%);
+  background: linear-gradient(135deg, rgb(13 34 54 / 0.92), rgb(9 26 42 / 0.95));
+  backdrop-filter: blur(var(--joma-blur-lg)) saturate(180%); -webkit-backdrop-filter: blur(var(--joma-blur-lg)) saturate(180%);
   border: 1px solid rgb(255 255 255 / 0.1); border-radius: var(--joma-radius-modal);
-  box-shadow: 0 30px 80px rgb(0 0 0 / 0.6), 0 0 0 1px rgb(99 102 241 / 0.14), inset 0 1px 0 rgb(255 255 255 / 0.06);
+  box-shadow: 0 30px 80px rgb(0 0 0 / 0.6), 0 0 60px rgb(6 182 212 / 0.08), 0 0 0 1px rgb(6 182 212 / 0.16), inset 0 1px 0 rgb(255 255 255 / 0.1);
   overflow: hidden; animation: joma-cmdk-in 0.32s cubic-bezier(0.34,1.56,0.64,1) both;
 }
 .jomatheme-cmdk__head { display: flex; align-items: center; gap: .6rem; padding: .9rem 1rem; border-bottom: 1px solid rgb(255 255 255 / 0.07); }
-.jomatheme-cmdk__icon { color: rgb(129 140 248); font-size: 1.05rem; }
+.jomatheme-cmdk__icon { color: rgb(34 211 238); font-size: 1.05rem; }
 .jomatheme-cmdk__input {
   flex: 1; background: transparent !important; border: 0 !important; box-shadow: none !important;
-  color: rgb(232 238 246) !important; font-size: 1rem; outline: none !important;
+  color: rgb(226 242 250) !important; font-size: 1rem; outline: none !important;
 }
-.jomatheme-cmdk__input::placeholder { color: rgb(110 122 150) !important; }
+.jomatheme-cmdk__input::placeholder { color: rgb(100 132 158) !important; }
 .jomatheme-cmdk__kbd {
-  font-size: .68rem; color: rgb(140 150 176); border: 1px solid rgb(255 255 255 / 0.12);
+  font-size: .68rem; color: rgb(122 152 178); border: 1px solid rgb(255 255 255 / 0.12);
   border-radius: 6px; padding: .1rem .35rem; background: rgb(255 255 255 / 0.04);
 }
 .jomatheme-cmdk__list { max-height: 22rem; overflow-y: auto; padding: .4rem; }
-.jomatheme-cmdk__group { font-size: .66rem; text-transform: uppercase; letter-spacing: .1em; color: rgb(110 122 150); padding: .6rem .6rem .3rem; }
+.jomatheme-cmdk__group { font-size: .66rem; text-transform: uppercase; letter-spacing: .1em; color: rgb(100 132 158); padding: .6rem .6rem .3rem; }
 .jomatheme-cmdk__item {
   display: flex; align-items: center; gap: .65rem; padding: .55rem .6rem; border-radius: var(--joma-radius-sm);
-  color: rgb(202 210 226); cursor: pointer; border: 1px solid transparent;
+  color: rgb(192 214 230); cursor: pointer; border: 1px solid transparent;
   transition: background var(--joma-transition-fast) ease, border-color var(--joma-transition-fast) ease, transform var(--joma-transition-fast) ease, color var(--joma-transition-fast) ease;
 }
 .jomatheme-cmdk__item.is-active {
-  background: linear-gradient(135deg, rgb(99 102 241 / 0.24), rgb(139 92 246 / 0.1));
-  border-color: rgb(99 102 241 / 0.38); color: rgb(245 247 252); transform: translateX(2px);
+  background: linear-gradient(135deg, rgb(6 182 212 / 0.24), rgb(45 212 191 / 0.1));
+  border-color: rgb(6 182 212 / 0.38); color: rgb(240 250 253); transform: translateX(2px);
 }
-.jomatheme-cmdk__item-icon { width: 1.2rem; text-align: center; color: rgb(129 140 248); }
+.jomatheme-cmdk__item-icon { width: 1.2rem; text-align: center; color: rgb(34 211 238); }
 .jomatheme-cmdk__item-label { flex: 1; }
-.jomatheme-cmdk__item-hint { font-size: .7rem; color: rgb(110 122 150); }
-.jomatheme-cmdk__empty { padding: 1.4rem; text-align: center; color: rgb(140 150 176); font-size: .85rem; }
+.jomatheme-cmdk__item-hint { font-size: .7rem; color: rgb(100 132 158); }
+.jomatheme-cmdk__empty { padding: 1.4rem; text-align: center; color: rgb(122 152 178); font-size: .85rem; }
 
 /* command palette hint (bottom-left) */
 #jomatheme-cmdk-hint {
   position: fixed; left: 1.25rem; bottom: 1.25rem; z-index: 99990;
   display: inline-flex; align-items: center; gap: .4rem;
   padding: .35rem .6rem; border-radius: 8px; cursor: pointer;
-  background: rgb(14 20 38 / 0.78); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgb(255 255 255 / 0.1); color: rgb(202 210 226); font-size: .72rem;
+  background: rgb(10 28 46 / 0.78); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgb(255 255 255 / 0.1); color: rgb(192 214 230); font-size: .72rem;
   box-shadow: 0 8px 24px rgb(0 0 0 / 0.35);
   transition: border-color var(--joma-transition-normal) ease, transform var(--joma-transition-normal) ease, color var(--joma-transition-normal) ease;
 }
-#jomatheme-cmdk-hint:hover { border-color: rgb(99 102 241 / 0.5); color: rgb(245 247 252); transform: translateY(-1px); }
-#jomatheme-cmdk-hint kbd { font-size: .66rem; border: 1px solid rgb(255 255 255 / 0.14); border-radius: 5px; padding: .05rem .3rem; background: rgb(255 255 255 / 0.06); color: rgb(129 140 248); }
+#jomatheme-cmdk-hint:hover { border-color: rgb(6 182 212 / 0.5); color: rgb(240 250 253); transform: translateY(-1px); }
+#jomatheme-cmdk-hint kbd { font-size: .66rem; border: 1px solid rgb(255 255 255 / 0.14); border-radius: 5px; padding: .05rem .3rem; background: rgb(255 255 255 / 0.06); color: rgb(34 211 238); }
 @media (max-width: 640px) { #jomatheme-cmdk-hint { display: none; } }
 
 @media (prefers-reduced-motion: reduce) {
@@ -462,11 +464,11 @@ button:not(:disabled):hover svg, .btn:hover svg, [class*="Button"]:not(:disabled
       btn.setAttribute("aria-label", "Copy console output");
       btn.style.cssText = "position:absolute;top:10px;right:10px;z-index:5;display:inline-flex;align-items:center;gap:.3rem;" +
         "padding:.3rem .6rem;font-size:.72rem;font-weight:600;border-radius:8px;" +
-        "background:rgb(14 20 38 / 0.8);color:rgb(202 210 226);" +
+        "background:rgb(10 28 46 / 0.8);color:rgb(192 214 230);" +
         "border:1px solid rgb(255 255 255 / 0.12);cursor:pointer;backdrop-filter:blur(8px);" +
         "transition:color .2s ease,border-color .2s ease,background .2s ease;";
-      btn.addEventListener("mouseenter", function () { btn.style.color = "rgb(245 247 252)"; btn.style.borderColor = "rgb(99 102 241 / 0.5)"; });
-      btn.addEventListener("mouseleave", function () { btn.style.color = "rgb(202 210 226)"; btn.style.borderColor = "rgb(255 255 255 / 0.12)"; });
+      btn.addEventListener("mouseenter", function () { btn.style.color = "rgb(240 250 253)"; btn.style.borderColor = "rgb(6 182 212 / 0.5)"; });
+      btn.addEventListener("mouseleave", function () { btn.style.color = "rgb(192 214 230)"; btn.style.borderColor = "rgb(255 255 255 / 0.12)"; });
       btn.addEventListener("click", function () {
         safe(function () {
           var txt = textOf(con);

@@ -11,7 +11,7 @@
 @section('content')
 @verbatim
 <style>
-.jomatheme-admin { color: rgb(232 238 246); }
+.jomatheme-admin { color: rgb(226 242 250); }
 .jomatheme-admin * { box-sizing: border-box; }
 
 /* ---- hero ---- */
@@ -19,16 +19,16 @@
   position: relative; overflow: hidden; border-radius: var(--joma-radius-xl, 22px);
   padding: 2.25rem 2.25rem; margin-bottom: 1.5rem;
   border: 1px solid rgb(255 255 255 / 0.09);
-  background: linear-gradient(135deg, rgb(24 32 58 / 0.82), rgb(12 18 36 / 0.9));
+  background: linear-gradient(135deg, rgb(15 40 64 / 0.82), rgb(9 26 42 / 0.9));
   backdrop-filter: blur(16px) saturate(160%);
   box-shadow: 0 24px 60px rgb(0 0 0 / 0.5), inset 0 1px 0 rgb(255 255 255 / 0.06);
 }
 .ja-hero::before {
   content: ""; position: absolute; inset: -50% -10% auto -10%; height: 200%; z-index: 0;
   background:
-    radial-gradient(40% 60% at 15% 20%, rgb(99 102 241 / 0.5), transparent 70%),
+    radial-gradient(40% 60% at 15% 20%, rgb(6 182 212 / 0.5), transparent 70%),
     radial-gradient(40% 60% at 85% 15%, rgb(34 211 238 / 0.32), transparent 70%),
-    radial-gradient(50% 60% at 60% 95%, rgb(139 92 246 / 0.4), transparent 70%);
+    radial-gradient(50% 60% at 60% 95%, rgb(45 212 191 / 0.4), transparent 70%);
   filter: blur(46px); opacity: 0.5; animation: ja-drift 16s ease-in-out infinite alternate;
 }
 .ja-hero::after {
@@ -42,17 +42,17 @@
 .ja-hero__inner { position: relative; z-index: 1; display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; }
 .ja-mark {
   width: 64px; height: 64px; border-radius: 18px; display: grid; place-items: center;
-  background: linear-gradient(135deg, rgb(99 102 241), rgb(139 92 246));
-  box-shadow: 0 12px 30px rgb(99 102 241 / 0.5), inset 0 1px 0 rgb(255 255 255 / 0.3);
+  background: linear-gradient(135deg, rgb(6 182 212), rgb(45 212 191));
+  box-shadow: 0 12px 30px rgb(6 182 212 / 0.5), inset 0 1px 0 rgb(255 255 255 / 0.3);
   font-size: 1.9rem; font-weight: 800; color: #fff; flex: 0 0 auto;
   animation: ja-float 5s ease-in-out infinite;
 }
 .ja-hero h1 {
   margin: 0; font-size: 1.9rem; font-weight: 800; letter-spacing: -0.025em;
-  background: linear-gradient(110deg, #fff, rgb(165 180 254) 55%, rgb(34 211 238));
+  background: linear-gradient(110deg, #fff, rgb(103 232 249) 55%, rgb(34 211 238));
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
-.ja-hero p { margin: .3rem 0 0; color: rgb(170 180 204); font-size: .95rem; max-width: 42rem; }
+.ja-hero p { margin: .3rem 0 0; color: rgb(158 186 208); font-size: .95rem; max-width: 42rem; }
 .ja-pill {
   margin-left: auto; font-size: .72rem; font-weight: 700; padding: .35rem .8rem;
   border-radius: 999px; color: rgb(34 197 94); background: rgb(34 197 94 / 0.12);
@@ -65,41 +65,41 @@
 .ja-stat {
   position: relative; overflow: hidden;
   border-radius: 14px; padding: 1.1rem 1.2rem; border: 1px solid rgb(255 255 255 / 0.07);
-  background: linear-gradient(135deg, rgb(22 30 54 / 0.72), rgb(12 18 36 / 0.8));
+  background: linear-gradient(135deg, rgb(16 40 62 / 0.72), rgb(9 26 42 / 0.8));
   backdrop-filter: blur(12px);
   transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
 }
-.ja-stat:hover { transform: translateY(-2px); border-color: rgb(99 102 241 / 0.32); box-shadow: 0 14px 34px rgb(99 102 241 / 0.18); }
-.ja-stat__label { font-size: .68rem; text-transform: uppercase; letter-spacing: .12em; color: rgb(140 150 176); margin: 0 0 .35rem; font-weight: 600; }
-.ja-stat__value { font-size: 1.2rem; font-weight: 800; color: rgb(245 247 252); margin: 0; }
-.ja-stat__hint { font-size: .78rem; color: rgb(110 122 150); margin: .25rem 0 0; }
+.ja-stat:hover { transform: translateY(-2px); border-color: rgb(6 182 212 / 0.32); box-shadow: 0 14px 34px rgb(6 182 212 / 0.18); }
+.ja-stat__label { font-size: .68rem; text-transform: uppercase; letter-spacing: .12em; color: rgb(122 152 178); margin: 0 0 .35rem; font-weight: 600; }
+.ja-stat__value { font-size: 1.2rem; font-weight: 800; color: rgb(240 250 253); margin: 0; }
+.ja-stat__hint { font-size: .78rem; color: rgb(100 132 158); margin: .25rem 0 0; }
 
 /* ---- sections ---- */
-.ja-section { border-radius: 14px; padding: 1.4rem 1.5rem; margin-bottom: 1.5rem; border: 1px solid rgb(255 255 255 / 0.07); background: linear-gradient(135deg, rgb(20 28 50 / 0.66), rgb(12 18 36 / 0.72)); backdrop-filter: blur(12px); }
-.ja-section h2 { margin: 0 0 1rem; font-size: 1.05rem; font-weight: 700; color: rgb(245 247 252); display: flex; align-items: center; gap: .5rem; }
-.ja-section h2::before { content: ""; width: 4px; height: 16px; border-radius: 4px; background: linear-gradient(rgb(99 102 241), rgb(34 211 238)); }
+.ja-section { border-radius: 14px; padding: 1.4rem 1.5rem; margin-bottom: 1.5rem; border: 1px solid rgb(255 255 255 / 0.07); background: linear-gradient(135deg, rgb(13 34 54 / 0.66), rgb(9 26 42 / 0.72)); backdrop-filter: blur(12px); }
+.ja-section h2 { margin: 0 0 1rem; font-size: 1.05rem; font-weight: 700; color: rgb(240 250 253); display: flex; align-items: center; gap: .5rem; }
+.ja-section h2::before { content: ""; width: 4px; height: 16px; border-radius: 4px; background: linear-gradient(rgb(6 182 212), rgb(34 211 238)); }
 
 .ja-features { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: .75rem; }
 .ja-feature { display: flex; gap: .75rem; align-items: flex-start; padding: .8rem .9rem; border-radius: 12px; background: rgb(255 255 255 / 0.03); border: 1px solid rgb(255 255 255 / 0.06); transition: border-color .2s ease, background .2s ease; }
-.ja-feature:hover { border-color: rgb(99 102 241 / 0.3); background: rgb(99 102 241 / 0.06); }
+.ja-feature:hover { border-color: rgb(6 182 212 / 0.3); background: rgb(6 182 212 / 0.06); }
 .ja-feature__icon { font-size: 1.15rem; line-height: 1.4; }
-.ja-feature__t { font-weight: 600; color: rgb(232 238 246); font-size: .9rem; }
-.ja-feature__d { color: rgb(140 150 176); font-size: .82rem; margin: .1rem 0 0; }
+.ja-feature__t { font-weight: 600; color: rgb(226 242 250); font-size: .9rem; }
+.ja-feature__d { color: rgb(122 152 178); font-size: .82rem; margin: .1rem 0 0; }
 
 .ja-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .6rem 0; border-bottom: 1px solid rgb(255 255 255 / 0.06); }
 .ja-row:last-child { border-bottom: 0; }
 .ja-row__label { color: rgb(190 196 214); font-size: .9rem; }
-.ja-row__value { color: rgb(245 247 252); font-weight: 600; font-size: .88rem; }
-.ja-code { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: .82rem; background: rgb(7 11 24 / 0.7); border: 1px solid rgb(255 255 255 / 0.08); border-radius: 8px; padding: .15rem .45rem; color: rgb(165 180 254); }
+.ja-row__value { color: rgb(240 250 253); font-weight: 600; font-size: .88rem; }
+.ja-code { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: .82rem; background: rgb(5 14 26 / 0.7); border: 1px solid rgb(255 255 255 / 0.08); border-radius: 8px; padding: .15rem .45rem; color: rgb(103 232 249); }
 
 .ja-preview { display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; margin-top: .5rem; }
 .ja-swatch { width: 30px; height: 30px; border-radius: 8px; border: 1px solid rgb(255 255 255 / 0.15); box-shadow: 0 4px 12px rgb(0 0 0 / 0.4); }
 .ja-color { display: flex; align-items: center; gap: .6rem; }
 .ja-color input[type="color"] { width: 42px; height: 30px; border: 1px solid rgb(255 255 255 / 0.15); border-radius: 8px; background: none; cursor: pointer; padding: 0; }
-.ja-note { font-size: .8rem; color: rgb(140 150 176); margin: .8rem 0 0; line-height: 1.5; }
-.ja-note code { background: rgb(7 11 24 / 0.7); border: 1px solid rgb(255 255 255 / 0.08); border-radius: 6px; padding: .05rem .35rem; color: rgb(165 180 254); font-size: .78rem; }
+.ja-note { font-size: .8rem; color: rgb(122 152 178); margin: .8rem 0 0; line-height: 1.5; }
+.ja-note code { background: rgb(5 14 26 / 0.7); border: 1px solid rgb(255 255 255 / 0.08); border-radius: 6px; padding: .05rem .35rem; color: rgb(103 232 249); font-size: .78rem; }
 
-.ja-btn { display: inline-flex; align-items: center; gap: .4rem; padding: .45rem .9rem; border-radius: 100px; font-size: .82rem; font-weight: 600; cursor: pointer; text-decoration: none; border: 1px solid transparent; background: linear-gradient(135deg, rgb(99 102 241), rgb(79 70 229)); color: #fff; box-shadow: 0 8px 22px rgb(99 102 241 / 0.32); transition: filter .2s ease, transform .2s ease; }
+.ja-btn { display: inline-flex; align-items: center; gap: .4rem; padding: .45rem .9rem; border-radius: 100px; font-size: .82rem; font-weight: 600; cursor: pointer; text-decoration: none; border: 1px solid transparent; background: linear-gradient(135deg, rgb(6 182 212), rgb(8 145 178)); color: #fff; box-shadow: 0 8px 22px rgb(6 182 212 / 0.32); transition: filter .2s ease, transform .2s ease; }
 .ja-btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
 
 @keyframes ja-drift { 0% { transform: translate3d(-3%, -2%, 0) scale(1.05); } 50% { transform: translate3d(5%, 4%, 0) scale(1.12); } 100% { transform: translate3d(-3%, -2%, 0) scale(1.05); } }
@@ -116,7 +116,7 @@
       <div class="ja-mark">J</div>
       <div>
         <h1>JomaTheme</h1>
-        <p>Premium dark control panel für JomaMC — Deep-Navy, Indigo/Violet/Cyan-Gradiente, Glassmorphism, animierter Aurora-Hintergrund, Live-Statistiken &amp; Quick Actions.</p>
+        <p>Premium dark control panel für JomaMC — Midnight Marine: abyssale Mitternacht, Cyan/Teal/Sky-Gradiente, echtes Liquid Glass mit Specular-Highlights, animierte Tiefsee-Caustics, Live-Statistiken &amp; Quick Actions.</p>
       </div>
       <span class="ja-pill"><span class="ja-pill__dot"></span> Active</span>
     </div>
@@ -125,8 +125,8 @@
   <div class="ja-grid">
     <div class="ja-stat">
       <p class="ja-stat__label">Version</p>
-      <p class="ja-stat__value">3.0.0</p>
-      <p class="ja-stat__hint">Premium glass redesign</p>
+      <p class="ja-stat__value">4.0.0</p>
+      <p class="ja-stat__hint">Midnight marine · liquid glass</p>
     </div>
     <div class="ja-stat">
       <p class="ja-stat__label">Blueprint Target</p>
@@ -148,8 +148,8 @@
   <div class="ja-section">
     <h2>Features</h2>
     <div class="ja-features">
-      <div class="ja-feature"><span class="ja-feature__icon">🌌</span><div><div class="ja-feature__t">Animated Aurora Background</div><div class="ja-feature__d">Drifting indigo/violet/cyan gradient mesh on every page.</div></div></div>
-      <div class="ja-feature"><span class="ja-feature__icon">🪟</span><div><div class="ja-feature__t">Real Glassmorphism</div><div class="ja-feature__d">Frosted blur + gradient hairline borders on cards &amp; panels.</div></div></div>
+      <div class="ja-feature"><span class="ja-feature__icon">🌊</span><div><div class="ja-feature__t">Deep-Sea Caustics</div><div class="ja-feature__d">Drifting cyan/teal/sky gradient mesh + sea-bubble grid on every page.</div></div></div>
+      <div class="ja-feature"><span class="ja-feature__icon">🪟</span><div><div class="ja-feature__t">True Liquid Glass</div><div class="ja-feature__d">Frosted blur, specular top-light &amp; refraction hairlines on cards &amp; panels.</div></div></div>
       <div class="ja-feature"><span class="ja-feature__icon">✨</span><div><div class="ja-feature__t">Premium Hero</div><div class="ja-feature__d">JOMAMC · CONTROL PANEL mit Live-Statistiken &amp; Quick Actions.</div></div></div>
       <div class="ja-feature"><span class="ja-feature__icon">🎮</span><div><div class="ja-feature__t">Premium Server Cards</div><div class="ja-feature__d">Gradient-Border, Status-Glow &amp; Hover-Elevation.</div></div></div>
       <div class="ja-feature"><span class="ja-feature__icon">🔔</span><div><div class="ja-feature__t">Toast Notifications</div><div class="ja-feature__d">Power-Actions erscheinen als Auto-Dismiss Toasts.</div></div></div>
@@ -164,8 +164,8 @@
     <div class="ja-row">
       <span class="ja-row__label">Primary color (live preview)</span>
       <div class="ja-color">
-        <input type="color" id="ja-primary" value="#6366f1" aria-label="Primary color live preview">
-        <span class="ja-row__value" id="ja-primary-val">#6366F1</span>
+        <input type="color" id="ja-primary" value="#06b6d4" aria-label="Primary color live preview">
+        <span class="ja-row__value" id="ja-primary-val">#06B6D4</span>
       </div>
     </div>
     <div class="ja-row">
@@ -181,10 +181,10 @@
       <span class="ja-row__value">Enabled (reduced-motion aware)</span>
     </div>
     <div class="ja-preview" aria-hidden="true">
-      <span class="ja-swatch" id="ja-sw1" style="background:#6366f1"></span>
-      <span class="ja-swatch" id="ja-sw2" style="background:#8b5cf6"></span>
+      <span class="ja-swatch" id="ja-sw1" style="background:#06b6d4"></span>
+      <span class="ja-swatch" id="ja-sw2" style="background:#2dd4bf"></span>
       <span class="ja-swatch" style="background:#22d3ee"></span>
-      <span class="ja-swatch" style="background:#3b82f6"></span>
+      <span class="ja-swatch" style="background:#0ea5e9"></span>
       <span class="ja-swatch" style="background:#22c55e"></span>
       <span class="ja-swatch" style="background:#f59e0b"></span>
       <span class="ja-swatch" style="background:#ef4444"></span>

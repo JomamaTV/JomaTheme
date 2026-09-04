@@ -5,9 +5,9 @@
 info:
   name: 'JomaTheme'
   identifier: 'jomatheme'
-  description: 'Premium dark control panel for JomaMC — deep navy, indigo/violet/cyan gradients, real glassmorphism, animated aurora background, live dashboard stats, quick actions, premium server cards, cloud console and a slick server dashboard.'
+  description: 'Premium dark liquid-glass control panel for JomaMC — Midnight Marine: abyssal midnight blues, cyan/teal/sky gradients, true liquid glass with specular highlights, animated deep-sea caustics, live dashboard stats, quick actions, premium glass server cards, cloud console and a slick server dashboard.'
   flags: ''
-  version: '3.0.0'
+  version: '4.0.0'
   target: 'beta-2026-08'
   author: 'JomaMC'
   icon: ''

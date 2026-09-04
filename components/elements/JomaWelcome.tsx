@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 /**
- * JomaWelcome — premium dashboard hero (JomaTheme v3.0)
+ * JomaWelcome — premium dashboard hero (JomaTheme v4.0 · Midnight Marine)
  *
  * Injected via Blueprint's Components.yml at the `Dashboard.Serverlist.BeforeContent`
  * slot. Renders the "JOMAMC · CONTROL PANEL" hero above the server list with a
@@ -148,13 +148,13 @@ export default function JomaWelcome(): JSX.Element {
       <svg className="jomatheme-welcome__spark" width="160" height="56" viewBox="0 0 160 56" fill="none" aria-hidden="true">
         <path
           d="M2 44 L20 38 L38 42 L56 26 L74 32 L92 18 L110 24 L128 12 L146 20 L158 8"
-          stroke="rgb(129 140 248)"
+          stroke="rgb(56 189 248)"
           strokeWidth="2.5"
           strokeLinecap="round"
           strokeLinejoin="round"
           fill="none"
         />
-        <circle cx="158" cy="8" r="3.5" fill="rgb(34 211 238)" />
+        <circle cx="158" cy="8" r="3.5" fill="rgb(45 212 191)" />
       </svg>
 
       <div className="jomatheme-welcome__inner">
